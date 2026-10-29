@@ -1,0 +1,107 @@
+import type {
+  ExecutionStructure,
+  OutputForm,
+  OutputStructure,
+  StudentRole,
+  TextOperation,
+  ThinkingMovement,
+} from "./activity-taxonomy";
+
+export const thinkingMovementLabels: Record<ThinkingMovement, string> = {
+  mashahede: "مشاهده",
+  jozeinegari: "جزئی‌نگری",
+  tosif: "توصیف",
+  revayat: "روایت",
+  bayan_ehsas: "بیان احساس",
+  takhayol: "تخیل",
+  porseshgari: "پرسشگری",
+  moghayese: "مقایسه",
+  didgah: "دیدگاه",
+  ertebatsazi: "ارتباط‌سازی",
+  dalil_entekhab: "دلیل و انتخاب",
+  bazandishi: "بازاندیشی",
+};
+
+export const studentRoleLabels: Record<StudentRole, string> = {
+  observer: "مشاهده‌گر",
+  detective: "کارآگاه",
+  explorer: "کاوشگر",
+  narrator: "راوی",
+  interviewer: "مصاحبه‌کننده",
+  decision_maker: "تصمیم‌گیرنده",
+  chooser: "انتخاب‌کننده",
+  witness: "شاهد",
+  critic: "منتقد",
+  letter_writer: "نامه‌نویس",
+  questioner: "پرسشگر",
+  imaginary_historian: "مورخ خیالی",
+  representative_citizen: "شهروند نماینده",
+  role_player: "ایفاکننده نقش",
+  nonhuman_character: "شخصیت غیرانسانی",
+  reporter: "گزارشگر",
+  listener: "شنونده",
+  passenger: "مسافر",
+  none: "بدون نقش",
+};
+
+export const textOperationLabels: Record<TextOperation, string> = {
+  compress: "فشرده‌سازی",
+  expand_preceding: "گسترش پیش‌داستان",
+  expand_following: "گسترش پس‌داستان",
+  change_viewpoint: "تغییر زاویه‌دید",
+  change_variable: "تغییر یک مؤلفه",
+  change_tone: "تغییر لحن",
+  reorder: "جابه‌جایی ترتیب",
+  parallel_variants: "ساخت نسخه‌های موازی",
+  reflective_revision: "بازنگری تأملی",
+  change_audience: "تغییر مخاطب",
+  none: "بدون عملیات متنی",
+};
+
+export const outputFormLabels: Record<OutputForm, string> = {
+  description: "توصیف",
+  list: "فهرست",
+  narrative: "روایت",
+  letter: "نامه",
+  dialogue: "گفت‌وگو",
+  interview: "مصاحبه",
+  monologue: "تک‌گویی",
+  report: "گزارش",
+  analysis: "تحلیل",
+  interpretation: "تفسیر",
+  argument: "استدلال",
+  hypothesis_evidence: "فرضیه و شواهد",
+  decision_reason: "تصمیم و دلیل",
+  question_chain: "زنجیره پرسش",
+  text_rewrite: "بازنویسی متن",
+  text_extension: "گسترش متن",
+  text_variants: "نسخه‌های متفاوت متن",
+};
+
+export const outputStructureLabels: Record<OutputStructure, string> = {
+  free_description: "توصیف آزاد",
+  ordered_list: "فهرست منظم",
+  sensory_description: "توصیف حسی",
+  narrative_sequence: "توالی روایی",
+  three_part_narrative: "روایت سه‌بخشی",
+  question_answer: "پرسش و پاسخ",
+  dialogue: "ساختار گفت‌وگویی",
+  comparison: "مقایسه",
+  claim_reason: "ادعا و دلیل",
+  claim_evidence: "ادعا و شواهد",
+  hypothesis_evidence: "فرضیه و شواهد",
+  decision_consequence: "تصمیم و پیامد",
+  question_chain: "زنجیره پرسش",
+  before_after: "قبل و بعد",
+  parallel_variants: "نسخه‌های موازی",
+  text_extension: "گسترش متن",
+  reflective_revision: "بازنگری تأملی",
+  none: "بدون ساختار مشخص",
+  cause_effect: "علت و پیامد",
+};
+
+export const executionStructureLabels: Record<ExecutionStructure, string> = {
+  individual: "فردی",
+  pair: "دو نفره",
+  group: "گروهی",
+};

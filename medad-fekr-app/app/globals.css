@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "MRT Bamshad";
+  src: url("/fonts/Bamshad_MRT.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Medad Fekr — Brand Colors */
+  --background: #f6f1e6;
+  --foreground: #2b3a67;
+
+  --primary: #2b3a67;
+  --accent: #c1863c;
+  --secondary: #3c6e68;
+
+  --muted: #6b7280;
+
+  /* Supporting UI Colors */
+  --surface: #ffffff;
+  --border: rgba(43, 58, 103, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "MRT Bamshad", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+a {
+  font-family: inherit;
+}

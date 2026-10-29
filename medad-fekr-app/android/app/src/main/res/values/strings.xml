@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">مداد فکر</string>
+    <string name="title_activity_main">مداد فکر</string>
+    <string name="package_name">ir.medadfekr.app</string>
+    <string name="custom_url_scheme">ir.medadfekr.app</string>
+</resources>
