@@ -48,20 +48,30 @@ export default function Hero() {
           </p>
 
           <div className="mt-14 flex flex-wrap gap-5">
-            <a href="#story">
-              <Button>Discover ENSHA</Button>
-            </a>
+  <a
+    href="https://ensha-web-prdv-8kc6ykc3s-ensha.vercel.app/"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Button>ورود به نسخهٔ وب</Button>
+  </a>
 
-            <a
-              href="/pitch-deck.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="secondary">
-                Read the Pitch Deck
-              </Button>
-            </a>
-          </div>
+  <a href="/downloads/medad-fekr-release-v2.apk" download>
+    <Button variant="secondary">دانلود نسخهٔ اندروید</Button>
+  </a>
+
+  <a href="#story">
+    <Button variant="secondary">Discover ENSHA</Button>
+  </a>
+
+  <a
+    href="/pitch-deck.pdf"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Button variant="secondary">Read the Pitch Deck</Button>
+  </a>
+</div>
         </div>
       </Container>
     </section>
