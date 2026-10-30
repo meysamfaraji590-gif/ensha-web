@@ -53,11 +53,11 @@ export default function Hero() {
     target="_blank"
     rel="noopener noreferrer"
   >
-    <Button>ورود به نسخهٔ وب</Button>
+    <Button>Open Web App-pilot</Button>
   </a>
 
   <a href="/downloads/medad-fekr-release-v2.apk" download>
-    <Button variant="secondary">دانلود نسخهٔ اندروید</Button>
+    <Button variant="secondary">Download Android App-pilot</Button>
   </a>
 
   <a href="#story">
