@@ -140,15 +140,15 @@ const [introSlide, setIntroSlide] = useState(0);
   );
 
   function handleIntroNext() {
-    if (introSlide === currentSlides.length - 1) {
-      setIntroSlide((current) => current + 1);
-      return;
-    }
-
-    localStorage.setItem("medad-fekr-intro", "true");
-    window.dispatchEvent(new Event("medad-fekr-intro-change"));
-    setScreen("main");
+  if (introSlide < currentSlides.length - 1) {
+    setIntroSlide((current) => current + 1);
+    return;
   }
+
+  localStorage.setItem("medad-fekr-intro", "true");
+  window.dispatchEvent(new Event("medad-fekr-intro-change"));
+  setScreen("main");
+}
 
   function handleSelectLand(landId: string) {
     setSelectedLandId(landId);

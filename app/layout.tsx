@@ -1,21 +1,23 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+
+import type { Metadata, Viewport } from "next";
+import { SerwistProvider } from "./serwist";
+import { LanguageProvider } from "../i18n/LanguageProvider";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "ENSHA │ مداد فکر",
-  description:
-    "Designing meaningful writing experiences that cultivate thinking.",
+  applicationName: "مداد فکر",
+  title: "مداد فکر",
+  description: "تجربه‌های نوشتن برای دیدن و پرورش فکر",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "مداد فکر",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({
@@ -24,12 +26,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-screen bg-[#FAFAF8] text-[#243B63]">
-        {children}
+    <html lang="fa" dir="rtl">
+      <body>
+        <LanguageProvider>
+          <SerwistProvider swUrl="/sw.js">
+            {children}
+          </SerwistProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
