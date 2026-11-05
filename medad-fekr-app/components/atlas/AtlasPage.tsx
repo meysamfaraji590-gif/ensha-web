@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { atlas } from "../../data/atlas";
 import LandCard from "./LandCard";
+import { useLanguage } from "../../i18n/LanguageProvider";
 
 type AtlasPageProps = {
   onBack: () => void;
@@ -9,6 +10,8 @@ type AtlasPageProps = {
 };
 
 export default function AtlasPage({ onBack, onSelectLand }: AtlasPageProps) {
+  const { t } = useLanguage();
+
   return (
     <main className="min-h-screen bg-[#F6F1E6] text-[#2B3A67]">
       <div className="mx-auto w-full max-w-6xl px-6 py-8 md:px-10">
@@ -17,19 +20,19 @@ export default function AtlasPage({ onBack, onSelectLand }: AtlasPageProps) {
             onClick={onBack}
             className="text-sm text-slate-400 transition hover:text-[#2B3A67]"
           >
-            بازگشت
+            {t("back")}
           </button>
 
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-3">
               <Image
                 src="/logo.png"
-                alt="مداد فکر"
+                alt={t("brand")}
                 width={40}
                 height={40}
                 className="rounded-xl object-cover"
               />
-              <div className="text-xl font-bold">مداد فکر</div>
+              <div className="text-xl font-bold">{t("brand")}</div>
             </div>
           </div>
         </header>
@@ -39,17 +42,15 @@ export default function AtlasPage({ onBack, onSelectLand }: AtlasPageProps) {
             <div className="mb-6 h-px w-12 bg-[#C1863C]" />
 
             <div className="text-sm font-medium tracking-wide text-[#C1863C]">
-              زنگ انشا
+              {t("essayBell")}
             </div>
 
             <h1 className="mt-5 text-4xl font-bold leading-[1.4] md:text-6xl">
-              اطلس موقعیت‌ها
+              {t("atlasTitle")}
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-9 text-slate-600 md:text-xl">
-              هر سرزمین، راهی متفاوت برای دیدن، فکر کردن و نوشتن است. سرزمینی را
-              انتخاب کنید و از میان موقعیت‌های آن، فعالیتی برای کلاس خود پیدا
-              کنید.
+              {t("atlasDescription")}
             </p>
           </div>
 

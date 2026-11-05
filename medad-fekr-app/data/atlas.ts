@@ -1,3 +1,17 @@
+
+export type ActivityTranslation = {
+  purpose: string;
+  instruction: string;
+  steps: string[];
+  questions: string[];
+  teacherNote?: string;
+  materials?: {
+    required: boolean;
+    type: "none" | "image" | "audio" | "text" | "object";
+    items: string[];
+  };
+};
+
 export type Activity = {
   purpose: string;
   instruction: string;
@@ -10,6 +24,10 @@ export type Activity = {
     type: "none" | "image" | "audio" | "text" | "object";
     items: string[];
   };
+
+  translations?: {
+    en: ActivityTranslation;
+  };
 };
 
 export type Situation = {
@@ -17,6 +35,13 @@ export type Situation = {
   title: string;
   description: string;
   activity?: Activity;
+
+  translations?: {
+    en: {
+      title: string;
+      description: string;
+    };
+  };
 };
 
 export type AtlasLand = {
@@ -25,7 +50,15 @@ export type AtlasLand = {
   title: string;
   description: string;
   situations: Situation[];
+
+  translations?: {
+    en: {
+      title: string;
+      description: string;
+    };
+  };
 };
+
 
 export const atlas: AtlasLand[] = [
   {
@@ -33,13 +66,28 @@ export const atlas: AtlasLand[] = [
     code: "06M",
     title: "تخیل",
     description:
-      "ساختن امکان‌ها، جهان‌ها و تجربه‌هایی که در برابر ما وجود ندارند.",
-    situations: [
+     "ساختن امکان‌ها، جهان‌ها و تجربه‌هایی که در برابر ما وجود ندارند.",
+    translations: {
+     en: {
+    title: "Imagination",
+    description:
+      "Imagining possibilities, worlds, and experiences that do not yet exist.",
+   },
+ },
+     situations: [
       {
         id: "06M-01",
         title: "موزه‌ی اشیای جادویی",
         description:
           "در موزه‌ای شش شیء جادویی وجود دارد؛ هرکدام قدرتی متفاوت دارد و می‌توانی فقط یکی را انتخاب کنی.",
+        
+         translations: {
+         en: {
+         title: "The Museum of Magical Objects",
+         description:
+        "A museum holds six magical objects, each with a different power. You can choose only one.",
+          },
+        },
 
         activity: {
           purpose:
@@ -72,7 +120,44 @@ export const atlas: AtlasLand[] = [
             required: false,
             type: "none",
             items: [],
-          },
+            },
+          translations: {
+           en: {
+           purpose:
+           "Develop imagination by exploring a new possibility and following its uses, limits, and consequences.",
+
+           instruction:
+            "Imagine entering a museum that holds six magical objects. Each object has a different power. Choose one and imagine what might happen when it becomes part of someone's life.",
+
+           steps: [
+           "Choose one of the six magical objects.",
+           "Imagine who might need this object.",
+           "Imagine how that person would use it.",
+           "Consider what might happen differently from what they expected.",
+           "Give the object one rule or limitation.",
+           "Imagine what changes in that person's life after using it.",
+           ],
+
+          questions: [
+           "If this object really had this power, who might need it?",
+           "What would that person do with the object?",
+           "What might happen differently from what they expected?",
+           "If you could set a new rule for this object, what would it be?",
+           "What would change in that person's life after using the object?",
+          ],
+
+          teacherNote:
+           "The six cards introduce only each object's identity and power. Students create its uses, consequences, and limitations. The goal is to develop a possibility and explore its consequences—not to find the strangest object.",
+
+           materials: {
+           required: false,
+           type: "none",
+           items: [],
+    },
+  },
+},
+
+          
         },
       },
 
@@ -81,7 +166,13 @@ export const atlas: AtlasLand[] = [
         title: "نامه‌ای از سال ۲۱۲۰",
         description:
           "نوشتن نامه‌ای ناقص از زبان کودکی در سال ۲۱۲۰ و تصور چیزهایی که در آینده تغییر کرده یا باقی مانده‌اند.",
-
+         translations: {
+  en: {
+    title: "A Letter from the Year 2120",
+    description:
+      "Writing an unfinished letter from the perspective of a child living in the year 2120, imagining what has changed and what has remained the same in their world.",
+  },
+},
         activity: {
           purpose:
             "گسترش تخیل زمانی از طریق تصور زندگی روزمره در آینده و مقایسه‌ی آن با زندگی امروز.",
@@ -113,6 +204,42 @@ export const atlas: AtlasLand[] = [
             required: true,
             type: "text",
             items: ["/text/06M/06M-02.txt"],
+                     
+          },
+           translations: {
+            en: {
+              purpose:
+                "Develop time-based imagination by picturing everyday life in the future and comparing it with life today.",
+
+              instruction:
+                "Read an unfinished letter written by a child in the year 2120. Fill in the missing parts using your imagination and create a picture of this child's life.",
+
+              steps: [
+                "Read the unfinished letter.",
+                "Fill in the blanks with your own ideas about life in the year 2120.",
+                "Think about what has changed in this child's life compared with today.",
+                "Choose one thing that you have deliberately kept similar to life today.",
+                "Finally, imagine that a child from the year 2120 visits the year 2026. What would surprise them the most?",
+              ],
+
+              questions: [
+                "In your letter, what is different about life in 2120 compared with today?",
+                "Which of the changes you imagined do you find most interesting? Why?",
+                "What did you deliberately keep the same as life today? Why do you think it might still exist a hundred years from now?",
+                "Which part of a child's life in 2120 might seem strange to a child today?",
+                "Which part of life today might seem strange to a child from 2120?",
+                "If someone reads your letter a hundred years from now, what would you want them to know about our lives today?",
+              ],
+
+              teacherNote:
+                "The goal is not to make scientific predictions about the future. The letter is deliberately unfinished so students can create their own future world. Avoid prescribing specific technologies or a particular vision of the future.",
+
+              materials: {
+                required: true,
+                type: "text",
+                items: ["/text/06M/06M-02.txt"],
+              },
+            },
           },
         },
       },
@@ -122,7 +249,13 @@ export const atlas: AtlasLand[] = [
         title: "شهری زیر ریشه‌های درختان",
         description:
           "تصور کردن شهری پنهان زیر ریشه‌های یک جنگل قدیمی و ساختن شیوه‌ی زندگی در آن.",
-
+          translations: {
+  en: {
+    title: "A City Beneath the Tree Roots",
+    description:
+      "Imagining a hidden city beneath the roots of an ancient forest and creating a way of life for its inhabitants.",
+  },
+},
         activity: {
           purpose:
             "گسترش تخیل فضایی و کمک به دانش‌آموز برای ساختن یک جهان خیالی با رابطه میان مکان، زندگی و قوانین آن.",
@@ -158,6 +291,46 @@ export const atlas: AtlasLand[] = [
             required: false,
             type: "none",
             items: [],
+                          
+          },
+           translations: {
+            en: {
+              purpose:
+                "Develop spatial imagination by helping students create an imaginary world and explore the connections between its places, people's lives, and its rules.",
+
+              instruction:
+                "Imagine that beneath the roots of a very old forest, there is a hidden city—a city that no one in our world has ever seen. You are the first person to enter it.",
+
+              steps: [
+                "Imagine the first thing you see when you enter the city.",
+                "Picture where the people live and how they travel from place to place.",
+                "Think about how they get light, food, and water.",
+                "Create one unusual but logical rule for this city.",
+                "Imagine what else might change in people's lives if one of the city's rules changes.",
+                "Imagine that one of the city's residents visits our world for the first time. What would seem strange to them?",
+              ],
+
+              questions: [
+                "What is the first thing you see when you enter the city?",
+                "Where do the people of this city live?",
+                "How do they travel from place to place?",
+                "If the city is underground, where does its light come from?",
+                "How have the people found ways to get food and water?",
+                "What is one rule in this city that would seem strange in our own city?",
+                "Why have the people accepted this rule?",
+                "If one of the city's rules changes, what else might change in people's lives?",
+                "If one of the city's residents visits our world for the first time, what would seem strange to them?",
+              ],
+
+              teacherNote:
+                "Encourage students to build connections between the different parts of their imaginary world. The city's features do not have to be realistic, but it is helpful if the students' different ideas connect with one another.",
+
+              materials: {
+                required: false,
+                type: "none",
+                items: [],
+              },
+            },
           },
         },
       },
@@ -166,7 +339,13 @@ export const atlas: AtlasLand[] = [
         id: "06M-04",
         title: "آسانسوری که به زمان‌های مختلف می‌رود",
         description: "سفر با آسانسوری که هر طبقه‌ی آن به زمانی متفاوت می‌رود.",
-
+        translations: {
+  en: {
+    title: "An Elevator That Travels Through Time",
+    description:
+      "Traveling in an elevator where each floor takes you to a different point in time.",
+  },
+},
         activity: {
           purpose:
             "تقویت تخیل زمانی و کمک به دانش‌آموز برای تصور زندگی در زمان‌هایی متفاوت از زمان خود.",
@@ -195,11 +374,48 @@ export const atlas: AtlasLand[] = [
 
           teacherNote:
             "دانش‌آموز می‌تواند به گذشته، آینده یا حتی زمانی کاملاً خیالی که هرگز وجود نداشته سفر کند. تمرکز بر ساختن امکان‌های متفاوت است، نه اطلاعات تاریخی.",
-
+                    
           materials: {
             required: false,
             type: "none",
             items: [],
+          },
+          translations: {
+            en: {
+              purpose:
+                "Develop time-based imagination by helping students picture life in times different from their own.",
+
+              instruction:
+                "In an old building, you discover an elevator where each floor takes you to a different time. You can use the elevator only three times.",
+
+              steps: [
+                "Choose three different times to visit.",
+                "Imagine the first thing you see when you arrive in each time.",
+                "Compare people's lives in those times with life today.",
+                "Imagine something that happens differently from what you expected.",
+                "Think about what you would choose if you could bring back just one thing from one of those times.",
+                "After your three journeys, imagine how your view of your own time has changed.",
+              ],
+
+              questions: [
+                "Which times would you visit? Why?",
+                "What is the first thing you see when you arrive?",
+                "How is people's life in that time different from life today?",
+                "What is something that happens differently from what you expected?",
+                "If you could bring just one thing from that time into your own time, what would it be?",
+                "If someone from that time came to our time, what would seem strange to them?",
+                "After your three journeys, how has your view of your own time changed?",
+              ],
+
+              teacherNote:
+                "Students can travel to the past, the future, or even to a completely imaginary time that has never existed. The focus is on creating different possibilities, not on historical knowledge.",
+
+              materials: {
+                required: false,
+                type: "none",
+                items: [],
+              },
+            },
           },
         },
       },
@@ -209,7 +425,13 @@ export const atlas: AtlasLand[] = [
         title: "مغازه‌ی تعمیر خاطره‌ها",
         description:
           "تصور کردن مغازه‌ای که خاطره‌های آسیب‌دیده را تعمیر می‌کند.",
-
+         translations: {
+  en: {
+    title: "The Memory Repair Shop",
+    description:
+      "Imagining a shop where damaged memories can be repaired.",
+  },
+},
         activity: {
           purpose:
             "تقویت تخیل از طریق تصور یک امکان غیرممکن و بررسی شکل‌های مختلف تغییر یا ترمیم یک خاطره.",
@@ -244,15 +466,60 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+        
+       translations: {
+            en: {
+              purpose:
+                "Develop imagination by exploring an impossible possibility and considering different ways a memory might be changed or repaired.",
+
+              instruction:
+                "There is a shop that repairs memories. One day, a customer walks in and says, 'I have a memory that doesn't work properly anymore.' Imagine what has gone wrong with this memory and how it could be repaired.",
+
+              steps: [
+                "Imagine what is wrong with the customer's memory.",
+                "Imagine what might look strange or broken if you could see this memory.",
+                "Find a way to repair it.",
+                "Think about whether the memory needs to be exactly the way it was before.",
+                "Imagine the difference between the memory before and after the repair.",
+                "Think about how repairing this memory might change its owner's feelings or way of seeing things.",
+              ],
+
+              questions: [
+                "What has gone wrong with this customer's memory?",
+                "If you could see this memory, what part of it might look strange or broken?",
+                "What could you do to repair it?",
+                "Does the whole memory need to be restored exactly as it was? Why?",
+                "How is the memory different after being repaired?",
+                "If the owner remembers it after the repair, what might change in their feelings or way of seeing things?",
+                "Is a repaired memory still the same memory as before? Why?",
+              ],
+
+              teacherNote:
+                "Do not require students to use a real memory from their own lives. The customer and the memory can be entirely imaginary.",
+
+                            materials: {
+                required: false,
+                type: "none",
+                items: [],
+              },
+            },
+          },
         },
       },
+      
 
       {
         id: "06M-06",
         title: "اگر هرکس فقط یک جمله می‌توانست بگوید",
         description:
           "تصور کردن جهانی که هر آدم در هر روز فقط می‌تواند یک جمله بگوید.",
-
+         translations: {
+  en: {
+    title: "If Everyone Could Say Only One Sentence",
+    description:
+      "Imagining a world where each person can say only one sentence per day.",
+  },
+},
         activity: {
           purpose:
             "تقویت تخیل از طریق تغییر یک قانون ساده و دنبال کردن پیامدهای آن در زندگی روزمره.",
@@ -283,6 +550,39 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+                    translations: {
+            en: {
+              purpose:
+                "Develop imagination by changing a simple rule and exploring its consequences in everyday life.",
+
+              instruction:
+                "Imagine that starting tomorrow, every person can say only one sentence each day. They must spend the rest of the day without speaking. Imagine one day in a world like this.",
+
+              steps: [
+                "Imagine what people would have to choose to say in their one sentence.",
+                "Picture an ordinary day in this world.",
+                "Think about how school, home, and people's relationships might change.",
+                "Imagine a situation in which people have only one chance to speak.",
+                "If you could say only one sentence each day, choose when you would say it and who you would say it to.",
+              ],
+
+              questions: [
+                "What would people have to choose to say in their one sentence?",
+                "What would an ordinary day in this kind of world be like?",
+                "What would become more difficult, and what might change?",
+                "If you could say only one sentence each day, what would you say, when would you say it, and to whom?",
+              ],
+
+              teacherNote:
+                "The goal is to explore the consequences of a simple possibility. Students do not need to explain how the entire society works; imagining one day and a few specific situations is enough to begin building this world.",
+
+              materials: {
+                required: false,
+                type: "none",
+                items: [],
+              },
+            },
+          },
         },
       },
 
@@ -291,7 +591,13 @@ export const atlas: AtlasLand[] = [
         title: "مصاحبه با یک اختراع",
         description:
           "تصور کردن یک اختراع ناشناخته از صد سال آینده و ساختن کاربرد، محدودیت و پیامدهای آن.",
-
+         translations: {
+  en: {
+    title: "An Interview with an Invention",
+    description:
+      "Imagining an unknown invention from a hundred years in the future and developing its uses, limitations, and possible consequences.",
+  },
+},
         activity: {
           purpose:
             "تقویت تخیل از طریق ساختن یک اختراع ناشناخته و دنبال کردن کاربرد، محدودیت و پیامدهای آن.",
@@ -328,6 +634,45 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+                    translations: {
+            en: {
+              purpose:
+                "Develop imagination by creating an unfamiliar invention and exploring its uses, limitations, and consequences.",
+
+              instruction:
+                "A strange device from a hundred years in the future has been discovered. No one knows what it was made for. Imagine what this invention is and what it can do.",
+
+              steps: [
+                "Imagine what this device was made to do.",
+                "Think about how it works.",
+                "Imagine who might need it.",
+                "Decide on one thing this invention cannot do.",
+                "Imagine what might happen if someone uses it in an unexpected way.",
+                "Think about what might change if this invention became part of our lives today.",
+                "Create one rule for using it.",
+              ],
+
+              questions: [
+                "What was this device made to do?",
+                "What made you think that?",
+                "Who might need this invention?",
+                "How does it work?",
+                "What is one thing it cannot do?",
+                "What might happen if someone uses it in an unexpected way?",
+                "What might change if it became part of our lives today?",
+                "If you could make one rule for using it, what would that rule be?",
+              ],
+
+              teacherNote:
+                "The invention should come from a fresh idea, but it does not need to be complicated or scientific. The focus is on helping students go beyond simply naming a strange device and imagine its purpose, limitations, and consequences.",
+
+              materials: {
+                required: false,
+                type: "none",
+                items: [],
+              },
+            },
+          },
         },
       },
 
@@ -336,7 +681,13 @@ export const atlas: AtlasLand[] = [
         title: "اگر یک شیء می‌توانست حرف بزند",
         description:
           "دیدن یک روز عادی از جایگاه چیزی که همیشه در اطراف ماست اما معمولاً صدایی ندارد.",
-
+         translations: {
+  en: {
+    title: "If an Object Could Talk",
+    description:
+      "Seeing an ordinary day from the perspective of something that is always around us but usually has no voice.",
+  },
+},
         activity: {
           purpose:
             "تقویت تخیل از طریق جان‌بخشی به اشیا و تجربه کردن جهان از جایگاه چیزی غیرانسانی.",
@@ -367,6 +718,39 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+                    translations: {
+            en: {
+              purpose:
+                "Develop imagination by bringing objects to life and experiencing the world from the perspective of something non-human.",
+
+              instruction:
+                "Choose something you see around you every day. Imagine that today, for the first and only time, it can talk to you.",
+
+              steps: [
+                "Choose a familiar object.",
+                "Imagine what this object sees throughout the day that you usually do not notice.",
+                "Think about what it knows about the people and events around it.",
+                "Imagine what it would say if it had only one chance to speak.",
+                "Think about how hearing its words might change the way you see that object.",
+              ],
+
+              questions: [
+                "What does this object see during the day that you usually do not notice?",
+                "What does it think about the people or events happening around it?",
+                "If it had only one chance to speak, what would it say?",
+                "After hearing what it says, would the way you see this object change?",
+              ],
+
+              teacherNote:
+                "The goal is not simply to give an object human qualities. Students should try to see the world from the object's perspective. Something ordinary to the object might be something humans have never noticed.",
+
+              materials: {
+                required: false,
+                type: "none",
+                items: [],
+              },
+            },
+          },
         },
       },
 
@@ -375,7 +759,13 @@ export const atlas: AtlasLand[] = [
         title: "باغ جانوران ناممکن",
         description:
           "ساختن جانوری که از ترکیب ویژگی‌های جانوران آشنا به وجود آمده اما قبلاً وجود نداشته است.",
-
+         translations: {
+  en: {
+    title: "The Garden of Impossible Animals",
+    description:
+      "Creating an animal that has never existed by combining features of familiar animals.",
+  },
+},
         activity: {
           purpose:
             "تقویت تخیل ترکیبی؛ ساختن چیزی تازه از عناصر آشنا و دنبال کردن رابطه‌ی میان ویژگی‌ها و پیامدهای آن‌ها.",
@@ -411,6 +801,44 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+                    translations: {
+            en: {
+              purpose:
+                "Develop combinational imagination by creating something new from familiar elements and exploring the connections between its features and their consequences.",
+
+              instruction:
+                "Imagine entering a garden where animals live that do not exist anywhere else. Use features of familiar animals to create a completely new animal.",
+
+              steps: [
+                "Choose features from familiar animals.",
+                "Combine those features with one another.",
+                "Think about what new ability this combination might create.",
+                "Imagine the animal's habitat, food, and ways of protecting itself.",
+                "Think about what problems its body shape or abilities might cause for it.",
+                "Create a new behavior for your animal that is not borrowed from any of the animals that inspired you.",
+              ],
+
+              questions: [
+                "Which features does your animal have from familiar animals?",
+                "When combined, what new ability do these features give it?",
+                "Where does it live?",
+                "What does it eat, and how does it find food?",
+                "What problems might its body shape or abilities cause for it?",
+                "How does it protect itself?",
+                "What behavior does it have that is different from the animals that inspired you?",
+                "If a child saw it for the first time, what might they guess incorrectly about it?",
+              ],
+
+              teacherNote:
+                "Encourage students to go beyond simply combining parts of different animals. The chosen features should connect to the animal's abilities, habitat, and behavior.",
+
+              materials: {
+                required: false,
+                type: "none",
+                items: [],
+              },
+            },
+          },
         },
       },
 
@@ -419,7 +847,13 @@ export const atlas: AtlasLand[] = [
         title: "بندر کشتی‌های کاغذی",
         description:
           "تصور کردن بندی روی زمین که هیچ انسانی تاکنون به آن نرسیده و کشتی‌های کاغذی به آن می‌رسند.",
-
+         translations: {
+  en: {
+    title: "The Harbor of Paper Boats",
+    description:
+      "Imagining a harbor in a place no human has ever reached, where paper boats arrive.",
+  },
+},
         activity: {
           purpose:
             "تقویت تخیل از طریق ساختن یک مکان ناشناخته از یک نقطه‌ی شروع محدود و تصور چیزی که هنوز در تجربه‌ی انسانی وجود ندارد.",
@@ -449,6 +883,38 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+                    translations: {
+            en: {
+              purpose:
+                "Develop imagination by creating an unknown place from a limited starting point and imagining something that has never existed in human experience.",
+
+              instruction:
+                "Somewhere on Earth, there is a harbor that no human has ever reached. Paper boats made by children travel through rivers and seas from different places and eventually arrive at this harbor. Today, your paper boat has arrived there, and you are the first human to see it.",
+
+              steps: [
+                "Imagine what catches your attention when you see the harbor for the first time.",
+                "Picture the shape and atmosphere of the harbor.",
+                "Think about what you see as you walk around it.",
+                "Choose one feature of the harbor that you find especially interesting or unusual.",
+              ],
+
+              questions: [
+                "What catches your attention when you see the harbor for the first time?",
+                "What does the harbor look like?",
+                "What do you see as you walk around the harbor?",
+                "What do you find most interesting or unusual about this harbor?",
+              ],
+
+              teacherNote:
+                "The goal is to create an imaginary place, not to solve a mystery about why the harbor is unknown. The questions are only starting points, and students should be free to build the world of this harbor in their own way.",
+
+              materials: {
+                required: false,
+                type: "none",
+                items: [],
+              },
+            },
+          },
         },
       },
     ],
@@ -458,14 +924,25 @@ export const atlas: AtlasLand[] = [
     code: "01M",
     title: "مشاهده",
     description: "دیدن چیزی که معمولاً از کنار آن عبور می‌کنیم.",
-
+    translations: {
+  en: {
+    title: "Observation",
+    description: "Noticing what we usually pass by without a second look.",
+  },
+},
     situations: [
       {
         id: "01M-01",
         title: "پنج چیز که همیشه بوده‌اند",
         description:
           "در اطرافمان چیزهایی هستند که همیشه بوده‌اند، اما معمولاً دقیق به آن‌ها نگاه نمی‌کنیم.",
-
+          translations: {
+  en: {
+    title: "Five Things That Have Always Been There",
+    description:
+      "There are things around us that have always been there, yet we rarely take a close look at them.",
+  },
+},
         activity: {
           purpose:
             "تقویت مشاهده‌ی آگاهانه و کمک به دانش‌آموز برای دیدن دوباره‌ی چیزهای آشنا و توجه به جزئیاتی که معمولاً از نظرش پنهان می‌مانند.",
@@ -498,6 +975,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Develop mindful observation and help students look at familiar things again, noticing details that usually go unnoticed.",
+    instruction:
+      "Ask students to first find five familiar things in their surroundings that they have seen for a long time but rarely look at closely. Then ask them to choose one and describe it, focusing on the details they can actually see rather than guesses or stories created in their minds.",
+    steps: [
+      "Ask students to look around calmly and without rushing for a few moments.",
+      "Ask them to find five familiar things that have been around them for a long time but that they rarely observe closely.",
+      "Ask them to choose one of those five things.",
+      "Ask them to describe it without naming it, using at least three observable features.",
+      "Now ask them to look more carefully and find at least one new detail they had not noticed before.",
+      "Finally, ask them to write a short description that includes both observable features and the newly discovered detail.",
+    ],
+    questions: [
+      "Which thing did you choose? Why do you think you usually do not look at it closely?",
+      "What did you notice about it that you had not noticed before?",
+      "Which details would help someone imagine this thing without actually seeing it?",
+      "Which parts of your writing are based on what you actually saw rather than what you guessed?",
+      "After looking at it carefully, did it still seem like the same thing to you? What changed in the way you saw it?",
+    ],
+    teacherNote:
+      "The goal is not to find unusual objects; the value of this activity lies in looking at completely familiar things again. Encourage students to use observable features, and help them avoid turning their descriptions too quickly into guesses or imaginative stories.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -506,7 +1013,13 @@ export const atlas: AtlasLand[] = [
         title: "پنجره خاموش",
         description:
           "نگاه کردن به یک پنجره‌ی معمولی و پیدا کردن چیزهایی که از پشت آن دیده نمی‌شوند.",
-
+        translations: {
+  en: {
+    title: "The Silent Window",
+    description:
+      "Looking at an ordinary window and noticing things that cannot be seen through it.",
+  },
+},
         activity: {
           purpose:
             "تقویت مشاهده‌ی دقیق و توجه به تفاوت میان آنچه مستقیماً دیده می‌شود و آنچه می‌توان از نشانه‌های موجود حدس زد.",
@@ -538,6 +1051,35 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Develop careful observation and help students distinguish between what they directly see and what they can infer from available clues.",
+    instruction:
+      "Ask students to think of an ordinary window, perhaps one they see every day. First, ask them to describe only what they can actually see. Then invite them to think about things that remain unseen but that they can ask questions about based on the available clues.",
+    steps: [
+      "Ask students to choose a familiar window at school, at home, or on the street.",
+      "Ask them to describe only what they can actually see, without making up stories about it.",
+      "Ask them to identify three things that cannot be seen directly but for which there are clues suggesting their presence.",
+      "Ask them to make one guess and raise one question about one of these unseen things.",
+      "Finally, discuss in class the difference between 'what we saw,' 'what we guessed,' and 'what we still do not know.'",
+    ],
+    questions: [
+      "What can you actually see through this window?",
+      "What can you not see, but have a clue that it exists?",
+      "What is the difference between observation and guessing?",
+      "If you could ask only one question about something beyond the window, what would you ask?",
+      "Is it possible for two people to look at the same window and see different things? Why?",
+    ],
+    teacherNote:
+      "Maintain the distinction between observation and interpretation throughout this activity. When a student makes a guess, ask: 'What made you think that?' The goal is not to find the correct guess, but to become aware of the difference between observed information and personal interpretation.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -546,7 +1088,13 @@ export const atlas: AtlasLand[] = [
         title: "قبل از نام‌گذاری",
         description:
           "نگاه به یک شیء پیش از آنکه نامش را به زبان بیاوری، فقط با ویژگی‌های قابل‌مشاهده.",
-
+           translations: {
+  en: {
+    title: "Before Naming",
+    description:
+      "Looking at an object before saying its name, focusing only on its observable features.",
+  },
+},
         activity: {
           purpose:
             "تمرین مشاهده‌ی دقیق و جدا کردن ویژگی‌های قابل‌مشاهده از نام، کاربرد و برداشت ذهنی درباره‌ی یک شیء.",
@@ -578,6 +1126,35 @@ export const atlas: AtlasLand[] = [
             type: "object",
             items: ["یک شیء ساده و آشنا برای مشاهده‌ی کلاسی"],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practice careful observation and distinguish an object's observable features from its name, function, and the assumptions we make about it.",
+    instruction:
+      "Give students a simple object, but ask them not to say its name for a while. Invite them to describe it using only the features they can actually see.",
+    steps: [
+      "Place a simple object in front of the class.",
+      "Ask students not to name the object for a while and, as much as possible, not to mention what it is used for.",
+      "Ask them to identify the object's observable features, such as its shape, size, color, surface, lines, and different parts.",
+      "Ask them to compare their descriptions with those of a classmate and notice which details one person saw that the other did not.",
+      "Finally, reveal the object's name and discuss how knowing the name of something can affect the way we see it.",
+    ],
+    questions: [
+      "If you did not know this object's name, how would you describe it to someone?",
+      "Which feature did you notice first?",
+      "Can knowing the name of an object make us less likely to notice some of its details? Why?",
+      "What did you notice that your classmate did not?",
+      "Is it possible to describe an object using only its observable features?",
+    ],
+    teacherNote:
+      "During the first stage, do not let students rely on the object's name or function. If someone says, 'This is a ...' or 'It is used for ...', guide them back to its observable features. The goal is to practice observing before naming and judging.",
+    materials: {
+      required: true,
+      type: "object",
+      items: ["A simple, familiar object for classroom observation"],
+    },
+  },
+},
         },
       },
 
@@ -586,7 +1163,13 @@ export const atlas: AtlasLand[] = [
         title: "همان چیز، جای دیگر",
         description:
           "دیدن یک چیز آشنا از زاویه‌ای تازه و توجه به چیزهایی که با تغییر جای مشاهده آشکار یا پنهان می‌شوند.",
-
+         translations: {
+  en: {
+    title: "The Same Thing, Somewhere Else",
+    description:
+      "Seeing a familiar thing from a new angle and noticing what becomes visible or hidden when our viewing position changes.",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای درک اینکه جایگاه و زاویه‌ی مشاهده بر آنچه می‌بینیم اثر می‌گذارد.",
@@ -618,6 +1201,35 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Help students understand how our position and viewing angle influence what we see.",
+    instruction:
+      "Choose a simple object or a part of the surrounding environment. Ask students to look at it first from a specific position and then change their position. The goal is to notice how some features become visible while others disappear from view when the observer moves.",
+    steps: [
+      "Choose a simple, familiar object or place for observation.",
+      "Ask students to look at it from where they are and record a few observable features.",
+      "Ask them to change their position, for example by moving closer, farther away, higher, lower, or to the other side.",
+      "Ask them to observe the same thing again and identify new features they can now see.",
+      "Finally, place the two observations side by side and write down what became visible or disappeared when their position changed.",
+    ],
+    questions: [
+      "When you looked from your first position, what caught your attention most?",
+      "After changing your position, what did you see that you could not see before?",
+      "Was there anything that was no longer visible from your second position?",
+      "If someone else looked from a different position, what might they see differently?",
+      "Did changing your position change the thing itself, or only what you could see of it?",
+    ],
+    teacherNote:
+      "The goal of this activity is not to find the 'correct angle.' Students should experience how every viewing position reveals some parts of something while hiding others.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -626,7 +1238,13 @@ export const atlas: AtlasLand[] = [
         title: "ردّ زمان",
         description:
           "پیدا کردن نشانه‌هایی از گذشته در چیزهایی که همین حالا جلوی چشم ما هستند.",
-
+         translations: {
+  en: {
+    title: "Traces of Time",
+    description:
+      "Finding signs of the past in things that are right in front of us now.",
+  },
+},
         activity: {
           purpose:
             "تقویت توجه به تغییر، فرسودگی و نشانه‌های زمانی و کمک به دانش‌آموز برای استنباط گذشته از روی شواهد قابل مشاهده.",
@@ -658,6 +1276,35 @@ export const atlas: AtlasLand[] = [
             type: "object",
             items: ["یک شیء قدیمی، فرسوده یا تعمیرشده در محیط مدرسه"],
           },
+          translations: {
+  en: {
+    purpose:
+      "Develop attention to change, wear, and signs of time, helping students infer the past from observable evidence.",
+    instruction:
+      "Choose an old object or an aged part of the school environment for observation—something that shows signs of use, change, or the passage of time. Ask students to first identify only the observable signs, and then think about what those signs might tell them about the past.",
+    steps: [
+      "Choose an old object or an aged part of the school environment for observation.",
+      "Ask students to identify any signs of use, change, wear, or repair that they can see.",
+      "Ask them to distinguish between what they actually see and what they infer from it.",
+      "Ask them to make guesses about what these signs might reveal about the object's past.",
+      "Finally, compare several observations and inferences, and discuss which inferences are supported by stronger evidence.",
+    ],
+    questions: [
+      "What tells you that this object has been used for a long time?",
+      "Which part of it has changed more than the others?",
+      "What can you actually see, and what are you only guessing from what you see?",
+      "If this object could talk about its past, what might you infer from the signs it carries?",
+      "Which of your guesses is supported by stronger evidence? Why?",
+    ],
+    teacherNote:
+      "The goal is not to invent an imaginary story about the object. It is to help students learn to ask questions about the past using observable clues. Keep asking, 'What made you say that?' to make the relationship between observation and inference clear.",
+    materials: {
+      required: true,
+      type: "object",
+      items: ["An old, worn, or repaired object from the school environment"],
+    },
+  },
+},
         },
       },
 
@@ -666,7 +1313,13 @@ export const atlas: AtlasLand[] = [
         title: "یک چیز که همین حالا در حال تغییر است",
         description:
           "مشاهده‌ی یک شیء یا پدیده در طول چند دقیقه و پیدا کردن تغییرهایی که معمولاً به چشم نمی‌آیند.",
-
+          translations: {
+  en: {
+    title: "Something Changing Right Now",
+    description:
+      "Observing an object or phenomenon over several minutes and noticing changes that usually go unnoticed.",
+  },
+},
         activity: {
           purpose:
             "تقویت مشاهده‌ی فرایندی و کمک به دانش‌آموز برای توجه به تغییرات تدریجی و ثبت آن‌ها در طول زمان.",
@@ -700,6 +1353,37 @@ export const atlas: AtlasLand[] = [
               "یکی از این موارد: یک تکه یخ، یک قطره آب یا یک منبع/ناحیه نور",
             ],
           },
+          translations: {
+  en: {
+    purpose:
+      "Develop process-oriented observation and help students notice gradual changes and record them over time.",
+    instruction:
+      "Choose a simple phenomenon, such as an ice cube, a drop of water, or an area illuminated by light, and observe it for several minutes. Ask students to look at it again at specific intervals and describe the changes carefully.",
+    steps: [
+      "Choose one of the following for observation: an ice cube, a drop of water, or an area of light.",
+      "At the beginning, ask students to describe the state of the phenomenon using only observable features, without interpretation.",
+      "After a few minutes, ask them to observe the same phenomenon again and identify any changes.",
+      "Repeat the observation once more and ask students to describe the changes in chronological order.",
+      "Finally, discuss which changes became visible quickly and which could only be noticed by waiting patiently.",
+    ],
+    questions: [
+      "What exactly did you see during your first observation?",
+      "What had changed by the second observation?",
+      "Which change did you notice first?",
+      "If we wait another five minutes, what will probably change?",
+      "Can something be changing even when we cannot see that change in a single moment?",
+    ],
+    teacherNote:
+      "Encourage students to describe changes in chronological order using words that refer to observable features. The goal is not to predict the future correctly, but to help students realize that some phenomena can only be understood through repeated observation and patience.",
+    materials: {
+      required: true,
+      type: "object",
+      items: [
+        "One of the following: an ice cube, a drop of water, or a light source/illuminated area",
+      ],
+    },
+  },
+},
         },
       },
 
@@ -708,7 +1392,13 @@ export const atlas: AtlasLand[] = [
         title: "جای خالی",
         description:
           "پیدا کردن چیزهایی در محیط که نبودنشان به‌اندازه بودنشان معنا دارد.",
-
+          translations: {
+  en: {
+    title: "The Empty Space",
+    description:
+      "Finding things in our surroundings whose absence can be just as meaningful as their presence.",
+  },
+},
         activity: {
           purpose:
             "تقویت توجه به غیاب، خلأ و تغییرات محیطی و کمک به دانش‌آموز برای کشف اطلاعاتی که از نبودن یک چیز می‌توان به دست آورد.",
@@ -740,6 +1430,35 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Develop attention to absence, emptiness, and changes in the environment, helping students discover what can be learned from something that is missing.",
+    instruction:
+      "Ask students to look around the school for an empty space or something that is expected to be there but is not. Then ask them to explore what this absence might tell us about the environment or about something that has happened.",
+    steps: [
+      "Ask students to look carefully around the classroom or school.",
+      "Ask them to find an empty space or a meaningful absence, such as the place where an object used to be, an empty chair, a picture frame without a picture, or a space where something is usually kept.",
+      "Ask them to explain how they know that something is missing from that place.",
+      "Ask them to suggest several possible reasons for this absence.",
+      "Finally, discuss the difference between 'what we see' and 'what we conclude from the absence of something.'",
+    ],
+    questions: [
+      "What did you find whose absence caught your attention?",
+      "How did you know that something was missing from that place?",
+      "What might have caused that object or person not to be there?",
+      "Can you learn something from the absence of something you cannot see?",
+      "Which explanation for this empty space is supported by stronger evidence?",
+    ],
+    teacherNote:
+      "Do not rush students into making up stories. First, ask them to describe the absence itself carefully, and then invite them to come up with several possible explanations. The goal is to experience the idea that absence can also provide information and clues.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -748,7 +1467,13 @@ export const atlas: AtlasLand[] = [
         title: "چیزی که باعث شد مکث کنم",
         description:
           "پیدا کردن چیزی در محیط که برای لحظه‌ای توجهت را متوقف می‌کند و تبدیل آن مشاهده به ماده‌ای برای نوشتن.",
-
+         translations: {
+  en: {
+    title: "Something That Made Me Pause",
+    description:
+      "Finding something in the environment that makes you pause for a moment and turning that observation into material for writing.",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای تبدیل مشاهده‌ی شخصی به ماده‌ای برای نوشتن و تجربه‌ی اینکه یک مشاهده می‌تواند آغاز یک توصیف، پرسش، حدس یا روایت باشد.",
@@ -781,6 +1506,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Help students turn personal observations into material for writing and experience how an observation can become the starting point for a description, question, guess, or narrative.",
+    instruction:
+      "Ask students to spend some time in their surroundings, paying attention to things they usually pass by without noticing. This time, they should not look for something strange, beautiful, or important. Instead, they should find something that, for any reason, made them pause for a moment. Then ask them to use that observation as the starting point for a piece of writing.",
+    steps: [
+      "Ask students to spend a few quiet minutes observing their surroundings.",
+      "Ask them to find something that made them pause for a moment.",
+      "Ask them to write down exactly what they saw or noticed.",
+      "Ask them to think about what caught their attention and what came to mind afterward.",
+      "Ask them to identify one thing about it that they still do not know or understand.",
+      "Finally, ask them to create a short piece of writing based on that observation. It could be a description, a question, a guess, a memory, or a narrative.",
+    ],
+    questions: [
+      "What made you pause?",
+      "What exactly did you see that caught your attention?",
+      "Before looking at it closely, what did you think about it?",
+      "After observing it more carefully, what changed in your understanding?",
+      "What about it is still unclear to you?",
+    ],
+    teacherNote:
+      "Students do not all need to produce the same kind of writing in this activity. Its value lies in turning observation into raw material for writing. Allow one student to develop a description from an observation, another to raise a question, another to make a guess, and another to create a narrative.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -789,7 +1544,13 @@ export const atlas: AtlasLand[] = [
         title: "پنج صدایی که همیشه هستند",
         description:
           "چند دقیقه فقط گوش‌دادن و پیدا کردن صداهایی که همیشه هستند اما نادیده گرفته می‌شوند.",
-
+         translations: {
+  en: {
+    title: "Five Sounds That Are Always There",
+    description:
+      "Listening for a few minutes and discovering sounds that are always present but often go unnoticed.",
+  },
+},
         activity: {
           purpose:
             "تقویت مشاهده‌ی شنیداری و توجه به صداهای پس‌زمینه‌ای که معمولاً به دلیل حضور مداوم از آگاهی ما خارج می‌شوند.",
@@ -821,6 +1582,35 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Develop auditory observation and attention to background sounds that often disappear from our awareness because they are constantly present.",
+    instruction:
+      "Ask students to remain silent for a few minutes and listen carefully to the sounds around them. Ask them to identify five different sounds that are usually present in the environment but that they rarely pay attention to.",
+    steps: [
+      "Ask students not to speak for a few minutes and simply listen.",
+      "Ask them to identify five different sounds they can hear in their surroundings.",
+      "Ask them to identify where each sound comes from and how near or far away it seems.",
+      "Ask them to identify which sounds they have heard many times before but rarely notice.",
+      "Finally, bring together the sounds identified by the students and see how many were shared and how many were different across the classroom.",
+    ],
+    questions: [
+      "Which sound did you hear first?",
+      "Which sound do you hear all the time but rarely notice?",
+      "How did you figure out where each sound was coming from?",
+      "Was there a sound you did not hear at first but noticed after paying attention?",
+      "If this environment became completely silent, which missing sound would you notice most?",
+    ],
+    teacherNote:
+      "Make sure the first few minutes are genuinely devoted to silence. Encourage students to describe sounds through their auditory qualities, rather than only naming their sources. The goal is to expand their attention from prominent sounds to background sounds as well.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -829,7 +1619,13 @@ export const atlas: AtlasLand[] = [
         title: "چیزهایی که کج هستند",
         description:
           "پیدا کردن چیزهایی در محیط که از نظم معمول فاصله گرفته‌اند.",
-
+         translations: {
+  en: {
+    title: "Things That Are Out of Place",
+    description:
+      "Finding things in the environment that have moved away from their usual arrangement.",
+  },
+},
         activity: {
           purpose:
             "تقویت توجه به الگو، نظم و انحراف از نظم معمول و کمک به دانش‌آموز برای دیدن تفاوت‌های کوچک در محیط آشنا.",
@@ -861,6 +1657,35 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Develop attention to patterns, order, and deviations from familiar arrangements, helping students notice small differences in familiar surroundings.",
+    instruction:
+      "Ask students to look around the classroom or school for things that are slightly tilted, displaced, or different from their usual position. Ask them to first recall what the usual arrangement looks like and then describe the difference they have noticed.",
+    steps: [
+      "Ask students to look carefully at the familiar, everyday environment of their classroom or school.",
+      "Ask them to find something that is slightly tilted or displaced from its usual position.",
+      "Ask them to explain what made them notice this difference.",
+      "Ask them to guess how this small change might have happened.",
+      "Finally, bring several examples together and discuss how knowing the usual arrangement of an environment helps us notice things that are different.",
+    ],
+    questions: [
+      "What did you find that was tilted or out of place?",
+      "How did you know that this was not its usual position?",
+      "If you did not already know what this environment normally looked like, would you still have noticed the difference?",
+      "What events might have caused this change?",
+      "Can a small change make us pay more attention to the entire environment? Why?",
+    ],
+    teacherNote:
+      "The goal is not to find the biggest or strangest irregularity. Guide students toward small differences. The central idea of this activity is that careful observation is not only about noticing differences; sometimes we must first recognize the usual pattern before we can detect a deviation from it.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
     ],
@@ -870,14 +1695,25 @@ export const atlas: AtlasLand[] = [
     code: "02M",
     title: "روایت",
     description: "ساختن معنا از میان لحظه‌ها و تجربه‌ها.",
-
+    translations: {
+  en: {
+    title: "Narrative",
+    description: "Creating meaning through moments and experiences.",
+  },
+},
     situations: [
       {
         id: "02M-01",
         title: "جمله‌های ناتمام",
         description:
           "ساختن یک داستان از یک شروع داده‌شده و دنبال کردن آن تا پایان.",
-
+         translations: {
+  en: {
+    title: "Unfinished Sentences",
+    description:
+      "Building a story from a given beginning and following it through to the end.",
+  },
+},
         activity: {
           purpose:
             "تمرین شروع کردن یک روایت و ادامه دادن آن به شکلی که اتفاق‌ها برای خواننده قابل‌دنبال‌کردن باشند.",
@@ -907,6 +1743,33 @@ export const atlas: AtlasLand[] = [
             type: "text",
             items: ["/text/02M/02M-01.txt"],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practice beginning a narrative and continuing it in a way that allows the reader to follow the events.",
+    instruction:
+      "Choose one of the sentences below as your starting point and continue your story from there. Your story can be real or imaginary. It does not need to be complicated or unusual; just follow it through to an ending.",
+    steps: [
+      "Choose one of the opening sentences.",
+      "Think about what might happen after this sentence.",
+      "Continue the story by following the events.",
+      "At the end, finish your story in a way that lets the reader know what happened.",
+    ],
+    questions: [
+      "Where did your story begin?",
+      "What happened after the beginning?",
+      "What caused the next event to happen?",
+      "How did your story end?",
+    ],
+    teacherNote:
+      "The goal is not to write a literary or complicated story. If a student simply lists a few unrelated events, ask them to find the connection between those events: 'What happened next?' or 'How did this event lead to the next one?'",
+    materials: {
+      required: true,
+      type: "text",
+      items: ["/text/02M/02M-01.txt"],
+    },
+  },
+},
         },
       },
 
@@ -915,7 +1778,13 @@ export const atlas: AtlasLand[] = [
         title: "داستانی پشت دو عکس",
         description:
           "ساختن یک روایت از دو تصویر که فقط ردپاهایی از یک داستان را نشان می‌دهند.",
-
+         translations: {
+  en: {
+    title: "A Story Behind Two Pictures",
+    description:
+      "Creating a narrative from two images that reveal only traces of a story.",
+  },
+},
         activity: {
           purpose:
             "تمرین ساختن یک روایت از روی نشانه‌های تصویری و کنار هم گذاشتن اتفاق‌ها، بدون اینکه تصویر داستان را به‌طور کامل تعیین کند.",
@@ -945,6 +1814,33 @@ export const atlas: AtlasLand[] = [
             type: "image",
             items: ["/images/02M/02M-02.png"],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practice creating a narrative from visual clues and connecting events without allowing the images to determine the entire story.",
+    instruction:
+      "Look at these two pictures. What do you think the story behind them might be? You can imagine both pictures as parts of a real or imaginary story. Start wherever you think is appropriate and continue your story through to the end.",
+    steps: [
+      "Look carefully at both pictures.",
+      "Pay attention to what you can see in the pictures and what you are only guessing.",
+      "Think about what might have happened between the two pictures.",
+      "Build your story using events of your own choosing and continue it through to an ending.",
+    ],
+    questions: [
+      "What can you see with certainty in the two pictures?",
+      "What might have happened between the two pictures?",
+      "Where did your story begin?",
+      "What happened at the end?",
+    ],
+    teacherNote:
+      "The two pictures are not meant to establish a fixed order for the story. Students do not need to decide that one picture must come before the other. The goal is to create a coherent narrative from a few visual clues. Several different stories that fit the pictures can all be valid.",
+    materials: {
+      required: true,
+      type: "image",
+      items: ["/images/02M/02M-02.png"],
+    },
+  },
+},
         },
       },
 
@@ -952,7 +1848,13 @@ export const atlas: AtlasLand[] = [
         id: "02M-03",
         title: "وقتی منتظر بودم",
         description: "روایت یک بار انتظار، از شروع تا لحظه‌ای که تمام شد.",
-
+         translations: {
+  en: {
+    title: "When I Was Waiting",
+    description:
+      "Telling the story of one experience of waiting, from its beginning to the moment it ended.",
+  },
+},
         activity: {
           purpose:
             "تمرین روایت کردن یک تجربه‌ی پیوسته و دنبال کردن اتفاق‌ها در طول یک بازه‌ی زمانی.",
@@ -982,6 +1884,33 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practice narrating a continuous experience and following events across a period of time.",
+    instruction:
+      "Remember a time when you were waiting for someone, something, or an event. Tell the story of that waiting, from the moment it began until it ended. You can use a real experience or create an imaginary story.",
+    steps: [
+      "Choose a situation in which you were waiting.",
+      "Identify the moment when the waiting began.",
+      "Narrate the events, thoughts, or things you did during the waiting period in order.",
+      "Explain how the waiting came to an end.",
+    ],
+    questions: [
+      "What or whom were you waiting for?",
+      "Where did the waiting begin?",
+      "What happened while you were waiting?",
+      "What finally brought your waiting to an end?",
+    ],
+    teacherNote:
+      "The goal is not simply to say, 'What was I waiting for?' What matters is that students can narrate the beginning, middle, and end of a continuous experience.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -990,7 +1919,13 @@ export const atlas: AtlasLand[] = [
         title: "چیزی که یاد گرفتم بی‌آنکه بخواهم",
         description:
           "روایت تجربه‌ای که در آن بدون قصد قبلی، چیزی تازه یاد گرفته شد.",
-
+         translations: {
+  en: {
+    title: "Something I Learned Without Trying",
+    description:
+      "Telling the story of an experience in which something new was learned unintentionally.",
+  },
+},
         activity: {
           purpose:
             "تمرین روایت تجربه‌ای که در جریان آن یک تغییر در فهم یا دانستن دانش‌آموز اتفاق می‌افتد.",
@@ -1021,6 +1956,34 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practice narrating an experience in which a change in the student's understanding or knowledge takes place.",
+    instruction:
+      "Remember an event in which you suddenly understood something, even though you had not intended to learn anything. Tell the story of what happened and describe the moment when you realized it. You can create a real or imaginary story.",
+    steps: [
+      "Choose an experience in which you did not initially intend to learn anything.",
+      "Tell the story from the beginning of that experience.",
+      "Follow the events that took place along the way.",
+      "Identify the moment when you realized that you had understood something new.",
+      "Continue the story until the experience comes to an end.",
+    ],
+    questions: [
+      "What happened at the beginning of the story?",
+      "What changed during the experience?",
+      "When did you realize that you had learned something new?",
+      "What happened after that?",
+    ],
+    teacherNote:
+      "The goal is not to write a 'moral lesson' or explain what you learned. The central point of the narrative is to follow an experience in which a new understanding gradually took shape.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -1029,7 +1992,13 @@ export const atlas: AtlasLand[] = [
         title: "یک جای آشنا، یک اتفاق کوچک",
         description:
           "روایت یک اتفاق کوچک که یک جای آشنا را برای مدتی متفاوت می‌کند.",
-
+         translations: {
+  en: {
+    title: "A Familiar Place, a Small Event",
+    description:
+      "Telling the story of a small event that makes a familiar place feel different for a while.",
+  },
+},
         activity: {
           purpose:
             "تمرین روایت کردن یک تغییر کوچک در محیطی آشنا و نشان دادن تفاوت میان وضعیت معمول و اتفاقی که رخ داده است.",
@@ -1060,6 +2029,34 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practice narrating a small change in a familiar environment and showing the difference between its usual state and what happened.",
+    instruction:
+      "Think of a familiar place that usually looks more or less the same. One day, a small event happened that made it feel different to you. Tell the story of that day.",
+    steps: [
+      "Choose a familiar place.",
+      "Think about what this place usually looks like.",
+      "Choose a small or unexpected event that happened there that day.",
+      "Follow the story from the moment the event began.",
+      "Explain what happened in the end.",
+    ],
+    questions: [
+      "What does that place usually look like?",
+      "What was different that day?",
+      "What happened after that event?",
+      "How did your story end?",
+    ],
+    teacherNote:
+      "The goal is not to provide a complete description of a place. The focus is on one small change and following the events that take place after it.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -1067,7 +2064,13 @@ export const atlas: AtlasLand[] = [
         id: "02M-06",
         title: "یک روز از زبان یک شیء کوچک",
         description: "روایت یک روز از نگاه یک شیء کوچک و آشنا.",
-
+         translations: {
+  en: {
+    title: "A Day in the Life of a Small Object",
+    description:
+      "Telling the story of a day from the perspective of a small, familiar object.",
+  },
+},
         activity: {
           purpose:
             "تمرین ساختن روایت از یک زاویه‌ی دید متفاوت و انتخاب اتفاق‌هایی که یک شیء می‌تواند ببیند یا تجربه کند.",
@@ -1098,6 +2101,34 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practice creating a narrative from an unusual point of view and choosing events that an object might see or experience.",
+    instruction:
+      "Choose a small, familiar object, such as a pencil, a key, a shoe, or a glass. Imagine that this object can tell stories. Narrate one day in its life in its own voice.",
+    steps: [
+      "Choose a small, familiar object.",
+      "Think about where this object has been throughout the day and what it might have seen or experienced.",
+      "Choose the important events of that day.",
+      "Tell the story in the object's own voice.",
+      "Continue the story until the end of the day or the end of the events.",
+    ],
+    questions: [
+      "Where does your object begin its story?",
+      "What happens to it throughout the day?",
+      "What can it see or understand?",
+      "Where does its story lead in the end?",
+    ],
+    teacherNote:
+      "Remind students that the object only knows about things it can see, hear, or experience from where it is. The goal is not to make the point of view complicated, but simply to experience having a different narrator.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -1106,7 +2137,13 @@ export const atlas: AtlasLand[] = [
         title: "صدایی که مرا به یاد چیزی انداخت",
         description:
           "ساختن یک روایت از یک صدا که جرقه‌ی یک اتفاق یا داستان را ایجاد می‌کند.",
-
+         translations: {
+  en: {
+    title: "A Sound That Reminded Me of Something",
+    description:
+      "Creating a narrative from a sound that sparks an event or a story.",
+  },
+},
         activity: {
           purpose: "تمرین تبدیل یک محرک شنیداری به یک روایت پیوسته.",
 
@@ -1135,6 +2172,33 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practice turning an auditory stimulus into a continuous narrative.",
+    instruction:
+      "Choose a sound that reminds you of an event, a situation, or even a story. First, briefly describe the sound itself. Then narrate the story that began to take shape in your mind when you heard it, from its beginning to its end.",
+    steps: [
+      "Choose a familiar or imaginary sound.",
+      "In a few sentences, describe what the sound is like or where it comes from.",
+      "Think about what event or story this sound sets in motion in your mind.",
+      "Narrate the story from beginning to end.",
+    ],
+    questions: [
+      "What sound did you choose?",
+      "What event began in your story when you heard that sound?",
+      "What happened after the story began?",
+      "How did your story end?",
+    ],
+    teacherNote:
+      "The sound can bring to mind a real memory, an imaginary situation, or a completely invented story. The main focus is on the relationship between the sound, the spark of the story, and the narrative—not on whether the memory is private or emotionally personal.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -1142,7 +2206,13 @@ export const atlas: AtlasLand[] = [
         id: "02M-08",
         title: "سه کلمه، یک داستان",
         description: "ساختن یک داستان کوتاه با استفاده از سه کلمه‌ی داده‌شده.",
-
+         translations: {
+  en: {
+    title: "Three Words, One Story",
+    description:
+      "Creating a short story using three given words.",
+  },
+},
         activity: {
           purpose: "تمرین ساختن یک روایت قابل‌دنبال‌کردن از چند عنصر پراکنده.",
 
@@ -1171,6 +2241,33 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practice building a coherent narrative from several separate elements.",
+    instruction:
+      "Create a story using these three words. Your story can be real or imaginary. The words do not need to play major roles in the story; they simply need to appear somewhere in it.",
+    steps: [
+      "Read the three words.",
+      "Think about how you can bring them together in one story.",
+      "Write your story.",
+      "Continue the story in a way that allows the reader to follow the events.",
+    ],
+    questions: [
+      "Where did your story begin?",
+      "Where did you use the three words in your story?",
+      "What happened after the beginning?",
+      "How did your story end?",
+    ],
+    teacherNote:
+      "The goal is not to create a strange, poetic, or complicated story. The three words are simply a starting point. Each word does not need to play an important role or become a symbolic element. The main focus is on bringing several separate elements together in a simple, coherent narrative that the reader can follow.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -1178,7 +2275,13 @@ export const atlas: AtlasLand[] = [
         id: "02M-09",
         title: "اولین بار که خودم انجامش دادم",
         description: "روایت اولین تجربه‌ی انجام یک کار به‌تنهایی.",
-
+        translations: {
+  en: {
+    title: "The First Time I Did It Myself",
+    description:
+      "Telling the story of the first time you did something on your own.",
+  },
+},
         activity: {
           purpose:
             "تمرین روایت کردن یک تجربه‌ی شخصی از نقطه‌ی شروع تا پایان و دنبال کردن اتفاق‌ها، دشواری‌ها و تلاش‌های میان راه.",
@@ -1210,6 +2313,35 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practice narrating a personal experience from beginning to end, following the events, difficulties, and efforts along the way.",
+    instruction:
+      "Remember something you did on your own for the first time—something that someone else had usually done for you or helped you with before. Tell the story of that experience, from before you started until the task was finished. You can use a real experience or create an imaginary story.",
+    steps: [
+      "Choose something you did on your own for the first time.",
+      "Think about what you expected before you started.",
+      "Identify the most difficult part or a moment of hesitation during the task.",
+      "Describe how you continued.",
+      "Follow the story until the experience comes to an end.",
+    ],
+    questions: [
+      "What were you thinking before you started?",
+      "Which part of the task was the most difficult for you?",
+      "Was there a moment when you thought you could not do it?",
+      "What made you keep going?",
+      "What happened in the end?",
+    ],
+    teacherNote:
+      "Focus on the process of the experience, not just on whether it ended successfully. If a student only says, 'I did it myself and succeeded,' ask them to describe the moments between the beginning and the end, especially the difficulty, the effort, and the turning point.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -1217,7 +2349,13 @@ export const atlas: AtlasLand[] = [
         id: "02M-10",
         title: "وقتی چیزی گم شد",
         description: "روایت ماجرایی که با گم شدن یک چیز شروع می‌شود.",
-
+         translations: {
+  en: {
+    title: "When Something Went Missing",
+    description:
+      "Telling the story of an event that begins when something goes missing.",
+  },
+},
         activity: {
           purpose:
             "تمرین ساختن یک روایت پیوسته از یک اتفاق ساده و دنبال کردن ماجرا تا پایان.",
@@ -1247,6 +2385,33 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practice creating a continuous narrative from a simple event and following the story through to the end.",
+    instruction:
+      "Choose something that went missing one day. Begin your story at the moment you realized it was no longer where it belonged. Then describe what happened next and how the story ended. You can create a real or imaginary event.",
+    steps: [
+      "Choose something real or imaginary that went missing.",
+      "Begin the story at the moment you realized it was missing.",
+      "Describe the events that followed in chronological order.",
+      "Explain what happened in the end.",
+    ],
+    questions: [
+      "When did you realize that the thing was no longer where it belonged?",
+      "What did you do after realizing it was missing?",
+      "What happened during the search or the events that followed?",
+      "Was the thing found in the end, or did the story end in another way?",
+    ],
+    teacherNote:
+      "The goal is not to create an exciting or complicated story. Students should be able to follow a simple narrative line from the moment they realize something is missing to the end.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
     ],
@@ -1256,12 +2421,23 @@ export const atlas: AtlasLand[] = [
     code: "04M",
     title: "نامه",
     description: "نوشتن برای کسی یا چیزی که معمولاً مخاطب نامه نیست.",
+    translations: {
+  en: {
+    title: "Letters",
+    description: "Writing to someone or something that is not usually addressed in a letter.",
+  },
+},
     situations: [
       {
         id: "04M-01",
         title: "نامه به خودم، ده سال بعد",
         description: "نوشتن نامه‌ای به خودِ آینده.",
-
+        translations: {
+  en: {
+    title: "A Letter to Myself, Ten Years from Now",
+    description: "Writing a letter to one's future self.",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای تصور آینده، توجه به تغییرات احتمالی زندگی و بیان خواسته‌ها، نگرانی‌ها و پرسش‌های امروز خطاب به خودِ آینده.",
@@ -1293,13 +2469,52 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Help students imagine the future, consider possible changes in their lives, and express their present wishes, concerns, and questions to their future selves.",
+
+    instruction:
+      "Ask students to imagine that ten years have passed and their future selves have received a letter from today. Invite them to write a letter to themselves ten years from now, sharing something about their present lives, what matters to them, their hopes, and the questions they would like their future selves to answer.",
+
+    steps: [
+      "Ask students to imagine themselves ten years in the future.",
+      "Invite them to choose a few things from their lives today that they would like their future selves to remember.",
+      "Ask them to write one or more wishes, concerns, or questions addressed to their future selves.",
+      "Invite them to imagine how their ten-years-older selves might respond to the letter.",
+      "Finally, ask them to end the letter with a sentence addressed to their future selves.",
+    ],
+
+    questions: [
+      "What would you like your future self, ten years from now, to know about today?",
+      "What matters to you today that might no longer matter ten years from now?",
+      "What would you like to change over the next ten years?",
+      "If your future self could answer you right now, what would you like to ask?",
+      "How would you like to feel when you read this letter ten years from now?",
+    ],
+
+    teacherNote:
+      "The goal is not to predict the future accurately or make a list of wishes. Encourage students to include something from their present lives so that the distance between now and the future becomes meaningful. If a student does not wish to share something personal, they may write an entirely imaginary letter.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
       {
         id: "04M-02",
         title: "نامه به خودم، وقتی کوچک‌تر بودم",
         description: "نوشتن نامه‌ای به خودِ چند سال پیش.",
-
+        translations: {
+  en: {
+    title: "A Letter to My Younger Self",
+    description: "Writing a letter to oneself a few years ago.",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای بازنگری در تجربه‌های گذشته و بیان چیزهایی که امروز می‌داند اما شاید خودِ کوچک‌ترش نمی‌دانست.",
@@ -1331,14 +2546,54 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Help students reflect on past experiences and express things they know today but may not have understood when they were younger.",
+
+    instruction:
+      "Ask students to imagine themselves a few years younger and write a letter to that child. Invite them to share something they know today, an experience they have been through, or something they wish someone had told them back then.",
+
+    steps: [
+      "Ask students to imagine themselves a few years younger.",
+      "Invite them to choose one thing they wish they had known at that age.",
+      "Ask them to share that thought with their younger selves in the form of a letter.",
+      "Invite them to include a memory or experience that helped them understand this better today.",
+      "Finally, ask them to end the letter with a short sentence meant to comfort, encourage, or guide their younger selves.",
+    ],
+
+    questions: [
+      "If you could tell your younger self one thing, what would you say?",
+      "What experience helped you learn this?",
+      "Is there something you know today that you could not have understood back then?",
+      "How do you think your younger self would feel after reading this letter?",
+      "Could there still be something about your present life that your future self might want to write to you about?",
+    ],
+
+    teacherNote:
+      "The goal is not to judge the past or say, 'I was wrong back then.' Encourage students to speak to their younger selves with kindness and empathy. If there is something personal they do not wish to discuss, they may use an imaginary situation or a simple experience instead.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
       {
         id: "04M-03",
         title: "نامه به وسیله‌ای که بیشتر از همه تو را همراهی کرده است",
         description: "نوشتن نامه‌ای قدردانی به وسیله‌ای که همیشه همراهت بوده.",
-
-        activity: {
+         
+        translations: {
+  en: {
+    title: "A Letter to an Object That Has Been with You the Longest",
+    description: "Writing a letter of appreciation to an object that has always been by your side.",
+  },
+},
+activity: {
           purpose:
             "کمک به دانش‌آموز برای دیدن ارزش و خاطره‌ی یک شیء آشنا و تمرین خطاب قرار دادن موجودی که معمولاً مخاطب نامه نیست.",
 
@@ -1369,13 +2624,52 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Help students recognize the value and memories associated with a familiar object, while practicing writing to someone or something that is not usually addressed in a letter.",
+
+    instruction:
+      "Ask students to choose an object that has been with them for a long time, such as a schoolbag, pencil, doll, bicycle, or something else. Then invite them to write a letter to that object, sharing memories, moments of companionship, and things they have experienced together.",
+
+    steps: [
+      "Ask students to choose an object they have owned for a long time or use regularly.",
+      "Invite them to recall a few important memories or events in which this object was present.",
+      "Ask them to imagine that the object can read the letter and understand what they are saying.",
+      "Invite them to thank the object in their letter and describe what they remember about having it with them.",
+      "Finally, ask them to end the letter with a sentence expressing what they would remember most if the object were no longer with them one day.",
+    ],
+
+    questions: [
+      "Why did you choose this object?",
+      "What is your oldest memory involving it?",
+      "During which moments has this object been with you more than ever?",
+      "If this object could reply to your letter, what do you think it would say?",
+      "If you no longer had this object one day, what would you miss most about it?",
+    ],
+
+    teacherNote:
+      "The goal is not simply to thank an object. Guide students toward the memories and the relationship they have developed with it. If a student chooses an object that has no particular memories attached to it, invite them to choose something that has been part of an important aspect of their daily lives.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
       {
         id: "04M-04",
         title: "نامه به فصل مورد علاقه‌ات",
         description: "نوشتن نامه به یکی از فصل‌های سال و بیان علاقه به آن.",
-
+         translations: {
+  en: {
+    title: "A Letter to Your Favorite Season",
+    description: "Writing a letter to one of the seasons and expressing why you like it.",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای تبدیل یک علاقه‌ی کلی به توصیف، خاطره و دلیل و تمرین نامه‌نویسی برای یک مخاطب غیرانسانی.",
@@ -1407,13 +2701,52 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Help students turn a general preference into description, memory, and reasoning, while practicing letter-writing to a non-human recipient.",
+
+    instruction:
+      "Ask students to choose the season they like most and write a letter to it. Encourage them not to stop at simply saying that they like the season, but to describe its features, memories, and moments that have shaped their fondness for it.",
+
+    steps: [
+      "Ask students to choose their favorite season.",
+      "Invite them to identify three features of that season that they like most.",
+      "Ask them to recall a memory or event connected to that season.",
+      "Invite them to write a letter addressed to the season itself, explaining why they like it.",
+      "Finally, ask them to include a question for their favorite season—a question that might receive an interesting answer if the season could speak.",
+    ],
+
+    questions: [
+      "What is it about this season that makes you like it more than the others?",
+      "If you had to describe your favorite season without saying its name, what would you tell us about it?",
+      "Which of your memories is most closely connected to this season?",
+      "If this season could reply to your letter, what do you think it would say?",
+      "If you could keep just one thing about this season forever, what would you choose?",
+    ],
+
+    teacherNote:
+      "Guide students beyond general answers such as 'I like autumn because it is beautiful' toward details, experiences, and reasons. Differences in students' preferences can provide a good starting point for discussing how the same thing can have different meanings for different people.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
       {
         id: "04M-05",
         title: "نامه به شخصیت محبوب یک داستان یا فیلم",
         description: "نوشتن نامه به یک شخصیت داستانی محبوب.",
-
+         translations: {
+  en: {
+    title: "A Letter to a Favorite Character from a Story or Film",
+    description: "Writing a letter to a beloved fictional character.",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای تبدیل علاقه به یک شخصیت داستانی به گفت‌وگویی معنادار و بیان دلیل‌های شخصی برای این علاقه.",
@@ -1445,13 +2778,52 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Help students turn their interest in a fictional character into a meaningful conversation and express their personal reasons for liking that character.",
+
+    instruction:
+      "Ask students to choose a character from a story, book, film, or animated movie that they like, and write a letter to that character. They can write about the character's actions, decisions, qualities, or events they remember from the story.",
+
+    steps: [
+      "Ask students to choose a fictional character they like.",
+      "Invite them to identify a specific action, decision, or quality of the character that caught their attention most.",
+      "Ask them to explain in their letter why that quality or action mattered to them.",
+      "Invite them to ask the character a question whose answer was never revealed in the story or film.",
+      "Finally, ask them to add something they would like to learn from the character or say to them.",
+    ],
+
+    questions: [
+      "Which quality of this character made you like them?",
+      "Which of their decisions or actions has stayed in your mind the most?",
+      "If you could ask this character one question, what would you ask?",
+      "If the character could explain one of their decisions in more detail, which decision would you want to hear about?",
+      "Is there something about this character that you wish you had yourself? Why?",
+    ],
+
+    teacherNote:
+      "Guide students beyond general statements such as 'I like this character because they are brave' toward a specific example from the story. It is important to connect students' admiration for a character to evidence from that character's actions or decisions in the story.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
       {
         id: "04M-06",
         title: "نامه به حیوانی که دوست داری یا دوست داری بیشتر درباره‌اش بدانی",
         description: "نوشتن نامه به یک حیوان، واقعی یا مورد کنجکاوی.",
-
+         translations: {
+  en: {
+    title: "A Letter to an Animal You Love or Want to Know More About",
+    description: "Writing a letter to an animal you know or are curious about.",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای تبدیل علاقه یا کنجکاوی درباره‌ی یک حیوان به یک خطاب شخصی و تمرین پرسیدن، توصیف کردن و بیان احساس یا کنجکاوی.",
@@ -1483,6 +2855,40 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Help students turn their interest or curiosity about an animal into a personal form of address, while practicing asking questions, describing, and expressing feelings or curiosity.",
+
+    instruction:
+      "Ask students to choose an animal they like or are curious about. Then invite them to write a letter to that animal, sharing what they already know about it, what they would like to learn, and the questions they would like to ask it.",
+
+    steps: [
+      "Ask students to choose an animal they like or would like to know more about.",
+      "Invite them to identify a few features or behaviors of the animal that they find interesting.",
+      "Ask them to write one or more questions they would like the animal itself to answer.",
+      "Invite them to explain in their letters why this animal interests them or why they like it.",
+      "Finally, ask them to imagine that the animal has received their letter and is writing a short reply.",
+    ],
+
+    questions: [
+      "Why did you choose this animal?",
+      "What do you already know about this animal?",
+      "What would you most like to understand about its life or behavior?",
+      "If the animal could answer just one of your questions, what would you ask?",
+      "If this animal could write you a letter about its own life, what do you think would matter most to it?",
+    ],
+
+    teacherNote:
+      "Keep both approaches open: students may write about an animal they love or one they know little about but are curious about. In the second case, their answers do not need to be scientifically accurate. The focus is on turning curiosity into a personal address and questions.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
       {
@@ -1490,7 +2896,13 @@ export const atlas: AtlasLand[] = [
         title: "نامه‌ای که کسی نیمه‌کاره گذاشته",
         description:
           "حدس‌زدن و تکمیل یک نامه‌ی ناشناس که فقط جمله‌ی آغازینش داده شده.",
-
+         translations: {
+  en: {
+    title: "A Letter Someone Left Unfinished",
+    description:
+      "Guessing and completing an anonymous letter when only its opening sentence is provided.",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای تمرین حدس و استنباط موقعیت از یک تکه متن ناقص، و سپس تمرین نوشتن نامه از دیدگاهی که خودش انتخاب کرده، نه از دیدگاه از‌پیش‌تعیین‌شده.",
@@ -1522,6 +2934,40 @@ export const atlas: AtlasLand[] = [
             type: "text",
             items: ["/text/04M/04M-07.txt"],
           },
+          translations: {
+  en: {
+    purpose:
+      "Help students practice inferring a situation from a fragment of text, then writing a letter from a perspective of their own choosing rather than one assigned in advance.",
+
+    instruction:
+      "The teacher writes or reads aloud only the opening sentence of an anonymous letter, without identifying its writer or recipient. Ask students to guess who might have written the letter, who it might be addressed to, and why it was left unfinished. Then invite them to complete it themselves.",
+
+    steps: [
+      "Write or read aloud the opening sentence of the letter (for example: 'I don't know how to say this, but there's something I've wanted to tell you for a long time...').",
+      "Ask students to make several guesses about who wrote the letter and who might receive it.",
+      "Invite them to choose one of their guesses and use it as the basis for their writing.",
+      "Ask them to continue and complete the letter, starting from the given sentence.",
+      "Finally, invite a few students to share only their initial guesses, not their complete letters, so the class can notice the differences in interpretation.",
+    ],
+
+    questions: [
+      "Why do you think this letter was left unfinished?",
+      "What might the writer have found difficult to say?",
+      "If you changed the recipient of the letter, how different would the rest of it become?",
+      "Which word or part of the opening sentence gave you the strongest clue?",
+      "Do you think the letter was eventually sent? Why?",
+    ],
+
+    teacherNote:
+      "The goal is not to arrive at one 'correct' guess. Students' different interpretations are equally valuable. This activity deliberately begins with an anonymous, unidentified text to create a safe distance from personal experience. No one is required to write from the perspective of a real, personal situation.",
+
+    materials: {
+      required: true,
+      type: "text",
+      items: ["/text/04M/04M-07.txt"],
+    },
+  },
+},
         },
       },
       {
@@ -1529,7 +2975,13 @@ export const atlas: AtlasLand[] = [
         title: "نامه به صدایی که هر روز می‌شنوی",
         description:
           "نوشتن نامه به یک صدای آشنا و روزمره، بعد از گوش‌دادن واقعی و دقیق به آن.",
-
+         translations: {
+  en: {
+    title: "A Letter to a Sound You Hear Every Day",
+    description:
+      "Writing a letter to a familiar, everyday sound after listening to it carefully and attentively.",
+  },
+},
         activity: {
           purpose:
             "تقویت گوش‌دادن دقیق به محیط روزمره و تبدیل یک تجربه‌ی شنیداری آشنا و نادیده‌گرفته‌شده به موضوع نوشتن و دلبستگی.",
@@ -1561,13 +3013,52 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Strengthen careful listening to the everyday environment and turn a familiar, often-overlooked auditory experience into a subject for writing and personal attachment.",
+
+    instruction:
+      "Ask students to listen quietly for a few moments and identify a familiar everyday sound in their minds, such as the school bell, wind outside the window, footsteps in the hallway, or any other sound they hear regularly. Then invite them to write a letter to that sound.",
+
+    steps: [
+      "Spend a few moments in silence, simply listening to the sounds around you.",
+      "Choose one sound that you hear every day, often without paying much attention to it.",
+      "Think about when this sound first became part of your life and the moments when you usually hear it.",
+      "Begin the letter by describing the role this sound plays in your days.",
+      "At the end of the letter, write about how your day would be different if this sound were absent for one day.",
+    ],
+
+    questions: [
+      "When do you first remember hearing this sound?",
+      "At what moment of your day do you usually hear it?",
+      "If this sound were absent for one day, what would be missing?",
+      "What time or place does this sound remind you of most?",
+      "If this sound could reply to your letter, what would it say?",
+    ],
+
+    teacherNote:
+      "The goal is not to describe the physical qualities of the sound. It is to discover the relationship a student has developed with a recurring everyday sound, even without consciously noticing it. If a student cannot think of a particular sound, you may offer examples such as the recess bell, the sound of rain, or a door opening as inspiration, without limiting their choices.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
       {
         id: "04M-09",
         title: "نامه‌ای که تصمیم گرفتی نفرستی",
         description: "نوشتن نامه‌ای خصوصی که فقط برای خودت است.",
-
+        translations: {
+  en: {
+    title: "A Letter You Decided Not to Send",
+    description: "Writing a private letter meant only for yourself.",
+  },
+},
         activity: {
           purpose:
             "ایجاد فضایی امن برای بیان فکرها و احساساتی که لزوماً قرار نیست به مخاطب واقعی گفته شوند و کمک به دانش‌آموز برای تجربه‌ی نامه به‌عنوان ابزاری برای فکر کردن، نه فقط ارتباط با دیگری.",
@@ -1599,6 +3090,40 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Create a safe space for expressing thoughts and feelings that are not necessarily meant to be shared with a real recipient, and help students experience letter-writing as a tool for thinking, not merely communicating with someone else.",
+
+    instruction:
+      "Ask students to imagine writing a letter that will never be sent to its intended recipient. They may address it to a person, a place, an event, or even themselves. Invite them to write anything they would like to say but do not intend to express directly.",
+
+    steps: [
+      "Ask students to choose someone or something to address the letter to, real or imaginary.",
+      "Invite them to imagine that the letter will never reach its recipient.",
+      "Ask them to choose something they would like to say in this letter but might not be able or willing to say in an ordinary conversation.",
+      "Invite them to write the letter without worrying about how the recipient might judge them.",
+      "Finally, ask them to read the letter again and, only if they wish, identify one sentence that matters most to them.",
+    ],
+
+    questions: [
+      "If you were certain no one would ever read this letter, what would be easier for you to say?",
+      "Why did you decide not to send this letter?",
+      "How is writing something you do not intend to say different from actually saying it?",
+      "After writing the letter, did your view of the subject or recipient change?",
+      "If you did not have to show the letter to anyone, would you want to keep it, tear it up, or put it aside? Why?",
+    ],
+
+    teacherNote:
+      "This activity must be genuinely voluntary and safe. Students must not be required to read their letters aloud or even share a single sentence. The goal is to experience writing as a way of expressing and thinking, not to reveal personal matters. Students may choose an entirely imaginary situation instead of a personal subject.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
       {
@@ -1606,7 +3131,13 @@ export const atlas: AtlasLand[] = [
         title: "نامه به یک آرزو",
         description:
           "نوشتن نامه‌ای خطاب به یک آرزوی شخصی، با شروع «آرزوی من، اگر می‌توانی صدای مرا بشنوی...»",
-
+        translations: {
+  en: {
+    title: "A Letter to a Wish",
+    description:
+      "Writing a letter to a personal wish, beginning with: 'My wish, if you can hear me...'",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای شناخت دقیق‌تر یک آرزو، بیان دلیل اهمیت آن و فکر کردن به رابطه‌ی میان آرزو، اکنون و آینده.",
@@ -1639,6 +3170,41 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Help students understand a wish more clearly, express why it matters to them, and reflect on the relationship between a wish, the present, and the future.",
+
+    instruction:
+      "Ask students to choose a personal wish and imagine that the wish can hear them. Then invite them to write a letter to it, describing where the wish came from, what it means to them, and what they hope will happen one day.",
+
+    steps: [
+      "Ask students to choose a personal wish, whether realistic or entirely imaginary.",
+      "Invite them to think about where this wish came from and why it became important to them.",
+      "Ask them to begin the letter with the sentence: 'My wish, if you can hear me...'",
+      "Invite them to explain in the letter what would change in their lives or in the way they see things if this wish came true one day.",
+      "Finally, ask them to write a sentence addressed to their wish, expressing what matters to them about the journey they are on today, even if they have not yet reached it.",
+    ],
+
+    questions: [
+      "Where did this wish come from?",
+      "Why does this wish matter to you?",
+      "If your wish came true tomorrow, what would change in your life?",
+      "If your wish could reply to your letter, what do you think it would say?",
+      "Could the meaning of this wish change as you grow older? Why?",
+      "If reaching a wish is important, could the journey toward it also be valuable?",
+    ],
+
+    teacherNote:
+      "The goal is not to judge students' wishes or classify them as 'realistic' or 'unrealistic.' Allow wishes to be personal, simple, ambitious, or entirely imaginary. The focus is on helping students think about why they have a particular wish, what it means to them, and what might change if it came true.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
     ],
@@ -1649,13 +3215,25 @@ export const atlas: AtlasLand[] = [
     code: "05M",
     title: "مقایسه",
     description: "دیدن تفاوت‌ها و شباهت‌هایی که نوع نگاه را تغییر می‌دهند.",
+    translations: {
+  en: {
+    title: "Comparison",
+    description: "Discovering similarities and differences that can change the way we see things.",
+  },
+},
     situations: [
       {
         id: "05M-01",
         title: "دو کیف، دو داستان",
         description:
           "ساختن داستان‌هایی درباره‌ی صاحبان دو کیف بر پایه‌ی وسایل داخل آن‌ها و تشخیص تفاوت میان مشاهده و حدس.",
-
+          translations: {
+  en: {
+    title: "Two Bags, Two Stories",
+    description:
+      "Creating stories about the owners of two bags based on the objects inside them, while distinguishing between observation and guesswork.",
+  },
+},
         activity: {
           purpose:
             "تقویت توانایی توجه به جزئیات، استفاده از شواهد و ساختن برداشت‌های مختلف از یک مجموعه نشانه.",
@@ -1690,6 +3268,43 @@ export const atlas: AtlasLand[] = [
             type: "image",
             items: ["/images/05M/05M-01.png"],
           },
+          translations: {
+  en: {
+    purpose:
+      "Strengthen students' ability to notice details, use evidence, and develop different interpretations from the same set of clues.",
+
+    instruction:
+      "Look carefully at the two open bags and the objects inside them. Based on these objects, guess who each bag might belong to and what story might lie behind it. You do not need to identify the actual owners. What matters is being able to support your guesses with reasons drawn from what you can see in the pictures.",
+
+    steps: [
+      "Look carefully at the objects inside both bags.",
+      "Write down a few things you can actually see in the pictures, without guessing or interpreting.",
+      "Guess who each bag might belong to.",
+      "Use the objects inside each bag as evidence to support your guess.",
+      "Imagine what situation or event the owner of each bag might have used these objects for.",
+      "Create a short story about one of the bags.",
+      "Finally, identify which parts of your story came from things you actually saw and which parts you guessed or invented yourself.",
+    ],
+
+    questions: [
+      "What exactly can you see in the pictures?",
+      "Which object had the greatest influence on your guess about the owner of the bag? Why?",
+      "What makes you think the owner of the bag might be this kind of person?",
+      "Could these same objects inspire a different story?",
+      "Which parts of your story were based on something you actually saw, and which parts did you add yourself?",
+      "If we removed one of the objects from the bag, would your story or guess about its owner change?",
+    ],
+
+    teacherNote:
+      "The goal is not to identify the actual owner of either bag. Students should distinguish between 'what I see' and 'what I conclude from it,' and recognize that the same set of clues can lead to more than one interpretation or story.",
+
+    materials: {
+      required: true,
+      type: "image",
+      items: ["/images/05M/05M-01.png"],
+    },
+  },
+},
         },
       },
 
@@ -1698,7 +3313,14 @@ export const atlas: AtlasLand[] = [
         title: "دو نقاش، یک منظره",
         description:
           "مقایسه‌ی دو نقاشی متفاوت از یک منظره و کشف تفاوت نگاه هر نقاش.",
-        activity: {
+        translations: {
+  en: {
+    title: "Two Painters, One Landscape",
+    description:
+      "Comparing two different paintings of the same landscape and discovering how each painter sees it differently.",
+  },
+},
+          activity: {
           purpose:
             "کمک به دانش‌آموز برای تشخیص تفاوت میان یک موضوع مشترک و شیوه‌های متفاوت دیدن و بازنمایی آن.",
           instruction:
@@ -1724,6 +3346,40 @@ export const atlas: AtlasLand[] = [
             type: "image",
             items: ["/images/05M/05M-02-a.jfif", "/images/05M/05M-02-b.jfif"],
           },
+          translations: {
+  en: {
+    purpose:
+      "Help students recognize the difference between a shared subject and the different ways people see and represent it.",
+
+    instruction:
+      "Imagine two painters looking at the same landscape, but each seeing and painting it differently. Ask students to first identify the visible differences, then consider what those differences might reveal about each painter's way of seeing.",
+
+    steps: [
+      "Show students two paintings of the same landscape.",
+      "Ask them to identify the features that are the same or similar in both paintings.",
+      "Invite them to examine the differences in color, size, details, viewing angle, and which elements are more or less prominent.",
+      "Ask them to guess which parts of the landscape each painter paid more attention to.",
+      "Finally, invite them to explain how two people can look at the same thing yet create different representations of it.",
+    ],
+
+    questions: [
+      "What do both paintings show in the same way?",
+      "What is the most noticeable difference between the two paintings?",
+      "Which part of the landscape stands out more in the first painting and less in the second?",
+      "What do you think each painter paid the most attention to? What makes you think so?",
+      "If you were painting the same landscape, which part would you make more prominent? Why?",
+    ],
+
+    teacherNote:
+      "Guide students away from judgments such as 'this painting is more beautiful' and toward observable, discussable differences. It is important that they first notice the differences and then form hypotheses about the painters' perspectives. Emphasize that two different representations do not necessarily mean that one is right and the other is wrong.",
+
+    materials: {
+      required: true,
+      type: "image",
+      items: ["/images/05M/05M-02-a.jfif", "/images/05M/05M-02-b.jfif"],
+    },
+  },
+},
         },
       },
 
@@ -1732,7 +3388,14 @@ export const atlas: AtlasLand[] = [
         title: "یک چیز، دو کاربرد",
         description:
           "مقایسه‌ی یک چیز مشابه در دو موقعیت و کشف اینکه کاربرد و محیط چگونه نگاه ما به آن را تغییر می‌دهند.",
-        activity: {
+            translations: {
+  en: {
+    title: "One Object, Two Uses",
+    description:
+      "Comparing the same kind of object in two different situations and discovering how its setting and use can change the way we see it.",
+  },
+},       
+          activity: {
           purpose:
             "کمک به دانش‌آموز برای دیدن اینکه یک چیز واحد، وقتی در موقعیت‌های متفاوت قرار می‌گیرد، می‌تواند کاربردها و ویژگی‌های مهم متفاوتی پیدا کند.",
           instruction:
@@ -1759,6 +3422,41 @@ export const atlas: AtlasLand[] = [
             type: "image",
             items: ["/images/05M/05M-03.png"],
           },
+          translations: {
+  en: {
+    purpose:
+      "Help students recognize that the same object can take on different uses and become important in different ways when placed in different situations.",
+
+    instruction:
+      "Show students two pictures of the same kind of object in two different settings, such as a chair in a classroom and a chair at a bus stop. Ask them to compare the pictures and explore how the setting and purpose can draw our attention to different features of the very same object.",
+
+    steps: [
+      "Show students two pictures of the same kind of object in two different settings.",
+      "Ask them to write down the features they can see in both pictures, without guessing or inventing a story.",
+      "Invite them to examine the differences between the two settings, such as the object's position, surrounding objects, people present, and how it is being used.",
+      "Ask them to identify which feature of the object stands out most in each setting.",
+      "Finally, invite them to explain how the surroundings can change the way we see an object, even when the object itself remains almost the same.",
+    ],
+
+    questions: [
+      "What do the two pictures have in common?",
+      "What has changed in the surroundings between the two pictures?",
+      "Which feature of the object caught your attention most in each picture?",
+      "Why do you think we pay attention to different features in different situations?",
+      "If you saw the same object in a completely different place, what might become more important to you about it?",
+      "Does the setting only change how an object is used, or can it also change the way we see the object itself?",
+    ],
+
+    teacherNote:
+      "The focus is not on finding one correct use. Students should notice the relationship between the 'object,' its 'setting,' and its 'use.' First guide them toward observing the actual differences between the pictures, then allow them to form their own interpretations about the objects' uses or meanings.",
+
+    materials: {
+      required: true,
+      type: "image",
+      items: ["/images/05M/05M-03.png"],
+    },
+  },
+},
         },
       },
 
@@ -1767,7 +3465,14 @@ export const atlas: AtlasLand[] = [
         title: "دو آهنگ، دو حس",
         description:
           "مقایسه‌ی حس دو قطعه‌ی موسیقی متفاوت و کشف اینکه چگونه ویژگی‌های موسیقی می‌توانند حال‌وهوای متفاوتی ایجاد کنند.",
-        activity: {
+          translations: {
+  en: {
+    title: "Two Pieces of Music, Two Feelings",
+    description:
+      "Comparing the feelings evoked by two different pieces of music and discovering how musical features can create different moods.",
+  },
+},
+          activity: {
           purpose:
             "تقویت گوش‌دادن دقیق و کمک به دانش‌آموز برای تشخیص و مقایسه‌ی تفاوت‌های سرعت، ریتم، شدت و حال‌وهوای دو قطعه‌ی موسیقی.",
           instruction:
@@ -1792,6 +3497,39 @@ export const atlas: AtlasLand[] = [
             type: "audio",
             items: ["/audio/05M/05M-04-a.mp3", "/audio/05M/05M-04-b.mp3"],
           },
+          translations: {
+  en: {
+    purpose:
+      "Develop careful listening and help students identify and compare differences in tempo, rhythm, intensity, and the overall mood of two musical pieces.",
+
+    instruction:
+      "Listen to two pieces of music. First, pay attention only to your own reactions. Then explore which features of each piece might have created these different feelings.",
+
+    steps: [
+      "Ask students to compare the two pieces in terms of tempo, intensity, rhythm, musical movement, and the moods they create.",
+      "Invite them to identify at least one audible feature that might have contributed to each feeling they have described.",
+      "Finally, ask them to explain how a composer can create two very different musical pieces.",
+    ],
+
+    questions: [
+      "How did you feel after listening to each piece?",
+      "Which piece gave you a stronger sense of movement and energy? How could you tell?",
+      "Which piece seemed calmer and gentler?",
+      "If you had to express each piece through a body movement, what would your movement look like?",
+      "Which musical feature had the greatest influence on your feelings?",
+      "How might a composer create music that invites you to move in one moment and feel calm in another?",
+    ],
+
+    teacherNote:
+      "The goal is not to identify one correct feeling or use technical musical terminology. What matters is that students try to connect their feelings to an audible feature of the music.",
+
+    materials: {
+      required: true,
+      type: "audio",
+      items: ["/audio/05M/05M-04-a.mp3", "/audio/05M/05M-04-b.mp3"],
+    },
+  },
+},
         },
       },
 
@@ -1800,7 +3538,13 @@ export const atlas: AtlasLand[] = [
         title: "کدام کیف بهتر است؟",
         description:
           "مقایسه‌ی دو کیف با وسایل متفاوت و کشف اینکه پاسخ به سؤال «کدام بهتر است؟» به چیزی که برای ما مهم است بستگی دارد.",
-
+           translations: {
+  en: {
+    title: "Which Bag Is Better?",
+    description:
+      "Comparing two bags with different contents and discovering that the answer to 'Which is better?' depends on what matters to us.",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای تشخیص اینکه یک چیز را نمی‌توان بدون مشخص کردن معیار، به‌طور مطلق بهتر از چیز دیگری دانست و افراد مختلف ممکن است با دیدن گزینه‌های یکسان، انتخاب‌های متفاوتی داشته باشند.",
@@ -1835,6 +3579,43 @@ export const atlas: AtlasLand[] = [
             type: "image",
             items: ["/images/05M/05M-05.png"],
           },
+          translations: {
+  en: {
+    purpose:
+      "Help students recognize that something cannot be considered absolutely better than something else without specifying a criterion, and that different people may make different choices even when looking at the same options.",
+
+    instruction:
+      "Show students two open bags containing different objects. First, without giving them any specific criteria, ask them to say which bag they prefer and write down their reasons. Then discuss what mattered most to them when making their choices.",
+
+    steps: [
+      "Look carefully at the two bags and the objects inside them.",
+      "Before any specific criteria are introduced, choose the bag you prefer.",
+      "Write down the reason for your choice.",
+      "Think about which objects or features of the bags influenced your choice most.",
+      "Now consider several different criteria, such as 'for traveling,' 'for entertainment,' or 'for recording and remembering events.'",
+      "Explore whether your choice changes when the criterion changes.",
+      "Finally, explain why we cannot say that one bag is always better than the other without considering a specific criterion.",
+    ],
+
+    questions: [
+      "Which bag did you choose at first? Why?",
+      "Which object inside the bag influenced your choice most?",
+      "If you were going on a trip with one of these bags, which would you choose? Why?",
+      "If you wanted to find something for entertainment, would your choice change?",
+      "Could two people look at these same bags and make different choices? Why?",
+      "When we say 'This bag is better,' what do we need to specify to make our statement more complete?",
+    ],
+
+    teacherNote:
+      "The goal is not to choose a winning bag. The main point is for students to recognize that 'better' has no complete meaning without a specified criterion, and that one option may be more suitable than another for a particular purpose.",
+
+    materials: {
+      required: true,
+      type: "image",
+      items: ["/images/05M/05M-05.png"],
+    },
+  },
+},
         },
       },
 
@@ -1843,7 +3624,14 @@ export const atlas: AtlasLand[] = [
         title: "یک تصویر، دو قاب",
         description:
           "دیدن یک صحنه از دو قاب متفاوت و توجه به اینکه با تغییر قاب، بعضی جزئیات آشکار و بعضی اطلاعات پنهان می‌شوند.",
-        activity: {
+         translations: {
+  en: {
+    title: "One Image, Two Frames",
+    description:
+      "Viewing a scene through two different frames and noticing how changing the frame reveals some details while hiding others.",
+  },
+},
+          activity: {
           purpose:
             "کمک به دانش‌آموز برای کشف اینکه یک تصویر واحد، بسته به اینکه از چه فاصله و با چه محدوده‌ای دیده شود، اطلاعات متفاوتی در اختیار ما قرار می‌دهد.",
           instruction:
@@ -1871,6 +3659,37 @@ export const atlas: AtlasLand[] = [
             type: "image",
             items: ["/images/05M/05M-06-a.jpg", "/images/05M/05M-06-b.jpg"],
           },
+          translations: {
+  en: {
+    purpose:
+      "To help students discover that the same image provides different information depending on the viewing distance and the area included in the frame.",
+    instruction:
+      "Show an image first in its entirety and then as a closer view of the same image. Ask students to compare only what they can see in each frame, without guessing the story behind the image.",
+    steps: [
+      "First, look at the full image and name a few things you can observe in it.",
+      "Now look at the same image in a closer view.",
+      "Notice which details become visible in the closer view that you did not notice at first.",
+      "Notice which parts of the full image are no longer visible in the closer view.",
+      "Compare the two frames and explain what information each one provides more or less of.",
+      "Finally, write one sentence explaining how changing the frame changed the way you saw the image.",
+    ],
+    questions: [
+      "What do you see in both frames?",
+      "What did you notice in the closer view that you had not noticed in the full image?",
+      "What could you see in the full image that is no longer visible in the closer view?",
+      "Did changing the frame make anything about the image clearer to you?",
+      "Is there anything you know less about when looking at the closer view?",
+      "If you could see only one of these two frames, what information would you miss?",
+    ],
+    teacherNote:
+      "The goal is not to find the correct answer about the image. Draw students' attention to the differences in the information provided by the two frames of the same image. In the discussion, it is helpful to distinguish between what is actually visible in the image and the interpretations we may form from it.",
+    materials: {
+      required: true,
+      type: "image",
+      items: ["/images/05M/05M-06-a.jpg", "/images/05M/05M-06-b.jpg"],
+    },
+  },
+},
         },
       },
 
@@ -1879,7 +3698,14 @@ export const atlas: AtlasLand[] = [
         title: "یک صدا، دو معنا",
         description:
           "شنیدن یک صدای یکسان در دو موقعیت متفاوت و کشف اینکه زمینه می‌تواند برداشت ما از یک صدا را تغییر دهد.",
-        activity: {
+          translations: {
+  en: {
+    title: "One Sound, Two Meanings",
+    description:
+      "Hearing the same sound in two different situations and discovering how context can change the way we interpret it.",
+  },
+},
+          activity: {
           purpose:
             "کمک به دانش‌آموز برای تشخیص تفاوت میان خودِ یک صدا و معنایی که در یک موقعیت به آن می‌دهد.",
           instruction:
@@ -1907,6 +3733,37 @@ export const atlas: AtlasLand[] = [
             type: "audio",
             items: ["/audio/05M/05M-07.wav"],
           },
+          translations: {
+  en: {
+    purpose:
+      "To help students distinguish between a sound itself and the meaning they assign to it in a particular situation.",
+    instruction:
+      "Play the same sound for students in two different contexts; for example, the sound of someone knocking on a door. First, ask them to make guesses without knowing the context. Then help them explore how their interpretation changes when the context changes.",
+    steps: [
+      "Play a short, recognizable sound for the students.",
+      "Ask them to write down what they think is happening, without knowing the context.",
+      "Introduce the same sound in a different context or provide a different explanation of the situation.",
+      "Ask them to consider whether their interpretation of the same sound has changed.",
+      "Ask them to identify which parts of their interpretation came from the sound itself and which came from the information they received about the situation.",
+      "Finally, ask them to explain how the same sound can have different meanings in two different situations.",
+    ],
+    questions: [
+      "When you first heard the sound, what did you think was happening?",
+      "What made you form that interpretation?",
+      "After the context changed, did your interpretation of the same sound change?",
+      "Which parts of what you understood came from the sound itself, and which parts did you infer from the situation?",
+      "Is it possible for two people to hear the same sound but interpret it differently? Why?",
+      "If you heard only the sound and had no information about the situation, what could you not know for certain?",
+    ],
+    teacherNote:
+      "The goal is not to find the correct meaning of the sound. Students should recognize that what we hear and the interpretation we form are not always the same thing. It is helpful to distinguish between 'What I heard' and 'What I thought it meant.'",
+    materials: {
+      required: true,
+      type: "audio",
+      items: ["/audio/05M/05M-07.wav"],
+    },
+  },
+},
         },
       },
 
@@ -1915,7 +3772,14 @@ export const atlas: AtlasLand[] = [
         title: "یک تصویر، دو عنوان",
         description:
           "نوشتن دو عنوان متفاوت برای یک تصویر و کشف اینکه چگونه یک تصویر واحد می‌تواند برداشت‌های متفاوتی ایجاد کند.",
-        activity: {
+          translations: {
+  en: {
+    title: "One Image, Two Titles",
+    description:
+      "Writing two different titles for the same image and discovering how a single image can lead to different interpretations.",
+  },
+},       
+          activity: {
           purpose:
             "کمک به دانش‌آموز برای کشف رابطه‌ی میان یک تصویر واحد، برداشت ذهنی و نوشته‌ای که از آن برداشت تولید می‌شود.",
           instruction:
@@ -1943,6 +3807,37 @@ export const atlas: AtlasLand[] = [
             type: "image",
             items: ["/images/05M/05M-08.png"],
           },
+          translations: {
+  en: {
+    purpose:
+      "To help students discover the relationship between a single image, their mental interpretation of it, and the writing that emerges from that interpretation.",
+    instruction:
+      "Give students an image that allows for more than one interpretation. Ask them to write two different titles for the same image, then explore what in their thinking made it possible to give one image two different titles.",
+    steps: [
+      "Give students an open-ended image that allows for different interpretations.",
+      "Ask them to look at the image and write the first title that comes to mind, without any additional explanation.",
+      "Ask them to look at the same image again and write a title that creates a different interpretation.",
+      "Ask them to compare their two titles and identify what has changed between them.",
+      "Ask them to explain which details in the image or which interpretations led them to create each title.",
+      "Finally, ask them to write a third title that is neither a repetition of the first nor the second.",
+    ],
+    questions: [
+      "What was the first title that came to mind? Why?",
+      "What did you see or interpret differently in the image when you came up with the second title?",
+      "Could both titles be reasonable interpretations of the same image? Why?",
+      "Which details in the image had the greatest influence on your titles?",
+      "If you saw only the first title, what impression would you form of the image?",
+      "What does your third title reveal that was not present in the first two?",
+    ],
+    teacherNote:
+      "The goal is not to find the correct title. The important part of the activity is for students to recognize that a single visual source can be the starting point for several interpretations and several pieces of writing. It is best to have students write their titles before discussing whether they are right or wrong, and then talk about the reasons behind each one.",
+    materials: {
+      required: true,
+      type: "image",
+      items: ["/images/05M/05M-08.png"],
+    },
+  },
+},
         },
       },
 
@@ -1950,6 +3845,13 @@ export const atlas: AtlasLand[] = [
         id: "05M-09",
         title: "راه دراز، راه کوتاه",
         description: "مقایسه‌ی دو مسیر متفاوت برای رسیدن به یک مقصد.",
+        translations: {
+  en: {
+    title: "The Long Way, the Short Way",
+    description:
+      "Comparing two different routes to the same destination.",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای درک اینکه کوتاه‌ترین مسیر همیشه تنها معیار انتخاب یک مسیر نیست و ویژگی‌هایی مانند آرامش، شلوغی، امنیت یا لذت مسیر نیز می‌توانند در تصمیم‌گیری اهمیت داشته باشند.",
@@ -1975,8 +3877,38 @@ export const atlas: AtlasLand[] = [
           materials: {
             required: true,
             type: "text",
-            items: ["/text/05M/05M-09"],
+            items: ["/text/05M/05M-09.txt"],
           },
+          translations: {
+  en: {
+    purpose:
+      "To help students understand that the shortest route is not always the only criterion for choosing a route. Factors such as peace and quiet, crowds, safety, and enjoyment can also matter when making a decision.",
+    instruction:
+      "Present students with two different routes to the same destination. One route is shorter, while the other is quieter and more pleasant. Ask students to compare the routes from several perspectives and explain which one they would choose in different circumstances.",
+    steps: [
+      "Introduce two routes to a specific destination.",
+      "Ask students to examine the features of each route in terms of distance, time, crowds, peace and quiet, and anything else that matters to them.",
+      "Ask them to identify the circumstances in which they would choose the shorter route.",
+      "Ask them to identify the circumstances in which they would prefer the quieter route.",
+      "Finally, ask them whether one route can always be considered better than the other, or whether the choice depends on the circumstances.",
+    ],
+    questions: [
+      "Which route is shorter, and how do you know?",
+      "Which route is quieter or more pleasant?",
+      "If you were in a hurry, which route would you choose? Why?",
+      "If you had enough time, would you still choose the shorter route?",
+      "What other feature might make you prefer one route over the other?",
+      "Can we say that one route is always the best? Why?",
+    ],
+    teacherNote:
+      "The goal is not for students to arrive at a single answer. They should recognize that what counts as 'better' depends on the criteria used for comparison. You can design the two routes so that one is better in terms of distance and the other in terms of peace and quiet, beauty, or crowds. Then ask students to identify the criteria behind their choices.",
+    materials: {
+      required: true,
+      type: "text",
+      items: ["/text/05M/05M-09.txt"],
+    },
+  },
+},
         },
       },
 
@@ -1985,7 +3917,14 @@ export const atlas: AtlasLand[] = [
         title: "یک بازی، تنها یا با دوست",
         description:
           "مقایسه‌ی تجربه‌ی یک بازی در دو حالت تنها و همراه با دوست.",
-        activity: {
+          translations: {
+  en: {
+    title: "One Game, Alone or with a Friend",
+    description:
+      "Comparing the experience of playing a game alone and playing it with a friend.",
+  },
+},
+          activity: {
           purpose:
             "کمک به دانش‌آموز برای تشخیص اینکه حضور یا نبودن دیگران چگونه می‌تواند تجربه، تصمیم‌ها، احساس و شیوه‌ی بازی کردن را تغییر دهد.",
           instruction:
@@ -2013,6 +3952,37 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To help students recognize how the presence or absence of other people can change an experience, decisions, feelings, and the way a game is played.",
+    instruction:
+      "Imagine or experience a familiar game in two different ways: once alone and once with a friend. Ask students to compare the two experiences and explore whether only the number of players changes, or whether the experience of playing the game itself changes as well.",
+    steps: [
+      "Ask students to choose a game that can be played both alone and with a friend.",
+      "Ask them to describe what it is like to play the game alone.",
+      "Ask them to imagine or experience playing the same game with a friend.",
+      "Ask them to compare the two experiences in terms of decision-making, cooperation, competition, and feelings.",
+      "Ask them to identify which parts of the experience are related to the game itself and which are related to having a friend present.",
+      "Finally, ask them to explain how another person's presence can change something they previously thought of as the same game.",
+    ],
+    questions: [
+      "When you play alone, what stands out the most?",
+      "What changes when you play with your friend?",
+      "Is it possible for a game to be enjoyable when played alone but not enjoyable when played with a friend? Why?",
+      "How can another person's presence change your decisions?",
+      "Which parts of the gaming experience are related to the game itself, and which are related to having your friend there?",
+      "If you experienced only one of these two situations, what would you not understand about the experience of playing the game?",
+    ],
+    teacherNote:
+      "The goal is not to decide whether playing alone or with someone else is better. Students should see how changing one small factor—the presence of another person—can change the experience of the same activity. If a student cannot think of a suitable game, you can suggest activities such as building with LEGO, drawing, or solving a puzzle.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
     ],
@@ -2023,13 +3993,25 @@ export const atlas: AtlasLand[] = [
     code: "07M",
     title: "گفت‌وگو",
     description: "دیدن فکرها و تفاوت نگاه‌ها از راه گفت‌وگو.",
+    translations: {
+  en: {
+    title: "Dialogue",
+    description: "Exploring thoughts and different perspectives through dialogue.",
+  },
+},
     situations: [
       {
         id: "07M-01",
         title: "گفت‌وگوی من و آینده‌ام",
         description:
           "نوشتن گفت‌وگویی بین خودِ امروز و خودِ ده‌سال‌بعد، با محرک یک صندلی خالی.",
-
+         translations: {
+  en: {
+    title: "A Conversation Between Me and My Future Self",
+    description:
+      "Writing a dialogue between your present self and your self ten years from now, prompted by an empty chair.",
+  },
+},
         activity: {
           purpose:
             "فکر کردن درباره‌ی تفاوت نگاه و تجربه در دو زمان متفاوت از زندگی از راه گفت‌وگو.",
@@ -2061,6 +4043,35 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Reflecting on differences in perspective and experience at two different points in life through dialogue.",
+    instruction:
+      "Imagine an empty chair in front of you. Your self ten years from now is sitting in it, and you can have a conversation with them. What would you say to each other?",
+    steps: [
+      "Identify your present self and your self ten years from now.",
+      "Begin the conversation with a question or a statement.",
+      "Let each version of you talk about something that matters to them.",
+      "Pay attention to differences in their thoughts, concerns, or wishes.",
+      "End the conversation without requiring either version of you to convince the other.",
+    ],
+    questions: [
+      "What is the first thing you would ask your future self?",
+      "What might your future self find strange about your life today?",
+      "What would you like to know about your future life?",
+      "Might your future self disagree with one of your current ideas?",
+      "If your future self did not know something, what might they ask you?",
+    ],
+    teacherNote:
+      "Do not turn the dialogue into a session of giving advice or delivering motivational messages. What matters is that two versions of the same person can have different perspectives and experiences.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2068,7 +4079,13 @@ export const atlas: AtlasLand[] = [
         id: "07M-02",
         title: "گفت‌وگوی دو وسیله",
         description: "نوشتن گفت‌وگوی دو وسیله که سال‌هاست کنار هم هستند.",
-
+         translations: {
+  en: {
+    title: "A Conversation Between Two Objects",
+    description:
+      "Writing a dialogue between two objects that have been side by side for years.",
+  },
+},
         activity: {
           purpose:
             "تمرین دیدن یک موقعیت از نگاه موجودی دیگر و ساختن گفت‌وگویی که ویژگی‌های دو طرف در آن دیده شود.",
@@ -2101,6 +4118,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practicing how to see a situation from another being's perspective and creating a dialogue that reflects the characteristics of both participants.",
+    instruction:
+      "Choose two objects that have been together for a long time in a home, school, or another place. Imagine that these two objects can talk to each other. What might they talk about?",
+    steps: [
+      "Choose two objects.",
+      "Think about what each object sees or experiences more than the other.",
+      "Find a shared topic or event for their conversation.",
+      "Write the dialogue and let each object express its own perspective.",
+      "At the end, neither object has to agree that the other is right.",
+    ],
+    questions: [
+      "Which two objects did you choose?",
+      "What does each object see that the other sees less often?",
+      "What are they talking about?",
+      "Do they agree with each other about the topic?",
+      "What reasons does each one have for its opinion?",
+      "Which sentence best shows that this is a conversation between two objects?",
+    ],
+    teacherNote:
+      "The real characteristics of the objects should influence the dialogue. If the two objects simply take the place of two human characters, an important part of the activity's potential is lost.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2109,7 +4156,13 @@ export const atlas: AtlasLand[] = [
         title: "گفت‌وگوی قبل از تصمیم",
         description:
           "شنیدن دلایل دو نفر پیش از تصمیم‌گیری، بدون رسیدن به نتیجه‌ی نهایی.",
-
+         translations: {
+  en: {
+    title: "A Conversation Before a Decision",
+    description:
+      "Hearing two people's reasons before a decision is made, without reaching a final conclusion.",
+  },
+},
         activity: {
           purpose:
             "تمرین دیدن یک مسئله از دو نگاه متفاوت و ساختن گفت‌وگویی که در آن هر طرف دلیل قابل‌دفاع خودش را دارد.",
@@ -2142,6 +4195,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practicing how to look at an issue from two different perspectives and creating a dialogue in which each side has reasons they can defend.",
+    instruction:
+      "Two people need to make an important decision about something, but they have not made their final choice yet. Write their conversation so that both people can explain their reasons.",
+    steps: [
+      "Choose the topic of the decision.",
+      "Give each person a different point of view.",
+      "Identify the reasons behind each person's position.",
+      "Write the dialogue and let both people respond to what the other says.",
+      "End the conversation before a definite conclusion is reached.",
+    ],
+    questions: [
+      "What is the decision about?",
+      "Which option does each person prefer?",
+      "What is the most important reason for each person's choice?",
+      "Does one of them notice something the other has overlooked?",
+      "If both people wanted to convince the other, what would they say?",
+      "Does one of them have to win in the end? Why?",
+    ],
+    teacherNote:
+      "Both sides should have reasonable arguments. The activity should not present one side as right and the other as wrong from the beginning.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2150,7 +4233,13 @@ export const atlas: AtlasLand[] = [
         title: "گفت‌وگوی دو همکلاسی بعد از باختن یک بازی",
         description:
           "نوشتن گفت‌وگوی دو هم‌تیمی که هرکدام چیز متفاوتی از باخت به‌یاد دارند.",
-
+         translations: {
+  en: {
+    title: "Two Classmates Talking After Losing a Game",
+    description:
+      "Writing a dialogue between two teammates who remember different things about their loss.",
+  },
+},
         activity: {
           purpose: "فکر کردن درباره‌ی تفاوت نگاه دو نفر به یک اتفاق مشترک.",
 
@@ -2181,6 +4270,35 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Reflecting on how two people can have different perspectives on the same shared event.",
+    instruction:
+      "Two classmates are sitting together after losing a game. Each thinks they know what caused the loss. Write their conversation.",
+    steps: [
+      "Think about how each classmate sees the loss.",
+      "Give each of them a different reason or interpretation.",
+      "Begin the conversation just after the game.",
+      "Let each person talk about something they saw or felt.",
+      "At the end, consider whether their perspectives have become closer.",
+    ],
+    questions: [
+      "Why does each person think they lost the game?",
+      "Do both people remember exactly the same events?",
+      "What does one person consider more important than the other?",
+      "Might one of them have missed part of what happened?",
+      "By the end of the conversation, what has become clearer to both of them about the loss?",
+    ],
+    teacherNote:
+      "The focus is on the difference between two people's interpretations of the same event, not on finding someone to blame or deciding who won the argument.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2189,7 +4307,13 @@ export const atlas: AtlasLand[] = [
         title: "گفت‌وگوی دو احساس",
         description:
           "نوشتن گفت‌وگویی نمایشی بین دو احساس که در یک موقعیت با هم روبه‌رو شده‌اند.",
-
+          translations: {
+  en: {
+    title: "A Conversation Between Two Emotions",
+    description:
+      "Writing a dramatic dialogue between two emotions that encounter each other in a particular situation.",
+  },
+},
         activity: {
           purpose:
             "فکر کردن درباره‌ی هم‌زمانی یا تعارض احساس‌ها و پیدا کردن زبان برای نشان دادن آن‌ها در قالب گفت‌وگو.",
@@ -2222,6 +4346,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Reflecting on emotions that occur together or come into conflict, and finding a way to express them through dialogue.",
+    instruction:
+      "Choose two emotions that could encounter each other in a particular situation. Imagine that these two emotions can talk to each other. Write their conversation.",
+    steps: [
+      "Choose two emotions.",
+      "Find a situation in which both emotions could be present.",
+      "Think about what each emotion would say about that situation.",
+      "Write their conversation.",
+      "Let each emotion explain why it is present.",
+    ],
+    questions: [
+      "Which two emotions did you choose?",
+      "In what situation have they encountered each other?",
+      "What does each emotion want?",
+      "Are these two emotions in conflict, or might both of them be necessary?",
+      "Which sentence best expresses the personality of one of the emotions?",
+      "Does one emotion defeat the other at the end? Why?",
+    ],
+    teacherNote:
+      "Avoid clichéd pairs and predictable, ready-made answers. The situation should make the relationship between the two emotions meaningful.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2229,7 +4383,13 @@ export const atlas: AtlasLand[] = [
         id: "07M-06",
         title: "گفت‌وگوی من و یک کتاب",
         description: "تصور گفت‌وگو با کتابی که چیزی برای گفتن به خواننده دارد.",
-
+         translations: {
+  en: {
+    title: "A Conversation Between Me and a Book",
+    description:
+      "Imagining a conversation with a book that has something to say to its reader.",
+  },
+},
         activity: {
           purpose:
             "تمرین گفت‌وگوی دوطرفه و تصور یک نگاه مستقل برای یک کتاب یا داستان.",
@@ -2262,6 +4422,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practicing two-way dialogue and imagining an independent perspective for a book or story.",
+    instruction:
+      "Imagine that one of the books you have read can talk to you. Have a conversation with it—but this time, the book asks you questions too.",
+    steps: [
+      "Choose a book or story.",
+      "Imagine that the book can talk about itself and its reader.",
+      "Begin the conversation with a question or a statement.",
+      "Let the book ask you questions too.",
+      "At the end, identify one thing that has changed in the way you see the book or yourself.",
+    ],
+    questions: [
+      "What is the first thing you would ask the book?",
+      "What question might the book ask you?",
+      "If the book had a different opinion about one of its characters, what might it say?",
+      "What could the book know about its reader?",
+      "Is there something you think the book might dislike about what you think of it?",
+      "What new thing does this conversation reveal about the book or yourself?",
+    ],
+    teacherNote:
+      "Do not turn the book into a passive respondent. Part of what makes this activity interesting is that the book should have its own personality and perspective, and should ask the student questions as well.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2270,7 +4460,13 @@ export const atlas: AtlasLand[] = [
         title: "گفت‌وگویی که فقط با سؤال پیش می‌رود",
         description:
           "ساختن گفت‌وگویی که هر جمله‌ی آن سؤال است و هر سؤال اطلاعات یا معنای تازه‌ای به گفت‌وگو اضافه می‌کند.",
-
+          translations: {
+  en: {
+    title: "A Conversation Made Entirely of Questions",
+    description:
+      "Creating a conversation in which every sentence is a question, and each question adds new information or meaning.",
+  },
+},
         activity: {
           purpose:
             "فهمیدن اینکه سؤال می‌تواند علاوه بر گرفتن اطلاعات، گفت‌وگو را تغییر دهد، ابهام ایجاد کند یا مسیر فکر طرف مقابل را عوض کند.",
@@ -2303,6 +4499,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Understanding that questions can do more than gather information: they can change a conversation, create uncertainty, or shift the other person's line of thinking.",
+    instruction:
+      "Choose a situation in which two people are talking about something important or unusual. Write their conversation so that every sentence is a question—but each question must serve a purpose in the conversation.",
+    steps: [
+      "Choose a specific situation or event.",
+      "Place two people in that situation.",
+      "Move the conversation forward using questions only.",
+      "Each question should provide new information, create uncertainty, challenge something, or make the next question necessary.",
+      "By the end, the reader should understand something about the situation that they did not know at the beginning.",
+    ],
+    questions: [
+      "What is still unknown at the beginning of the conversation?",
+      "Which question could reveal the first important piece of information?",
+      "Which question might surprise the other person?",
+      "Is there a question whose answer could lead to the next question?",
+      "Which question could change an earlier interpretation?",
+      "What do we understand at the end that we did not know at the beginning?",
+    ],
+    teacherNote:
+      "The goal is not to produce a large number of questions. Each question should play a role in creating and advancing the conversation. The difference between this activity and Land 09M is that here, questions are used to build a dialogue and move the situation forward.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2311,7 +4537,13 @@ export const atlas: AtlasLand[] = [
         title: "گفت‌وگو با کسی که فقط یک کلمه می‌گوید",
         description:
           "نوشتن گفت‌وگویی معنادار با محدودیت یک‌کلمه‌ای برای یکی از طرفین.",
-
+          translations: {
+  en: {
+    title: "A Conversation with Someone Who Says Only One Word",
+    description:
+      "Writing a meaningful conversation with the restriction that one participant can reply using only one word.",
+  },
+},
         activity: {
           purpose:
             "تمرین ساختن معنا از پاسخ‌های بسیار محدود و توجه به نقش سؤال، موقعیت و نشانه‌ها در گفت‌وگو.",
@@ -2344,6 +4576,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practicing how to create meaning from very limited responses and noticing the role of questions, context, and clues in a conversation.",
+    instruction:
+      "You meet someone who responds to every question or statement you make with just one word. Even so, you have to keep the conversation going. Write the conversation.",
+    steps: [
+      "Choose a situation in which you meet this person.",
+      "Decide on this person's character or purpose.",
+      "Begin the conversation.",
+      "Make sure this person can respond using only one word.",
+      "Use your questions and reactions to keep the conversation meaningful.",
+    ],
+    questions: [
+      "Why does this person answer using only one word?",
+      "What is the first word they say?",
+      "What can you infer from a short response?",
+      "How can you find out more without getting a long answer?",
+      "Can one word have more than one meaning?",
+      "What have you learned about this person by the end?",
+    ],
+    teacherNote:
+      "The short responses should genuinely affect the shape of the conversation. Students can use the situation, their questions, and the other person's reactions to create additional meaning.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2352,7 +4614,13 @@ export const atlas: AtlasLand[] = [
         title: "گفت‌وگوی پشت در",
         description:
           "نوشتن گفت‌وگوی دو نفر که پشت یک در بسته‌اند، طوری که فقط از حرف‌ها اتفاق فهمیده شود.",
-
+          translations: {
+  en: {
+    title: "The Conversation Behind the Door",
+    description:
+      "Writing a conversation between two people behind a closed door, so that the reader discovers what is happening only through their words.",
+  },
+},
         activity: {
           purpose:
             "تمرین انتقال اطلاعات ناقص و ساختن موقعیت از راه گفت‌وگو، بدون توضیح مستقیم همه‌چیز برای خواننده.",
@@ -2385,6 +4653,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practicing how to convey incomplete information and build a situation through dialogue, without directly explaining everything to the reader.",
+    instruction:
+      "Two people are behind a closed door, and we cannot see what is happening inside the room. We can only hear their voices. Write their conversation so that the reader can infer what has happened from their words.",
+    steps: [
+      "Imagine an event or a secret inside the room.",
+      "Decide what the two people inside the room are talking about.",
+      "Write the conversation without directly describing the scene.",
+      "Use their sentences, reactions, and questions to give clues about what is happening.",
+      "Do not explain everything to the reader. Let them discover part of the story for themselves.",
+    ],
+    questions: [
+      "What has happened inside the room?",
+      "What does the reader not know at the beginning?",
+      "Which sentence could give the reader the first clue?",
+      "Is one of the characters hiding something from the other?",
+      "Which parts of the story should be understood only through what the characters say?",
+      "What becomes clear to the reader at the end, and what might remain unclear?",
+    ],
+    teacherNote:
+      "The strength of this activity lies in incomplete information. Do not ask students to explain everything that happened before writing the dialogue; the dialogue itself should carry the information.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2393,7 +4691,13 @@ export const atlas: AtlasLand[] = [
         title: "گفت‌وگوی دو درخت با دو نگاه متفاوت",
         description:
           "نوشتن گفت‌وگوی دو درخت که درباره‌ی یک تغییر مهم در محیط خود نظرهای متفاوتی دارند.",
-
+           translations: {
+  en: {
+    title: "A Conversation Between Two Trees with Different Perspectives",
+    description:
+      "Writing a conversation between two trees that have different opinions about an important change in their surroundings.",
+  },
+},
         activity: {
           purpose:
             "تمرین ساختن دو دیدگاه متفاوت بدون تقسیم شخصیت‌ها به «درست» و «غلط» و نشان دادن تفاوت نگاه از راه گفت‌وگو.",
@@ -2426,6 +4730,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practicing how to create two different perspectives without dividing the characters into 'right' and 'wrong', and showing their differences through dialogue.",
+    instruction:
+      "Imagine two trees that have lived in the same place for years. An important change is about to happen around them—for example, a playground will be built, part of the garden will be cut down, or the area will be turned into a park. The two trees have different opinions about this change. Write their conversation.",
+    steps: [
+      "Choose an important change that is about to happen in the trees' surroundings.",
+      "Give each tree a different point of view.",
+      "Find reasons to support both perspectives.",
+      "Write the conversation so that each tree can understand the other's point of view, even if it does not agree with it.",
+      "At the end, neither tree has to convince the other.",
+    ],
+    questions: [
+      "What change is about to happen in the trees' surroundings?",
+      "What does each tree think about this change?",
+      "Why does each tree hold that opinion?",
+      "What matters to one tree that might not matter to the other?",
+      "Could either tree accept part of what the other says?",
+      "If the trees themselves could make the final decision, what might they suggest?",
+    ],
+    teacherNote:
+      "Do not turn the trees into clichéd characters such as 'the wise old tree' and 'the hopeful young sapling'. Their disagreement should arise from their different situations, experiences, or needs, and both perspectives should be understandable.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
     ],
@@ -2435,12 +4769,23 @@ export const atlas: AtlasLand[] = [
     code: "10M",
     title: "انتخاب",
     description: "انتخاب کردن و فکر کردن درباره‌ی دلیل انتخاب.",
+    translations: {
+  en: {
+    title: "Choice",
+    description: "Making choices and thinking about the reasons behind them.",
+  },
+},
     situations: [
       {
         id: "10M-01",
         title: "یک ابرقدرت: پرواز یا نامرئی‌شدن",
         description: "انتخاب یکی از دو ابرقدرت و توضیح دلیل انتخاب.",
-
+         translations: {
+  en: {
+    title: "A Superpower: Flying or Becoming Invisible",
+    description: "Choosing one of two superpowers and explaining the reason for the choice.",
+  },
+},
         activity: {
           purpose:
             "تقویت توانایی انتخاب آگاهانه، تشخیص معیارهای شخصی برای تصمیم‌گیری و دفاع از یک انتخاب با دلیل.",
@@ -2473,6 +4818,41 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To strengthen the ability to make informed choices, identify personal decision-making criteria, and justify a choice with reasons.",
+
+    instruction:
+      "Imagine that you can have only one of these two superpowers for a year: flying or becoming invisible. Which one would you choose?",
+
+    steps: [
+      "Choose one of the two superpowers.",
+      "Think about what you could do with this power.",
+      "Explain why you prefer this power over the other one.",
+      "Think of one difficulty or limitation this power might have.",
+      "If you later realize that your choice was not right for you, think about what might make you keep it or change it.",
+    ],
+
+    questions: [
+      "Which superpower did you choose?",
+      "What is the most important reason for your choice?",
+      "What would you most like to do with this power?",
+      "What might make using this power difficult or troublesome?",
+      "If your friend chose the other power, what might their reason be?",
+      "If you later realized that the other choice suited you better, would you be willing to change your choice? Why?",
+    ],
+
+    teacherNote:
+      "The goal is not to arrive at a correct answer. Focus on the differences in students' decision-making criteria. Two students may choose the same power for completely different reasons. Also, encourage students to distinguish between 'something I like' and 'a reason I have for choosing it.'",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2481,7 +4861,13 @@ export const atlas: AtlasLand[] = [
         title: "بهترین و دوست‌داشتنی‌ترین",
         description:
           "انتخاب بهترین و دوست‌داشتنی‌ترین اثر از میان چیزهایی که قبلاً ساخته‌ای.",
-
+          translations: {
+  en: {
+    title: "The Best and the Most Beloved",
+    description:
+      "Choosing the best and the most beloved work from among things you have created before.",
+  },
+},
         activity: {
           purpose:
             "تقویت توانایی ارزش‌گذاری و فکر کردن درباره‌ی معیارهایی که باعث می‌شوند چیزی را بهترین یا دوست‌داشتنی‌ترین بدانیم.",
@@ -2513,6 +4899,40 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To strengthen the ability to evaluate and reflect on the criteria that lead us to consider something the best or the most beloved.",
+
+    instruction:
+      "Think about drawings, crafts, or other things you have made before. Which one do you consider the best, and which one do you like the most? Why?",
+
+    steps: [
+      "Recall a few drawings, crafts, or other things you have made before.",
+      "Choose one as your best work.",
+      "Choose one as the work you like the most.",
+      "Explain why you chose these two.",
+    ],
+
+    questions: [
+      "Which of your works do you consider the best?",
+      "Why do you consider it the best?",
+      "Which of your works do you like the most?",
+      "Why do you like this one more than the others?",
+      "Is the work you consider the best also the one you like the most? Why?",
+      "If someone else made a different choice, what might their reason be?",
+    ],
+
+    teacherNote:
+      "The goal is not to find a correct or shared definition of 'the best' and 'the most beloved.' Each student may have their own criteria, such as beauty, creativity, effort, a memory, or something personally important to them.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2520,7 +4940,13 @@ export const atlas: AtlasLand[] = [
         id: "10M-03",
         title: "اول کدام کار؟",
         description: "انتخاب اینکه چند کار روزمره را با چه ترتیبی انجام دهیم.",
-
+         translations: {
+  en: {
+    title: "Which Task First?",
+    description:
+      "Choosing the order in which to do several everyday tasks.",
+  },
+},
         activity: {
           purpose:
             "تقویت توانایی اولویت‌بندی و فکر کردن درباره‌ی معیاری که باعث می‌شود یک کار را زودتر از کارهای دیگر انجام دهیم.",
@@ -2552,6 +4978,40 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To strengthen the ability to set priorities and reflect on the criteria that lead us to do one task before another.",
+
+    instruction:
+      "When you get home from school, you have several things you want or need to do, such as homework, playing, and helping with a household task. You cannot do them all at once. Which one would you do first? Why?",
+
+    steps: [
+      "Choose a few things you want or need to do after school.",
+      "Decide which task you would do first.",
+      "Explain the reason for your choice.",
+      "Say what made you prioritize this task over the others.",
+    ],
+
+    questions: [
+      "Which task did you choose to do first?",
+      "What is the most important reason for your choice?",
+      "Was this task more necessary, something you liked more, or was there another reason?",
+      "What would change if you did another task first?",
+      "Why might your friend choose a different order?",
+      "If you could do only one of these tasks, which would you choose? Why?",
+    ],
+
+    teacherNote:
+      "The tasks mentioned in the scenario are only examples. Students may choose tasks from their own lives. The goal is not to find one correct order for everyone; what matters is that students can explain their own criteria for setting priorities.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2560,7 +5020,13 @@ export const atlas: AtlasLand[] = [
         title: "قانونی که دلت می‌خواهد عوض شود",
         description:
           "انتخاب یک قانون مدرسه، پیشنهاد تغییر آن و فکر کردن درباره‌ی نتیجه‌ی این تغییر.",
-
+          translations: {
+  en: {
+    title: "A Rule You Wish You Could Change",
+    description:
+      "Choosing a school rule, suggesting a change, and thinking about the possible consequences.",
+  },
+},
         activity: {
           purpose:
             "تقویت توانایی تصمیم‌گیری، تشخیص مسئله و دفاع از یک پیشنهاد با دلیل و توجه به پیامدهای تغییر.",
@@ -2593,6 +5059,41 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To strengthen decision-making, problem identification, and the ability to justify a proposal while considering the consequences of change.",
+
+    instruction:
+      "Choose a school rule that you think could be different. If you had the power to change it, what would you change? Why do you think this change would be better? After the rule changes, what might improve, and what new problem might arise?",
+
+    steps: [
+      "Choose a school rule that you think could be changed.",
+      "Explain what change you would make to it.",
+      "Write down your reason for suggesting this change.",
+      "Think about what might improve after the rule changes.",
+      "Also think of one new problem that might arise.",
+    ],
+
+    questions: [
+      "Which rule did you choose?",
+      "Why do you think this rule could be different?",
+      "If you had the power to change it, exactly what would you change?",
+      "Why do you think your proposed change would be better?",
+      "What might improve after this change?",
+      "What new problem might arise?",
+    ],
+
+    teacherNote:
+      "The goal is not simply to complain about school rules. Students should examine an existing situation, suggest a change, give reasons, and consider its possible consequences.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2601,7 +5102,13 @@ export const atlas: AtlasLand[] = [
         title: "یک روز بدون برق یا یک روز بدون اینترنت",
         description:
           "انتخاب میان دو محدودیت آشنا و فکر کردن درباره‌ی تأثیر هرکدام بر زندگی روزمره.",
-
+          translations: {
+  en: {
+    title: "A Day Without Electricity or a Day Without the Internet",
+    description:
+      "Choosing between two familiar limitations and thinking about how each would affect everyday life.",
+  },
+},
         activity: {
           purpose:
             "تمرین انتخاب در شرایط محدودیت و فکر کردن درباره‌ی چیزهایی که در یک تصمیم برای ما اهمیت دارند.",
@@ -2633,6 +5140,40 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To practice making choices under constraints and reflecting on what matters to us when making a decision.",
+
+    instruction:
+      "Imagine that tomorrow you will have to go without one of these two things: electricity or the internet. Which would you rather go without? Why? What would change for you during the day? What would your choice depend on?",
+
+    steps: [
+      "Decide whether going without electricity or going without the internet would be easier for you.",
+      "Explain the reason for your choice.",
+      "Think about the things that would change for you during the day.",
+      "Say which of these changes would matter most to you.",
+    ],
+
+    questions: [
+      "Which one did you choose to go without for a day?",
+      "What is the most important reason for your choice?",
+      "What would become more difficult for you during the day?",
+      "What could you do in a different way without that resource?",
+      "If your friend made a different choice, what might their reason be?",
+      "What did your choice depend on most: convenience, necessity, entertainment, communication, or something else?",
+    ],
+
+    teacherNote:
+      "The goal is not to find a correct answer. Both options should involve a real cost for the student, and the student should be able to explain the criteria behind preferring one over the other.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2641,7 +5182,13 @@ export const atlas: AtlasLand[] = [
         title: "دوستی که تعریف می‌کند یا دوستی که روراست است؟",
         description:
           "انتخاب میان دو نوع رفتار دوستانه و فکر کردن درباره‌ی ویژگی‌هایی که در یک دوستی برای ما اهمیت دارند.",
-
+          translations: {
+  en: {
+    title: "A Friend Who Praises You or a Friend Who Is Honest?",
+    description:
+      "Choosing between two kinds of friendly behavior and reflecting on the qualities that matter to us in a friendship.",
+  },
+},
         activity: {
           purpose:
             "فکر کردن درباره‌ی ویژگی‌هایی که در یک رابطه برای خودمان ارزشمند می‌دانیم و تفاوت میان چیزی که خوشایند است و چیزی که ممکن است به ما کمک کند.",
@@ -2673,6 +5220,40 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To reflect on the qualities we value in a relationship and the difference between something that feels pleasant and something that may actually help us.",
+
+    instruction:
+      "Imagine you have two friends. The first one praises you almost all the time and tells you that everything you do is great. The second one cares about you, but if they think you could do something better, they tell you what they really think, even if it is not always pleasant to hear. Now imagine you are about to do something important and can have only one of these friends by your side. Which one would you choose? Why?",
+
+    steps: [
+      "Choose one of the two friends.",
+      "Explain what matters most to you about their behavior.",
+      "Think about why you prefer this quality to the other friend's quality.",
+      "Explain the reason for your choice in a short piece of writing.",
+    ],
+
+    questions: [
+      "Which friend did you choose?",
+      "What matters most to you about their behavior?",
+      "Why did you prefer this quality to the other friend's quality?",
+      "Could hearing the second friend's opinion sometimes be upsetting but still helpful? Why?",
+      "If someone chose the first friend, what reasonable reason might they have?",
+      "Do you think a good friend should always say things that are pleasant to hear? Why?",
+    ],
+
+    teacherNote:
+      "The goal is not to identify the 'better friend.' Different answers can reveal what students value in a friendship, such as encouragement, honesty, support, comfort, or help in becoming better.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2680,7 +5261,12 @@ export const atlas: AtlasLand[] = [
         id: "10M-07",
         title: "بین سفر به گذشته یا سفر به آینده",
         description: "انتخاب جهت سفر با یک ماشین زمان یک‌بارمصرف.",
-
+        translations: {
+  en: {
+    title: "A Journey to the Past or the Future",
+    description: "Choosing the direction of a one-time journey in a time machine.",
+  },
+},
         activity: {
           purpose:
             "تقویت توانایی تصمیم‌گیری در شرایطی که هر دو انتخاب جذابیت و پیامدهای ناشناخته دارند و کمک به دانش‌آموز برای دفاع از انتخاب خود بر اساس هدف و کنجکاوی.",
@@ -2713,6 +5299,41 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To strengthen decision-making when both options are appealing and have unknown consequences, and to help students justify their choices based on their goals and curiosity.",
+
+    instruction:
+      "Imagine you have found a time machine that you can use only once. You can travel either to the past or to the future. You can visit only one point in time before returning. Which would you choose, and why? What is the most important thing you hope to gain from this journey? What might make the journey turn out differently from what you expect?",
+
+    steps: [
+      "Choose either the past or the future.",
+      "Decide what time you would like to visit.",
+      "Identify the most important thing you hope to gain from the journey.",
+      "Explain why this matters to you.",
+      "Think of something that might happen during the journey that goes against your expectations.",
+    ],
+
+    questions: [
+      "Would you travel to the past or the future? Why?",
+      "What is the most important thing you would want to see or find out during the journey?",
+      "If you traveled to the past, what might surprise you?",
+      "If you traveled to the future, what might turn out differently from what you expect?",
+      "If you could gain only one thing from the journey, what would it be?",
+      "What might make you later think that the other choice would have been better?",
+    ],
+
+    teacherNote:
+      "There is no correct answer to this scenario. The value of the activity lies in making a choice between two appealing but uncertain possibilities. The main focus should be on the student's goal, criteria, and reasons for choosing.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2720,7 +5341,12 @@ export const atlas: AtlasLand[] = [
         id: "10M-08",
         title: "یک دقیقه برای برداشتن",
         description: "انتخاب سه چیز برای برداشتن در یک دقیقه‌ی محدود.",
-
+         translations: {
+  en: {
+    title: "One Minute to Grab Things",
+    description: "Choosing three things to take with you when time is limited to one minute.",
+  },
+},
         activity: {
           purpose:
             "تقویت توانایی اولویت‌بندی، هزینه‌ی فرصت و توضیح اینکه چرا بعضی گزینه‌ها را بر گزینه‌های دیگر ترجیح می‌دهیم.",
@@ -2752,6 +5378,40 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To strengthen prioritization, understand opportunity cost, and explain why we prefer some options over others.",
+
+    instruction:
+      "Imagine you have only one minute to leave your room, and you can take only three things with you. What would you choose? For each choice, explain why you would rather take it than two other things.",
+
+    steps: [
+      "Choose three things from your room.",
+      "Compare each of your three choices with the things you did not take.",
+      "Write down your reason for each choice.",
+      "Explain what made you consider these three things more important.",
+    ],
+
+    questions: [
+      "What are the three things you chose?",
+      "Which of your choices is the most important? Why?",
+      "What did you think about most when making your choices?",
+      "What did you want to take but had to leave behind?",
+      "Why did you not choose it as one of your three things?",
+      "If you were allowed to take only one thing, which would you choose? Why?",
+    ],
+
+    teacherNote:
+      "The goal is not to find the 'right three things'; what matters are the student's prioritization criteria. Students may choose based on necessity, emotional value, usefulness, memories, or other reasons.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2760,7 +5420,13 @@ export const atlas: AtlasLand[] = [
         title: "قول به دوست یا کمک به خانواده؟",
         description:
           "انتخاب میان عمل به یک قول و کمک به یکی از اعضای خانواده در شرایطی که انجام هر دو ممکن نیست.",
-
+           translations: {
+  en: {
+    title: "Keeping a Promise to a Friend or Helping Your Family?",
+    description:
+      "Choosing between keeping a promise and helping a family member when it is not possible to do both.",
+  },
+},
         activity: {
           purpose:
             "استفاده از یک انتخاب دشوار برای فکر کردن درباره‌ی قول، رابطه، مسئولیت و ارزش‌هایی که در یک تصمیم برای ما اهمیت دارند.",
@@ -2792,6 +5458,40 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Using a difficult choice to reflect on promises, relationships, responsibilities, and the values that matter to us when making a decision.",
+
+    instruction:
+      "Imagine you have promised a friend that after school you will do something together that you have both been looking forward to for a long time. On the same day, a family member asks you to help with something important to them. If you go to meet your friend, you cannot help your family; if you stay to help, you cannot keep your promise. Which would you choose? Why?",
+
+    steps: [
+      "Choose one of the two options.",
+      "Explain why this choice matters more to you.",
+      "Think about the person you did not choose and say how your decision might affect them.",
+      "Explain the reason for your choice in a piece of writing.",
+    ],
+
+    questions: [
+      "Which did you choose: keeping your promise or helping your family?",
+      "What is the most important reason for your choice?",
+      "What mattered most to you when making this decision?",
+      "How do you think the person you did not choose might feel?",
+      "Could there be another reason for your choice as well?",
+      "If your friend or family member understood your decision, what would you want to explain to them?",
+    ],
+
+    teacherNote:
+      "The goal is not to find one correct answer. Both sides of the situation should matter to the student. This is a hypothetical scenario; students do not need to draw on real experiences involving their family or friendships.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2799,8 +5499,14 @@ export const atlas: AtlasLand[] = [
         id: "10M-10",
         title: "چه چیزی را انتخاب نمی‌کنم؟",
         description:
-          "اولویت‌بندی میان چند کار و کنار گذاشتن یکی از آن‌ها بر اساس معیارهای شخصی.",
-
+          "اولویت‌ بندی میان چند کار و کنار گذاشتن یکی از آن‌ها بر اساس معیارهای شخصی.",
+          translations: {
+  en: {
+    title: "What Will I Choose Not to Do?",
+    description:
+      "Prioritizing several tasks and setting one aside based on personal criteria.",
+  },
+},
         activity: {
           purpose:
             "تمرین اولویت‌بندی، هزینه‌ی فرصت و توضیح معیاری که باعث می‌شود یک کار را کنار بگذاریم.",
@@ -2832,6 +5538,40 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To practice prioritization, understand opportunity cost, and explain the criteria that lead us to leave one task aside.",
+
+    instruction:
+      "Imagine you have time to do only three things today. Write down four things you would like or need to do today. Now imagine you can do only three of them, so you have to leave one out. Which one will you choose not to do? Why? Explain what made you prefer the other three.",
+
+    steps: [
+      "Choose and write down four things you would like or need to do today.",
+      "Compare the four tasks with one another.",
+      "Set one of them aside.",
+      "Explain the reason for your choice.",
+    ],
+
+    questions: [
+      "What are the four things you chose?",
+      "Which task did you set aside?",
+      "What is the most important reason for leaving it out?",
+      "What made you prefer the other three tasks?",
+      "If your friend set aside one of the other three tasks, what might their reason be?",
+      "In your opinion, which criterion matters most in making this kind of choice: necessity, interest, usefulness, time, or something else? Why?",
+    ],
+
+    teacherNote:
+      "The goal is not to find the 'right choice.' Different answers can reveal the criteria students use when making decisions, such as necessity, interest, usefulness, time, other people, or consequences.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
     ],
@@ -2842,14 +5582,25 @@ export const atlas: AtlasLand[] = [
     code: "03M",
     title: "بیان احساس",
     description: "پیدا کردن زبان‌های تازه برای تجربه‌های درونی.",
-
+     translations: {
+  en: {
+    title: "Emotional Expression",
+    description: "Finding new languages for inner experiences.",
+  },
+},
     situations: [
       {
         id: "03M-01",
         title: "لحظه‌ای که غرق شادی شدم",
         description:
           "توصیف یک لحظه‌ی شادی یا هیجان از طریق نشانه‌ها، رفتار و جزئیات.",
-
+           translations: {
+  en: {
+    title: "A Moment When I Was Overwhelmed with Joy",
+    description:
+      "Describing a moment of joy or excitement through signs, behavior, and details.",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای تبدیل یک احساس درونی به نشانه‌های بیرونی، جزئیات حسی و تصویرهای قابل‌درک برای خواننده.",
@@ -2883,6 +5634,42 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To help students turn an inner feeling into outward signs, sensory details, and images that readers can understand.",
+
+    instruction:
+      "Remember a real moment when you felt very happy or excited. This time, instead of simply saying, 'I was very happy,' try to describe that moment of joy so that the reader can see it, hear it, and feel it.",
+
+    steps: [
+      "Choose a real moment when you felt great joy or excitement.",
+      "Think about the things you could see, hear, or touch at that moment.",
+      "Recall the changes in your body, such as your facial expression, hand movements, speaking speed, or heartbeat.",
+      "Remember a sentence, sound, or small event that made that moment even more joyful.",
+      "Write about the experience in a few paragraphs without repeatedly using words such as 'happy,' 'joyful,' or 'excited.'",
+      "At the end, choose one sentence or image that you think conveys the feeling of that moment most strongly.",
+    ],
+
+    questions: [
+      "What was the first sign that showed you were happy?",
+      "How did your body change at that moment?",
+      "What did you see or hear that you still remember?",
+      "If someone had watched you from the outside, how could they have known what you were feeling?",
+      "Did your happiness appear suddenly or grow gradually?",
+      "Which details in your writing could convey your feeling without using the word 'happiness'?",
+    ],
+
+    teacherNote:
+      "The goal is not to teach emotion vocabulary directly. Students should learn to express feelings through signs, behavior, bodily reactions, and details of the surroundings. If a piece of writing focuses only on the reason for the happiness, guide the student back to the moment itself and its observable signs.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2891,7 +5678,13 @@ export const atlas: AtlasLand[] = [
         title: "یک دلتنگی کوچک",
         description:
           "توصیف دلتنگی برای چیزی که دیگر مثل گذشته در زندگی حضور ندارد.",
-
+         translations: {
+  en: {
+    title: "A Little Longing",
+    description:
+      "Describing the feeling of missing something that is no longer part of life in the way it once was.",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای تبدیل یک احساس مبهم به خاطره، جزئیات و تصویرهای ملموس.",
@@ -2925,6 +5718,42 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To help students turn a vague feeling into memories, details, and tangible images.",
+
+    instruction:
+      "Think of something that is no longer part of your life in the way it once was. It might be an object, a season, a house, a street, a place, or something familiar. Write about missing it, but try to convey the feeling through details and memories rather than direct explanation.",
+
+    steps: [
+      "Choose an object, season, place, or familiar thing that you miss a little.",
+      "Recall one small, specific memory connected to it.",
+      "Find three details about it: something you saw, heard, touched, or smelled.",
+      "Explain what has changed and made you miss it.",
+      "Write your text so that the reader can understand the feeling without repeatedly seeing the word 'miss.'",
+      "At the end, write one sentence you would like to say to that thing if it could hear you.",
+    ],
+
+    questions: [
+      "What do you miss?",
+      "When was the last time you experienced it as you used to?",
+      "What is the smallest detail about it that you still remember?",
+      "What has changed and made you miss it?",
+      "If you could return to that time or place for one whole day, what would catch your attention first?",
+      "If you were not allowed to use the word 'miss,' how would you show this feeling in your writing?",
+    ],
+
+    teacherNote:
+      "Do not steer the activity toward very painful memories or sensitive losses. Options such as a season, an old school, a toy, a former home, a street, or a recreational place are more suitable. The main focus is on turning a feeling into tangible details.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2933,7 +5762,13 @@ export const atlas: AtlasLand[] = [
         title: "اسمش را نگو",
         description:
           "بیان یک احساس بدون نام بردن از آن، به‌گونه‌ای که خواننده بتواند آن را از نشانه‌ها حدس بزند.",
-
+          translations: {
+  en: {
+    title: "Don't Name It",
+    description:
+      "Expressing a feeling without naming it, so that the reader can infer it from the clues.",
+  },
+},
         activity: {
           purpose:
             "تقویت توانایی نشان دادن احساس به جای نام‌گذاری مستقیم و توجه به نشانه‌هایی که باعث می‌شوند خواننده یک احساس را از متن استنباط کند.",
@@ -2967,6 +5802,42 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To strengthen the ability to show a feeling instead of naming it directly, and to notice the clues that help readers infer a feeling from a text.",
+
+    instruction:
+      "Choose a feeling, but do not mention its name in your writing. Try to help the reader understand how you feel only through behavior, body language, thoughts, sounds, and events in the text.",
+
+    steps: [
+      "Choose a feeling, such as fear, joy, embarrassment, jealousy, calmness, or longing.",
+      "Find three clues that could show this feeling without naming it.",
+      "Create a short situation or choose a simple experience in which these clues could appear.",
+      "Write your text without directly naming the feeling.",
+      "Give your writing to a classmate and ask them to guess which feeling you have described.",
+      "Ask them which sentence or clue led them to that conclusion.",
+    ],
+
+    questions: [
+      "If you were not allowed to name your feeling, what would you use to express it?",
+      "What might a person's body reveal when they experience this feeling?",
+      "How does a person's behavior change in this state?",
+      "Is one clue enough to understand a feeling?",
+      "Which sentence in your writing shows the feeling most clearly?",
+      "Could two people interpret two different feelings from the same piece of writing? Why?",
+    ],
+
+    teacherNote:
+      "The goal is not to make the text deliberately vague. The clues should be clear enough for the reader to make an informed guess. After the guess, ask the student to point out which part of the writing led to that interpretation.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -2975,7 +5846,13 @@ export const atlas: AtlasLand[] = [
         title: "نقشه‌ی احساس",
         description:
           "تبدیل یک احساس به یک سرزمین خیالی و نوشتن درباره‌ی رابطه‌ی میان بخش‌های آن.",
-
+          translations: {
+  en: {
+    title: "A Map of a Feeling",
+    description:
+      "Turning a feeling into an imaginary land and writing about the relationships between its different parts.",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای تبدیل یک تجربه‌ی درونی به یک فضای خیالی و کشف اینکه بخش‌های مختلف یک احساس می‌توانند ویژگی‌ها، مسیرها و موانع متفاوتی داشته باشند.",
@@ -3009,6 +5886,42 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To help students transform an inner experience into an imaginary place and discover how different parts of a feeling can have different features, paths, and obstacles.",
+
+    instruction:
+      "Imagine that today's feeling is a land. This land might have mountains, rivers, forests, lakes, roads, caves, or anything else. Create a map of this land and then write about its different parts.",
+
+    steps: [
+      "Choose a feeling.",
+      "Imagine that this feeling has turned into a land.",
+      "Give different parts of this land their own features, such as a narrow path, a bright place, a crowded area, or an unfamiliar location.",
+      "Mark where you are on the map.",
+      "Choose a path from one point to another and explain what happens along the way.",
+      "Find a safe place, a difficult place, and an unknown place, and write about each one.",
+    ],
+
+    questions: [
+      "What is the name of your land of feelings?",
+      "Which part of the land is the largest? Why?",
+      "What feature of your feeling does each part represent?",
+      "Where are you in this land right now?",
+      "If you wanted to go somewhere else, which path would you choose?",
+      "If your feeling changed tomorrow, which part of the map would change?",
+    ],
+
+    teacherNote:
+      "Drawing is a way into writing, not the final goal. Symbols do not need to have fixed meanings; for example, a mountain does not necessarily have to represent difficulty. Ask students to explain the relationship between the elements of their map and their feelings. At the end, it is best for them to describe at least one part of the map in a short piece of writing.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3017,7 +5930,13 @@ export const atlas: AtlasLand[] = [
         title: "دو احساس با هم",
         description:
           "نوشتن درباره‌ی موقعیتی که هم‌زمان دو احساس متفاوت ایجاد می‌کند.",
-
+         translations: {
+  en: {
+    title: "Two Feelings at Once",
+    description:
+      "Writing about a situation that brings out two different feelings at the same time.",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای کشف اینکه یک اتفاق می‌تواند هم‌زمان احساس‌های متفاوت یا حتی متضاد ایجاد کند.",
@@ -3051,6 +5970,42 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To help students discover that a single event can bring about different or even opposite feelings at the same time.",
+
+    instruction:
+      "Think of a situation in which you experience two different feelings at the same time, such as being both happy and worried, both excited and embarrassed, or both longing for something and feeling calm. Write about these two feelings and show how each one expresses itself.",
+
+    steps: [
+      "Choose a real or imaginary situation that could bring about two different feelings.",
+      "Identify the two feelings that exist at the same time.",
+      "Find several clues for each feeling in thoughts, the body, behavior, or the surroundings.",
+      "Think about whether these two feelings conflict with each other or can exist side by side.",
+      "Write a short piece of narrative or descriptive text about the situation.",
+      "At the end, explain which feeling became stronger and why.",
+    ],
+
+    questions: [
+      "What happened to bring about these two different feelings at the same time?",
+      "Which clue relates to the first feeling, and which relates to the second?",
+      "Can two opposite feelings both be real at the same time?",
+      "Which feeling became stronger during the situation?",
+      "Did one feeling cause the other to change?",
+      "If someone saw only part of what happened, might they fail to notice one of the feelings?",
+    ],
+
+    teacherNote:
+      "Do not require students to use a personal experience. They can create an imaginary situation. The goal is not simply to list feelings; students should show how each feeling appears in behavior, thoughts, or the body, and how the two feelings coexist in the same situation.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3059,7 +6014,13 @@ export const atlas: AtlasLand[] = [
         title: "موسیقی چه می‌گوید؟",
         description:
           "شنیدن یک قطعه، ساختن برداشت احساسی و مقایسه‌ی آن با متنی که برای موسیقی نوشته شده است.",
-
+          translations: {
+  en: {
+    title: "What Does the Music Say?",
+    description:
+      "Listening to a musical piece, forming an emotional interpretation, and comparing it with the text written about the music.",
+  },
+},
         activity: {
           purpose:
             "تقویت شنیدن دقیق، تشخیص نشانه‌های احساسی و درک تفاوت میان برداشت شخصی و معنایی که یک اثر می‌تواند در متن یا زمینه‌ی خود داشته باشد.",
@@ -3093,6 +6054,42 @@ export const atlas: AtlasLand[] = [
             type: "audio",
             items: ["/audio/03M/03M-06.ogg"],
           },
+          translations: {
+  en: {
+    purpose:
+      "To strengthen careful listening, recognition of emotional cues, and understanding of the difference between personal interpretation and the meaning a work may have within its own text or context.",
+
+    instruction:
+      "Listen to a piece of music without first knowing what the composer has written about it. Notice what feelings, images, or events the music brings to your mind. Then read the text related to the piece and compare it with your own interpretation.",
+
+    steps: [
+      "Listen to the piece once without writing anything.",
+      "Listen a second time and write down a few words or images that come to mind.",
+      "Pay attention to changes in tempo, intensity, repetition of sounds, rising and falling musical lines, and silences.",
+      "Choose one feeling, image, or event and explain which part of the music led you to it.",
+      "Now read the text related to the piece: Antonio Vivaldi – Spring: Birds greet spring with joyful songs. Streams flow as a gentle breeze blows. Suddenly, the sky grows dark, and thunder announces a storm. As the storm subsides, the birds begin singing again.",
+      "Finally, describe the music to someone who has never heard it.",
+    ],
+
+    questions: [
+      "What was the first feeling or image the music brought to your mind?",
+      "Which part of the music had the greatest influence on your interpretation?",
+      "Did changes in the tempo or intensity of the music affect your feelings as the piece progressed?",
+      "Where did the text related to the piece agree with your interpretation?",
+      "Where was your interpretation different from the text?",
+      "If someone had a different interpretation, what evidence in the music might support it?",
+    ],
+
+    teacherNote:
+      "The goal is not to find the 'correct feeling' or guess what the composer intended. What matters is that students distinguish between 'my interpretation' and 'what the text or context of the work says,' and can point to features of the music that support their interpretation.",
+
+    materials: {
+      required: true,
+      type: "audio",
+      items: ["/audio/03M/03M-06.ogg"],
+    },
+  },
+},
         },
       },
 
@@ -3101,7 +6098,13 @@ export const atlas: AtlasLand[] = [
         title: "چهره‌های خاموش",
         description:
           "استنباط یک احساس از نشانه‌های یک تصویر و جدا کردن مشاهده از حدس.",
-
+          translations: {
+  en: {
+    title: "Silent Faces",
+    description:
+      "Inferring a feeling from the clues in an image and distinguishing observation from guessing.",
+  },
+},
         activity: {
           purpose:
             "تقویت توجه به نشانه‌های غیرکلامی و درک اینکه احساسات را معمولاً مستقیم نمی‌بینیم، بلکه از نشانه‌ها درباره‌ی آن‌ها برداشت می‌کنیم.",
@@ -3136,6 +6139,43 @@ export const atlas: AtlasLand[] = [
             type: "image",
             items: ["/images/03M/03M-07.jfif"],
           },
+          translations: {
+  en: {
+    purpose:
+      "To strengthen attention to nonverbal cues and understand that we do not usually see feelings directly; instead, we form interpretations about them based on clues.",
+
+    instruction:
+      "Look at the image of a face. You have no information about the person in it. First, identify only what you can actually see in the image. Then use those clues to come up with several possibilities about how the person might be feeling, and choose one to write about.",
+
+    steps: [
+      "Look carefully at the image and spend a few seconds observing it without writing.",
+      "Write down what you can actually see: facial expression, gaze, lighting, clothing, surroundings, and other details.",
+      "Choose three clues that influence your interpretation of the person's feelings.",
+      "Come up with two or three possibilities about the person's feelings or situation.",
+      "Choose one possibility and explain what might have happened before this moment.",
+      "Write a short story.",
+      "At the end, identify which parts of your writing are direct observations from the image and which parts you have made up.",
+    ],
+
+    questions: [
+      "What can you actually see in the image?",
+      "Which clue helped you infer the person's feelings?",
+      "Can you imagine a different feeling that could be suggested by these same clues?",
+      "What might have happened before this image was taken?",
+      "Which parts of your writing are observations, and which are guesses or imagination?",
+      "If one detail were removed from the image, would your interpretation change?",
+    ],
+
+    teacherNote:
+      "Several different interpretations can be acceptable, as long as students can point to a clue in the image to support them. The important question is: 'What in the image led you to that conclusion?' Avoid turning the image too quickly into one definite story.",
+
+    materials: {
+      required: true,
+      type: "image",
+      items: ["/images/03M/03M-07.jfif"],
+    },
+  },
+},
         },
       },
 
@@ -3144,7 +6184,13 @@ export const atlas: AtlasLand[] = [
         title: "امروز دلم شبیه ... بود",
         description:
           "بیان یک احساس با انتخاب تصویری که ویژگی‌های دقیق و مشترکی با آن احساس دارد.",
-
+          translations: {
+  en: {
+    title: "Today, My Heart Was Like...",
+    description:
+      "Expressing a feeling by choosing an image that shares precise qualities with that feeling.",
+  },
+},
         activity: {
           purpose:
             "تقویت توانایی استفاده‌ی دقیق از تشبیه برای بیان تجربه‌ی درونی و پیدا کردن رابطه‌ای شخصی و غیرکلیشه‌ای میان یک چیز و یک احساس.",
@@ -3179,6 +6225,43 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To strengthen the ability to use precise similes to express inner experiences and find personal, non-clichéd connections between an object and a feeling.",
+
+    instruction:
+      "Complete the sentence: 'Today, my heart was like ...' You can choose anything: a room, a wet shoe, a window, a piece of cloud, a street, or something else. But choosing something is not enough; you must explain exactly which quality makes it resemble your feeling.",
+
+    steps: [
+      "Choose the feeling you have been experiencing most strongly today.",
+      "Find something that you think could represent this feeling.",
+      "Identify at least two precise qualities of that thing.",
+      "Explain how each quality relates to your feeling.",
+      "If your first simile is too ordinary, find a more unexpected option.",
+      "Turn the opening sentence into a short piece of writing.",
+      "At the end, compare two of your similes and explain which one conveys the feeling better and why.",
+    ],
+
+    questions: [
+      "What was your heart like today?",
+      "Exactly which quality of that thing relates to your feeling?",
+      "Can you find a more precise quality instead of a general one?",
+      "If you changed your first simile, what else would you choose?",
+      "Which simile conveys your feeling better? Why?",
+      "Could two people express a similar feeling through two completely different images?",
+    ],
+
+    teacherNote:
+      "The value of the activity lies not in how strange the simile is, but in how precise the connection is. For example, 'My heart was like a flower because it was beautiful' creates a weak connection. Ask students to find a more specific quality that genuinely relates to their inner experience.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3187,7 +6270,13 @@ export const atlas: AtlasLand[] = [
         title: "شهری که چند چیز در آن نیست",
         description:
           "کشف احساس‌هایی که از نشانه‌های زندگی یک شهر کم‌رنگ یا ناپدید شده‌اند.",
-
+          translations: {
+  en: {
+    title: "A City Missing a Few Things",
+    description:
+      "Discovering which feelings have faded or disappeared through clues in the everyday life of a city.",
+  },
+},
         activity: {
           purpose:
             "تقویت توانایی استنباط احساس از رفتار و موقعیت و درک اینکه نبودن یک احساس را می‌توان از تغییر رفتار آدم‌ها حدس زد.",
@@ -3221,6 +6310,42 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To strengthen the ability to infer feelings from behavior and situations, and understand that the absence of a feeling can sometimes be inferred from changes in people's behavior.",
+
+    instruction:
+      "Read the following text:\n\n'In this city, people are less willing to try new things. If they see something unusual in the street, they usually walk past it without asking what it is.\n\nIf someone falls, most people wait for them to get up on their own. If something goes wrong several times, people usually stop trying again.\n\nSchools are quiet and orderly. Children mostly do the things they already know how to do, and few people ask, \"What would happen if we did it differently?\"'\n\nWhat feelings do you think have faded or disappeared in this city?",
+
+    steps: [
+      "Read the text carefully.",
+      "Choose two or three feelings that you think have faded in this city.",
+      "For each feeling, find one or more sentences in the text that led you to this conclusion.",
+      "Choose one of these feelings and imagine what the first sign of its return to the city would be.",
+      "Write a short piece of text showing how people change after that feeling returns.",
+      "At the end, explain why you think this feeling matters in people's lives.",
+    ],
+
+    questions: [
+      "Which feeling do you think has faded in this city?",
+      "Which sentence in the text led you to that conclusion?",
+      "Can you think of another feeling that could also fit the same sentences?",
+      "If that feeling returned to the city, what would be the first change in people's behavior?",
+      "Could the absence of a feeling sometimes be a good thing?",
+      "If only one of the missing feelings could return, which would you choose and why?",
+    ],
+
+    teacherNote:
+      "There is no single answer, but every interpretation should be connected to a clue in the text. Keep the activity away from 'guessing the word the teacher has in mind.' The goal is to infer feelings from behavior and then imagine the role those feelings play in people's lives.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3229,7 +6354,13 @@ export const atlas: AtlasLand[] = [
         title: "ترسی که یک‌بار داشتم و گذشت",
         description:
           "روایت یک ترس کوچک از لحظه‌ی شروع تا زمانی که شدت آن تغییر می‌کند.",
-
+           translations: {
+  en: {
+    title: "A Fear I Once Had That Passed",
+    description:
+      "Narrating a small fear from the moment it begins until its intensity changes.",
+  },
+},
         activity: {
           purpose:
             "کمک به دانش‌آموز برای مشاهده‌ی تغییر یک احساس در طول زمان و کشف اینکه چه چیزی می‌تواند شدت ترس را تغییر دهد.",
@@ -3265,6 +6396,44 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "To help students observe how a feeling changes over time and discover what can affect the intensity of fear.",
+
+    instruction:
+      "Remember a small fear that you can comfortably talk about, such as being afraid of a sound, the dark, an animal, an event, or a situation. You do not need to write about very personal or intense fears. Start your story at the moment you first felt afraid and continue until you realized you were no longer as afraid as before.",
+
+    steps: [
+      "Choose a small, manageable fear.",
+      "Identify the moment when you first became aware of your fear.",
+      "Describe the changes in your body and thoughts while you were afraid.",
+      "Explain what made the fear continue or grow stronger.",
+      "Identify the moment when your fear began to fade.",
+      "Write the ending of your story by describing how you felt after the fear had lessened.",
+      "At the end, think about whether the situation changed, or whether your perspective and feelings about it changed.",
+    ],
+
+    questions: [
+      "What was the first sign that made you realize you were afraid?",
+      "How did your body react at that moment?",
+      "What kinds of things was your mind imagining?",
+      "What made your fear grow stronger or weaker?",
+      "When did you realize that you were no longer as afraid as before?",
+      "How did you feel after your fear had faded?",
+      "If the same situation happened again, would your reaction be the same as before? Why?",
+    ],
+
+    teacherNote:
+      "Guide students toward choosing a small, manageable fear, and do not force them to recount a sensitive experience. The value of the activity lies in observing the course of a feeling: its beginning, increase, change, and decrease—not in the intensity or distressing nature of the experience.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
     ],
@@ -3276,11 +6445,24 @@ export const atlas: AtlasLand[] = [
     title: "پرسش‌نویسی",
     description:
       "یاد گرفتن اینکه پیش از پاسخ‌دادن، سؤال‌های بهتر، متفاوت‌تر و پُراطلاعات‌تر بسازیم.",
-    situations: [
+    translations: {
+  en: {
+    title: "Question Writing",
+    description:
+      "Learning to create better, more varied, and more informative questions before trying to answer.",
+  },
+},
+      situations: [
       {
         id: "09M-01",
         title: "صد پرسش درباره‌ی یک قطره باران",
         description: "ساختن پرسش‌های متفاوت درباره‌ی چیزی ساده و آشنا.",
+         translations: {
+  en: {
+    title: "One Hundred Questions About a Raindrop",
+    description: "Creating different questions about something simple and familiar.",
+  },
+},
         activity: {
           purpose:
             "گسترش توانایی تولید پرسش و تجربه‌ی این نکته که یک موضوع ساده می‌تواند از زاویه‌های بسیار متفاوت بررسی شود.",
@@ -3308,6 +6490,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Expanding the ability to generate questions and discovering that a simple subject can be explored from many different angles.",
+    instruction:
+      "Imagine a raindrop resting on a windowpane. You are not supposed to answer questions about it; your task is to create as many questions as you can. Try to make your questions different from one another, looking at the raindrop from a fresh angle each time.",
+    steps: [
+      "First, write five simple questions about the raindrop.",
+      "Now create questions about the raindrop's past. For example, where did it come from, or where was it before reaching the window?",
+      "Write a few questions about the raindrop's future.",
+      "Ask questions from the perspective of a scientist, a poet, a bird, or the raindrop itself.",
+      "Create at least three questions that cannot be answered with just one word.",
+      "Finally, choose the three questions you would most like to know the answers to, and explain why.",
+    ],
+    questions: [
+      "Which question makes you the most curious?",
+      "Which question comes from an angle you had not thought of at first?",
+      "Which question does not have a short answer?",
+      "Do you have two questions about the same thing that approach it from completely different angles?",
+      "If the raindrop could ask you a question, what would it ask?",
+    ],
+    teacherNote:
+      "The goal is not simply to reach the number one hundred. After generating the questions, it is better to examine them in terms of the variety of perspectives and types of curiosity they express. If students produce similar questions, invite them to change their point of view.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3316,7 +6528,14 @@ export const atlas: AtlasLand[] = [
         title: "پرسش‌های یک ربات تازه‌به‌دنیا‌آمده",
         description:
           "دیدن چیزهای آشنا از جایگاه موجودی که هیچ‌چیز درباره‌ی زندگی انسان‌ها نمی‌داند.",
-        activity: {
+           translations: {
+  en: {
+    title: "Questions from a Newly Awakened Robot",
+    description:
+      "Seeing familiar things from the perspective of a being that knows nothing about human life.",
+  },
+},
+          activity: {
           purpose:
             "تقویت نگاه بیگانه به امور آشنا و کشف اینکه بسیاری از چیزهای روزمره فقط به دلیل عادت، بدیهی به نظر می‌رسند.",
           instruction:
@@ -3342,6 +6561,35 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Developing the ability to look at familiar things as an outsider and discovering that many everyday things seem obvious only because we are used to them.",
+    instruction:
+      "Imagine a robot that has become conscious for the very first time today. It knows nothing about human life: it does not know what school or family is, how people eat, or even what it means to say hello. Write down the questions it might ask.",
+    steps: [
+      "Choose five completely ordinary things from everyday life.",
+      "For each one, create a question that a human would not usually ask simply because they are so familiar with it.",
+      "Write the robot's questions so that they genuinely arise from its unfamiliarity with the world.",
+      "Choose one of the questions and guess why it might be difficult for a human to answer.",
+      "Finally, take one of the robot's questions seriously yourself and think about it.",
+    ],
+    questions: [
+      "What was the strangest question the robot asked?",
+      "Which everyday thing no longer seems so obvious when seen through the robot's eyes?",
+      "If the robot asked about school, what might it ask?",
+      "Which of its questions made you rethink something yourself?",
+      "If you could ask the robot only one question, what would it be?",
+    ],
+    teacherNote:
+      "Do not steer students toward questions that are merely funny. The value of this activity lies in making the familiar seem unfamiliar: noticing things we no longer question because we are used to them.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3350,7 +6598,14 @@ export const atlas: AtlasLand[] = [
         title: "دستورالعملی با یک مرحله‌ی گمشده",
         description:
           "خواندن یک دستورالعمل ناقص و طرح سؤال‌هایی برای پیدا کردن اطلاعاتی که جا افتاده است.",
-        activity: {
+           translations: {
+  en: {
+    title: "Instructions with a Missing Step",
+    description:
+      "Reading an incomplete set of instructions and asking questions to find the missing information.",
+  },
+},
+          activity: {
           purpose:
             "تقویت توانایی تشخیص اطلاعات ناقص و ساختن پرسش‌هایی که یک خلأ اطلاعاتی را آشکار می‌کنند.",
           instruction:
@@ -3377,6 +6632,36 @@ export const atlas: AtlasLand[] = [
             type: "text",
             items: ["/text/09M/09M-03.txt"],
           },
+          translations: {
+  en: {
+    purpose:
+      "Developing the ability to identify incomplete information and formulate questions that reveal what is missing.",
+    instruction:
+      "You have been given a set of instructions, but an important step has been removed. You do not know exactly what is missing. By asking suitable questions, you must figure out what information is needed.",
+    steps: [
+      "Read the incomplete instructions carefully.",
+      "Identify the point at which you cannot confidently move on to the next step.",
+      "Create five questions that could help you find the missing step.",
+      "Arrange your questions from the broadest to the most specific.",
+      "Choose the one question you would ask if you were allowed to ask only one.",
+      "Finally, use the available clues to make an educated guess about the missing step.",
+    ],
+    questions: [
+      "At exactly what point did you realize something was missing?",
+      "Which question could give you the most information?",
+      "What information do you still not have?",
+      "Can two different questions help uncover the same piece of information?",
+      "If the answer to one of your questions is unexpected, what would you ask next?",
+    ],
+    teacherNote:
+      "The goal is not to guess the answer the teacher has in mind. The goal is to identify precisely what information is needed and create questions that can reveal the gap.",
+    materials: {
+      required: true,
+      type: "text",
+      items: ["/text/09M/09M-03.txt"],
+    },
+  },
+},
         },
       },
 
@@ -3385,7 +6670,14 @@ export const atlas: AtlasLand[] = [
         title: "کفش وسط جنگل",
         description:
           "طرح سؤال درباره‌ی یک نشانه‌ی مبهم، بدون عجله برای ساختن یک توضیح قطعی.",
-        activity: {
+           translations: {
+  en: {
+    title: "A Shoe in the Middle of the Forest",
+    description:
+      "Asking questions about an ambiguous clue without rushing to form a definite explanation.",
+  },
+},
+          activity: {
           purpose:
             "تقویت کنجکاوی و توانایی تولید پرسش درباره‌ی یک موقعیت مبهم، بدون اینکه اولین حدس به‌عنوان واقعیت پذیرفته شود.",
           instruction:
@@ -3412,6 +6704,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Developing curiosity and the ability to generate questions about an ambiguous situation without accepting the first guess as fact.",
+    instruction:
+      "In the middle of a forest, you find a single shoe. There is no one around. The shoe looks completely ordinary, but it is unclear why it is there. Before making up a story about it, write questions that could help uncover its mystery.",
+    steps: [
+      "Identify everything you actually know about the situation.",
+      "Create five questions about the shoe itself.",
+      "Create a few questions about the person who might own it.",
+      "Write a few questions about the area around the shoe.",
+      "Create questions that could help distinguish between several possible explanations.",
+      "Finally, come up with two or three different hypotheses about the shoe.",
+    ],
+    questions: [
+      "Which question could give you the most information?",
+      "What do you know, and what are you only guessing?",
+      "Can you come up with two completely different explanations for why the shoe is there?",
+      "What question would you need to ask to distinguish between those two explanations?",
+      "If you were allowed to find out just one more thing about the situation, what would you ask?",
+    ],
+    teacherNote:
+      "No image is needed. The situation of a shoe in the middle of a forest is deliberately incomplete and ambiguous, so students can use questions to identify what information they need.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3420,7 +6742,14 @@ export const atlas: AtlasLand[] = [
         title: "صدایی که نمی‌دانی از کجاست",
         description:
           "ساختن سؤال‌هایی که بتوانند میان احتمال‌های مختلف درباره‌ی یک صدای ناشناخته تفاوت ایجاد کنند.",
-        activity: {
+           translations: {
+  en: {
+    title: "A Sound Whose Source You Cannot Identify",
+    description:
+      "Creating questions that can distinguish between different possibilities about the source of an unfamiliar sound.",
+  },
+},
+          activity: {
           purpose:
             "تقویت پرسش‌گری تحقیقی و استفاده از سؤال برای محدود کردن یک مسئله‌ی ناشناخته.",
           instruction:
@@ -3447,6 +6776,36 @@ export const atlas: AtlasLand[] = [
             type: "audio",
             items: ["/audio/09M/09M-05.mp3"],
           },
+          translations: {
+  en: {
+    purpose:
+      "Developing investigative questioning and using questions to narrow down an unknown problem.",
+    instruction:
+      "You hear a sound, but you do not know where it is coming from. There are several possible sources. Before deciding what the sound is, design questions whose answers could help you narrow down the possibilities.",
+    steps: [
+      "Listen carefully to the unfamiliar sound.",
+      "Think of several different possible sources for it.",
+      "Create questions that could give you new information about the sound.",
+      "Choose questions that could help distinguish between the different possibilities.",
+      "Based on the possible answers, come up with three hypotheses about the source of the sound.",
+      "Choose one final question that would be most helpful in distinguishing between your hypotheses.",
+    ],
+    questions: [
+      "Which question could give you the most information?",
+      "Which question could rule out several possibilities at once?",
+      "If the answer to a question is yes, which possibilities remain?",
+      "If the answer is no, what changes?",
+      "If the answers do not match your first guess, what new question would you ask?",
+    ],
+    teacherNote:
+      "The goal is not to guess the source of the sound as quickly as possible. The important criteria are how much new information a question provides and how well it distinguishes between possibilities.",
+    materials: {
+      required: true,
+      type: "audio",
+      items: ["/audio/09M/09M-05.mp3"],
+    },
+  },
+},
         },
       },
 
@@ -3455,7 +6814,14 @@ export const atlas: AtlasLand[] = [
         title: "یک جواب، پنج سؤال",
         description:
           "دریافت چند پاسخ کوتاه و ساختن سؤال‌های متفاوتی که بتوانند همان پاسخ‌ها را به دنبال داشته باشند.",
-        activity: {
+          translations: {
+  en: {
+    title: "One Answer, Five Questions",
+    description:
+      "Receiving several short answers and creating different questions that could lead to those exact answers.",
+  },
+},
+          activity: {
           purpose:
             "درک این نکته که یک پاسخ کوتاه می‌تواند حاصل سؤال‌های کاملاً متفاوت باشد و تمرین انعطاف در ساختن سؤال.",
           instruction:
@@ -3480,6 +6846,34 @@ export const atlas: AtlasLand[] = [
             type: "text",
             items: ["/text/09M/09M-06.txt"],
           },
+          translations: {
+  en: {
+    purpose:
+      "Understanding that one short answer can result from completely different questions and practicing flexibility in question formation.",
+    instruction:
+      "You will be given five short answers. For each answer, write several different questions that could be answered with exactly that answer. Try not to make your questions sound alike just by changing a few words. Imagine different situations for each answer.",
+    steps: [
+      "Read each answer carefully.",
+      "For each answer, create one simple, natural question.",
+      "Now create another question for the same answer, but imagine a different situation.",
+      "Create a question that approaches the same answer from another angle.",
+      "Compare your questions and see whether they really describe different situations.",
+    ],
+    questions: [
+      "Which answer inspired the greatest number of different questions?",
+      "Which questions shared the same answer but described completely different situations?",
+      "Can you create a question for one answer that your friend might never have thought of?",
+      "Which question do you find the most interesting, and why?",
+    ],
+    teacherNote:
+      "The goal is not to repeat one question using different words. The value of this activity lies in creating different situations and perspectives that can lead to the same answer.",
+    materials: {
+      required: true,
+      type: "text",
+      items: ["/text/09M/09M-06.txt"],
+    },
+  },
+},
         },
       },
 
@@ -3488,7 +6882,14 @@ export const atlas: AtlasLand[] = [
         title: "اگر فقط یک چیز را می‌دانستی...",
         description:
           "انتخاب یک سؤال مهم در موقعیتی که اطلاعات کمی درباره‌ی آن داریم.",
-        activity: {
+           translations: {
+  en: {
+    title: "If You Could Know Only One Thing...",
+    description:
+      "Choosing an important question in a situation where we have very little information.",
+  },
+},
+          activity: {
           purpose:
             "تمرین تشخیص اینکه در یک موقعیت ناشناخته، دانستن کدام اطلاعات می‌تواند بیشترین کمک را به فهم موقعیت کند.",
           instruction:
@@ -3515,6 +6916,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practicing how to identify which piece of information would be most helpful in understanding an unfamiliar situation.",
+    instruction:
+      "Imagine you are about to enter a place you have never been before. You can ask only one question and receive only one answer. Choose your question so that knowing its answer would help you as much as possible.",
+    steps: [
+      "Read the situation carefully.",
+      "Think of several different questions you could ask and write them down, either in your mind or on paper.",
+      "Consider what each answer would tell you.",
+      "Choose only one question.",
+      "Explain why you chose this question over the others.",
+      "Think about what would become clear if you knew the answer, and what would still remain unknown.",
+    ],
+    questions: [
+      "What other questions could you have asked?",
+      "Why did you finally choose this particular question?",
+      "What would the answer to this question clarify for you?",
+      "What would still remain unknown even after receiving the answer?",
+      "If you were allowed to ask just one more question, what would it be?",
+    ],
+    teacherNote:
+      "The goal is not to find one correct answer. The student should determine the criteria for making the choice. You can ask them to explain what information each question would provide and why they consider one more important than the others.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3523,7 +6954,14 @@ export const atlas: AtlasLand[] = [
         title: "سؤال قبل از اختراع",
         description:
           "فکرکردن به مسئله یا نیازی که می‌تواند پیش از یک اختراع به شکل یک سؤال ظاهر شود.",
-        activity: {
+          translations: {
+  en: {
+    title: "The Question Before the Invention",
+    description:
+      "Thinking about a problem or need that might have appeared as a question before an invention was created.",
+  },
+},
+          activity: {
           purpose:
             "کمک به دانش‌آموز برای دیدن رابطه‌ی میان سؤال، نیاز، مسئله و پیدا کردن راه‌حل.",
           instruction:
@@ -3548,6 +6986,34 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Helping students recognize the relationship between questions, needs, problems, and the search for solutions.",
+    instruction:
+      "Choose a familiar device, such as a telephone, bicycle, lamp, refrigerator, or clock. Now go back to a time when this device did not yet exist. Think about the problem people faced and the questions they might have asked about it.",
+    steps: [
+      "Choose a familiar device.",
+      "Think about what need or problem existed before this device came along.",
+      "Create several questions about that need or problem.",
+      "Try to make sure your questions do not directly suggest a particular solution.",
+      "Choose one question that could open up a path toward thinking about a solution.",
+    ],
+    questions: [
+      "What made this question seem important to you?",
+      "Can one problem have several different starting questions?",
+      "Which question helps clarify the problem itself, and which one moves toward a solution more quickly?",
+      "If this device did not exist today, what new question might people ask?",
+    ],
+    teacherNote:
+      "The goal is not to reconstruct the actual history of the invention. Students do not need to guess the historical question asked by its inventor. What matters is recognizing how a question can turn a need into a problem that can be explored and thought about.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3556,7 +7022,14 @@ export const atlas: AtlasLand[] = [
         title: "سؤال‌های یک مسافر",
         description:
           "انتخاب پنج سؤال پُراطلاعات برای شناختن شهری که هیچ‌چیز درباره‌اش نمی‌دانی.",
-        activity: {
+           translations: {
+  en: {
+    title: "A Traveler's Questions",
+    description:
+      "Choosing five information-rich questions to learn about a city you know nothing about.",
+  },
+},
+          activity: {
           purpose:
             "تمرین انتخاب سؤال‌هایی که با تعداد محدود، بیشترین اطلاعات را درباره‌ی یک موقعیت ناشناخته فراهم می‌کنند.",
           instruction:
@@ -3583,6 +7056,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practicing how to choose questions that provide the greatest amount of information about an unfamiliar situation when the number of questions is limited.",
+    instruction:
+      "You have arrived in a city for the first time, and you know nothing about it. You can ask one of its residents only five questions. Choose your questions so that these five answers help you learn as much as possible about the city.",
+    steps: [
+      "Imagine what things about the city are still unknown to you.",
+      "Come up with different possible questions. For now, you do not need to limit yourself to five.",
+      "Now keep only five questions.",
+      "For each question, think about what information its answer would give you.",
+      "Check whether your questions ask for repeated information or whether each one reveals something new.",
+      "Finally, arrange your five questions in order of importance.",
+    ],
+    questions: [
+      "Which question gives you the greatest amount of information?",
+      "Can one question give you information about several different things?",
+      "If you had to remove one of your five questions, which would you remove, and why?",
+      "What would still remain unknown after receiving all five answers?",
+      "If you had the chance to ask just one more question, what would it be?",
+    ],
+    teacherNote:
+      "The five-question limit should be a genuine constraint of the activity. The goal is not to cover a fixed set of categories. Students should decide for themselves which questions would provide the most information.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3591,7 +7094,14 @@ export const atlas: AtlasLand[] = [
         title: "جعبه‌ی بسته",
         description:
           "ساختن سؤال‌هایی که با پاسخ‌های بله و نه، احتمال‌های مختلف را درباره‌ی یک چیز ناشناخته کم کنند.",
-        activity: {
+           translations: {
+  en: {
+    title: "The Sealed Box",
+    description:
+      "Creating questions with yes-or-no answers that narrow down the possibilities about something unknown.",
+  },
+},
+          activity: {
           purpose:
             "تجربه‌ی عملی این نکته که سؤال‌ها ارزش یکسانی ندارند و یک سؤال خوب می‌تواند با یک پاسخ، احتمال‌های زیادی را کنار بگذارد.",
           instruction:
@@ -3618,6 +7128,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Experiencing firsthand that not all questions are equally valuable, and that a good question can eliminate many possibilities with a single answer.",
+    instruction:
+      "There is a sealed box on the table. Something is inside it, but you cannot see it. You can only ask questions that can be answered with yes or no. There is one rule: you are not allowed to ask, \"What is inside the box?\" Build your questions so that each answer helps you rule out some possibilities and get closer to figuring out what is inside.",
+    steps: [
+      "Imagine several different things that might be inside the box.",
+      "Write your first yes-or-no question that could rule out some of the possibilities.",
+      "Based on the hypothetical answer, choose your next question.",
+      "Continue this process and see how many questions it takes to arrive at a specific guess.",
+      "Now look back at your questions and identify which one eliminated the greatest number of possibilities.",
+      "Finally, write a yes-or-no question whose answer would give you very little information about what is inside the box.",
+    ],
+    questions: [
+      "Which question ruled out the greatest number of possibilities?",
+      "Why did that question give you more information?",
+      "Did you ask a question whose answer you found out, but still knew very little about the box?",
+      "If you could change one of your questions, which would you change, and why?",
+      "Can you create a question that rules out only one possibility?",
+    ],
+    teacherNote:
+      "Students do not need to reach an answer within a specific number of questions. The main goal is to experience the difference between questions that provide little information and those that provide a lot. At the end, it is useful to discuss why some questions can eliminate many possibilities with a single answer.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
     ],
@@ -3629,14 +7169,26 @@ export const atlas: AtlasLand[] = [
     title: "بازنویسی",
     description:
       "برگشتن به نوشته و دیدن اینکه با تغییر در نگاه، ساختار یا بیان، چه چیزهایی در متن عوض می‌شوند.",
-
+       translations: {
+  en: {
+    title: "Rewriting",
+    description:
+      "Returning to a piece of writing and discovering what changes when we shift our perspective, structure, or way of expression.",
+  },
+},
     situations: [
       {
         id: "08M-01",
         title: "کوچکش کن",
         description:
           "بازنویسی نوشته‌ی قبلی در نصف تعداد کلمه‌ها، بدون از دست دادن مهم‌ترین اتفاق، ایده یا احساس آن.",
-
+         translations: {
+  en: {
+    title: "Make It Smaller",
+    description:
+      "Rewriting an earlier piece in half the number of words without losing its most important event, idea, or feeling.",
+  },
+},
         activity: {
           purpose:
             "تقویت توانایی تشخیص بخش‌های مهم نوشته، حذف جزئیات کم‌اهمیت و فشرده‌کردن متن بدون از دست دادن هسته‌ی اصلی.",
@@ -3668,6 +7220,35 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Developing the ability to identify the important parts of a piece of writing, remove less important details, and condense the text without losing its core.",
+    instruction:
+      "Choose one of your earlier pieces of writing. Now imagine that you have only half as much space as before. Rewrite it, but keep its most important event, idea, or feeling.",
+    steps: [
+      "Choose one of your earlier pieces of writing.",
+      "Estimate its word count and set a target of about half that number.",
+      "Identify the parts you can remove without harming the main idea of the writing.",
+      "Shorten the text while keeping its most important part.",
+      "Compare the new version with the original.",
+      "Explain what you removed and why.",
+    ],
+    questions: [
+      "Which parts did you remove?",
+      "How did you decide what to keep and what to remove?",
+      "Can the most important event, idea, or feeling still be found in the new version?",
+      "Which part was the hardest for you to remove?",
+    ],
+    teacherNote:
+      "The goal is not simply to make the text shorter. Students should distinguish between important and less important parts while preserving the core of their writing.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3676,7 +7257,13 @@ export const atlas: AtlasLand[] = [
         title: "از زبان یک نفر دیگر",
         description:
           "بازنویسی یک داستان قبلی از نگاه شخصیت یا شاهد دیگری که در همان ماجرا حضور داشته است.",
-
+          translations: {
+  en: {
+    title: "From Someone Else's Point of View",
+    description:
+      "Rewriting an earlier story from the perspective of another character or witness who was present in the same events.",
+  },
+},
         activity: {
           purpose:
             "تجربه‌ی این نکته که تغییر راوی می‌تواند اطلاعات، احساسات و برداشت‌های یک داستان را تغییر دهد.",
@@ -3707,6 +7294,34 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Experiencing how changing the narrator can alter the information, feelings, and interpretations in a story.",
+    instruction:
+      "Choose one of your earlier stories. Rewrite the same events from the perspective of another character or witness who was present. The main events do not have to change, but the new narrator may notice different things, be unaware of certain details, or interpret what happened differently.",
+    steps: [
+      "Choose one of your earlier stories.",
+      "Choose another character or witness who was present in the events.",
+      "Think about what this person knows, what they do not know, and what matters most to them.",
+      "Rewrite the same events from their point of view.",
+      "Place the two versions side by side and identify their differences.",
+    ],
+    questions: [
+      "What did the new narrator see differently?",
+      "What did the new narrator not know?",
+      "How were their feelings or interpretations of the events different?",
+      "Which part of the story changed because the narrator changed?",
+    ],
+    teacherNote:
+      "The goal is not simply to change the pronouns. Because of their different position and knowledge, the new narrator may notice or know things the previous narrator did not, while missing other details. The main events of the story do not need to become completely different.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3715,7 +7330,13 @@ export const atlas: AtlasLand[] = [
         title: "یک چیز را عوض کن",
         description:
           "بازنویسی یک داستان قبلی با تغییر فقط یک عنصر و دنبال‌کردن پیامدهای آن تغییر.",
-
+         translations: {
+  en: {
+    title: "Change One Thing",
+    description:
+      "Rewriting an earlier story by changing just one element and following the consequences of that change.",
+  },
+},
         activity: {
           purpose:
             "تجربه‌ی دیدن رابطه‌ی میان اجزای داستان و اینکه یک تغییر کوچک می‌تواند بخش‌های دیگری از داستان را نیز تغییر دهد.",
@@ -3746,6 +7367,34 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Exploring the relationships between the elements of a story and discovering how one small change can affect other parts of it.",
+    instruction:
+      "Choose one of your earlier stories. Change just one thing in it, such as the time, place, a character, or one of the events. Then rewrite the story and see what else changes as a result.",
+    steps: [
+      "Choose one of your earlier stories.",
+      "Choose just one of these four elements to change: the time, the place, a character, or an event.",
+      "Decide exactly what you want to change.",
+      "Rewrite the story with that change.",
+      "Notice which other parts of the story have changed as a result.",
+    ],
+    questions: [
+      "What exactly did you change?",
+      "Which part of the story had to change as a result?",
+      "Did your change also affect the outcome or ending of the story?",
+      "Which consequence of your change surprised you the most?",
+    ],
+    teacherNote:
+      "The goal is not simply to change one detail. Students should follow the consequences of that change through other parts of the story. Not everything needs to change; one or two additional changes are enough.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3754,7 +7403,13 @@ export const atlas: AtlasLand[] = [
         title: "یک بخش را از نو بساز",
         description:
           "انتخاب یک بخش از داستان قبلی و بازنویسی دوباره‌ی همان بخش، بدون تغییر دادن اتفاق اصلی داستان.",
-
+          translations: {
+  en: {
+    title: "Rebuild One Part",
+    description:
+      "Choosing one part of an earlier story and rewriting that same part without changing the main event of the story.",
+  },
+},
         activity: {
           purpose:
             "تمرین بازآفرینی یک بخش از متن و تجربه‌ی اینکه یک اتفاق واحد را می‌توان با توصیف، گفت‌وگو، رفتار و شیوه‌ی بیان متفاوت دوباره ساخت.",
@@ -3785,6 +7440,34 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Practicing the recreation of a section of text and discovering that the same event can be rebuilt through different descriptions, dialogue, actions, and ways of expression.",
+    instruction:
+      "Choose one of your earlier stories. Select one part or scene and rewrite that same section from scratch. Keep its main event, but feel free to change the descriptions, dialogue, characters' actions, or way of expressing things.",
+    steps: [
+      "Choose one of your earlier stories.",
+      "Select a specific part or scene from the story.",
+      "Identify the main event in that section.",
+      "Rewrite that section from scratch, making changes to the way it is expressed or to its details.",
+      "Compare the new section with the original version.",
+    ],
+    questions: [
+      "What did you change in this section?",
+      "What did you deliberately keep the same?",
+      "How does the new version change the image or feeling of the scene?",
+      "Which version do you like more? Why?",
+    ],
+    teacherNote:
+      "The focus is on rebuilding one specific section of the text, not changing the entire story. The main event can remain the same, but students should make new creative choices when reconstructing that section.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3793,7 +7476,13 @@ export const atlas: AtlasLand[] = [
         title: "پایان را دوباره بنویس",
         description:
           "بازنویسی پایان یک داستان قبلی و اصلاح بخش‌های لازم داستان برای هماهنگ شدن با پایان تازه.",
-
+         translations: {
+  en: {
+    title: "Rewrite the Ending",
+    description:
+      "Rewriting the ending of an earlier story and revising the necessary parts of the story to make them fit the new ending.",
+  },
+},
         activity: {
           purpose:
             "تجربه‌ی این نکته که تغییر پایان یک داستان ممکن است به تغییر یا بازنگری بخش‌های قبلی آن نیاز داشته باشد و بخش‌های مختلف داستان به یکدیگر وابسته‌اند.",
@@ -3826,6 +7515,36 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Discovering that changing the ending of a story may require revising earlier parts of it, and that different parts of a story depend on one another.",
+    instruction:
+      "Choose one of your earlier stories. Create a different ending for it by changing, for example, a character's decision, an event, or the outcome of the story. Then look back at the earlier parts and see whether anything no longer fits the new ending. Rewrite only the parts that need to change.",
+    steps: [
+      "Choose one of your earlier stories.",
+      "Identify the story's current ending.",
+      "Create a different ending for the story.",
+      "Check whether any earlier parts no longer fit the new ending.",
+      "Rewrite only the parts that need to change to fit the new ending.",
+      "Compare the old and new versions.",
+    ],
+    questions: [
+      "Which earlier part of the story had to change?",
+      "Why did that part no longer fit the new ending?",
+      "What did you keep unchanged despite changing the ending?",
+      "Did the new ending change the meaning of any earlier event?",
+      "If you had not changed that earlier part, what would have seemed inconsistent in the story?",
+    ],
+    teacherNote:
+      "The goal is not simply to create a different ending. Students should notice that a new ending may conflict with some earlier events or decisions, and revise only the related parts to make the story coherent.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3834,7 +7553,13 @@ export const atlas: AtlasLand[] = [
         title: "یک داستان در پنج جمله",
         description:
           "بازگویی یک داستان از کتاب کودک در پنج جمله، با نگه‌داشتن اتفاق‌ها و اطلاعات ضروری آن.",
-
+          translations: {
+  en: {
+    title: "A Story in Five Sentences",
+    description:
+      "Retelling a story from a children's book in five sentences while preserving its essential events and information.",
+  },
+},
         activity: {
           purpose:
             "تقویت توانایی تشخیص اتفاق‌ها و اطلاعات مهم در یک داستان و بازسازی فشرده‌ی آن در قالبی کوتاه و منسجم.",
@@ -3865,54 +7590,130 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Developing the ability to identify the important events and information in a story and reconstruct it in a concise, coherent form.",
+    instruction:
+      "Choose a short story from a children's book. Read the story, then retell it in exactly five sentences. You do not need to keep every detail. Try to make your five sentences sufficient for someone to understand the main story.",
+    steps: [
+      "Choose a short story from a children's book.",
+      "Read the story carefully.",
+      "Identify the events and information that are essential to understanding the story.",
+      "Retell the story in exactly five sentences.",
+      "Compare your five-sentence version with the original story.",
+    ],
+    questions: [
+      "Which events did you keep?",
+      "Which details did you leave out?",
+      "If you remove one of the five sentences, what would be lost from the story?",
+      "Are your five sentences enough to understand the main story?",
+    ],
+    teacherNote:
+      "The goal is not to shorten the story mechanically. Students should identify which events and pieces of information are essential to retelling it. The chosen story should preferably be short and appropriate for the students' age.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
       {
-        id: "08M-07",
-        title: "درس فارسی را دوباره بنویس",
-        description:
-          "بازنویسی یکی از متن‌های کتاب فارسی به شکلی تازه، در حالی که ایده یا اتفاق اصلی متن حفظ شود.",
+  id: "08M-07",
+  title: "داستانی را به شیوه‌ی خودت بازنویسی کن",
+  description:
+    "بازآفرینی یک داستان آشنا به شکلی تازه، در حالی که ماجرا یا ایده‌ی اصلی آن حفظ شود.",
 
-        activity: {
-          purpose:
-            "تمرین بازآفرینی یک متن موجود و تجربه‌ی این نکته که می‌توان یک ماجرا یا ایده را با شیوه‌ای تازه بیان کرد، بدون اینکه اصل آن از دست برود.",
+  translations: {
+    en: {
+      title: "Rewrite a Story in Your Own Way",
+      description:
+        "Retelling a familiar story in a new way while keeping its main idea or central events.",
+    },
+  },
 
-          instruction:
-            "یکی از متن‌های درس فارسی را انتخاب کن. متن را دوباره بخوان و بعد همان ماجرا یا ایده را به شکل دیگری بنویس. می‌توانی راوی، شکل روایت، گفت‌وگوها یا شیوه‌ی بیان را تغییر بدهی؛ اما سعی کن چیزی که متن اصلی درباره‌ی آن است، همچنان در نوشته‌ی تو باقی بماند.",
+  activity: {
+    purpose:
+      "تمرین بازآفرینی یک داستان موجود و تجربه‌ی این نکته که می‌توان یک ماجرا یا ایده را با شیوه‌ای تازه بیان کرد، بدون اینکه اصل آن از دست برود.",
 
-          steps: [
-            "یکی از متن‌های درس فارسی را انتخاب کن.",
-            "متن را با دقت بخوان و ببین ماجرای اصلی یا حرف اصلی آن چیست.",
-            "تصمیم بگیر چه چیزی را می‌خواهی در بازنویسی تغییر بدهی.",
-            "متن را با تغییر خودت دوباره بنویس.",
-            "نوشته‌ی خودت را با متن اصلی مقایسه کن.",
-          ],
+    instruction:
+      "یک داستان را انتخاب کن؛ می‌تواند داستانی از کتاب درسی، یک کتاب داستان یا قصه‌ای باشد که قبلاً شنیده‌ای. آن را دوباره بخوان یا به یاد بیاور و سپس همان داستان را به شیوه‌ای تازه بازنویسی کن. می‌توانی راوی، زاویه‌ی دید، گفت‌وگوها، ترتیب اتفاق‌ها یا شیوه‌ی بیان را تغییر بدهی؛ اما سعی کن هسته‌ی اصلی داستان همچنان در نوشته‌ی تو باقی بماند.",
 
-          questions: [
-            "در نوشته‌ی تو چه چیزی با متن اصلی فرق کرده است؟",
-            "چه چیزی را عمداً همان‌طور نگه داشتی؟",
-            "تغییر تو چه اثری روی داستان یا شیوه‌ی بیان آن گذاشت؟",
-            "آیا چیزی در متن اصلی بود که تغییر دادنش باعث شد بخش‌های دیگری از نوشته‌ات هم تغییر کنند؟",
-          ],
+    steps: [
+      "یک داستان آشنا انتخاب کن.",
+      "داستان را بخوان یا به یاد بیاور و مشخص کن ماجرای اصلی آن چیست.",
+      "تصمیم بگیر کدام بخش داستان را می‌خواهی تغییر بدهی.",
+      "داستان را با تغییر خودت دوباره بنویس.",
+      "نوشته‌ی خودت را با داستان اصلی مقایسه کن.",
+    ],
 
-          teacherNote:
-            "هدف فعالیت، جایگزین کردن چند واژه با واژه‌های دیگر نیست. دانش‌آموز باید متن را دوباره بسازد و در عین حال، هسته‌ی اصلی آن را حفظ کند. بسته به متن انتخاب‌شده، تغییر می‌تواند در راوی، شکل روایت، گفت‌وگوها، شیوه‌ی بیان یا بخش‌های دیگر اتفاق بیفتد. لازم نیست همه‌ی این موارد تغییر کنند.",
+    questions: [
+      "در داستان تو چه چیزی با نسخه‌ی اصلی فرق کرده است؟",
+      "چه چیزی را عمداً همان‌طور نگه داشتی؟",
+      "تغییر تو چه اثری روی داستان یا شیوه‌ی روایت آن گذاشت؟",
+      "آیا تغییر یک بخش باعث شد بخش‌های دیگری از داستانت هم تغییر کنند؟",
+    ],
 
-          materials: {
-            required: false,
-            type: "none",
-            items: [],
-          },
+    teacherNote:
+      "داستان می‌تواند از کتاب درسی، یک کتاب داستان یا قصه‌ای آشنا انتخاب شود. بهتر است دانش‌آموزان امکان انتخاب داستان را داشته باشند. هدف فعالیت، جایگزین کردن چند واژه با واژه‌های دیگر نیست؛ دانش‌آموز باید داستان را دوباره بسازد و در عین حال، هسته‌ی اصلی آن را حفظ کند. تغییر می‌تواند در راوی، زاویه‌ی دید، گفت‌وگوها، ترتیب اتفاق‌ها یا شیوه‌ی بیان باشد. لازم نیست همه‌ی این موارد تغییر کنند.",
+
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+
+    translations: {
+      en: {
+        purpose:
+          "To practise reimagining an existing story and discover how the same events or central idea can be expressed in a new way without losing what makes the story itself.",
+
+        instruction:
+          "Choose a story. It could be from a school textbook, a storybook, or a tale you have heard before. Read it again or recall what happens, then rewrite the story in a new way. You can change the narrator, point of view, dialogue, order of events, or style of telling. Try to keep the central idea or main events of the original story.",
+
+        steps: [
+          "Choose a familiar story.",
+          "Read or recall the story and identify its main events or central idea.",
+          "Decide which part or parts you want to change.",
+          "Rewrite the story using your own changes.",
+          "Compare your version with the original story.",
+        ],
+
+        questions: [
+          "What is different in your version of the story?",
+          "What did you deliberately keep the same?",
+          "How did your changes affect the story or the way it is told?",
+          "Did changing one part of the story lead you to change other parts as well?",
+        ],
+
+        teacherNote:
+          "The story may come from a school textbook, a storybook, or a familiar tale. Whenever possible, allow students to choose their own stories. The aim is not simply to replace a few words with synonyms. Students should reconstruct the story while preserving its central idea or main events. Changes may involve the narrator, point of view, dialogue, sequence of events, or style of telling. Students do not need to change all of these elements.",
+
+        materials: {
+          required: false,
+          type: "none",
+          items: [],
         },
       },
+    },
+  },
+},
 
       {
         id: "08M-08",
         title: "صدایش را عوض کن",
         description:
           "بازنویسی یک داستان با تغییر اثری که قرار است روی خواننده بگذارد؛ مثلاً خنده‌دار، ترسناک یا هیجان‌انگیز کردن همان اتفاق.",
-
+          translations: {
+  en: {
+    title: "Change Its Tone",
+    description:
+      "Rewriting a story to change its intended effect on the reader, for example, making the same events funny, frightening, or exciting.",
+  },
+},
         activity: {
           purpose:
             "تجربه‌ی این نکته که با تغییر واژه‌ها، جزئیات و شیوه‌ی بیان می‌توان اثر یک متن بر خواننده را تغییر داد، حتی وقتی اتفاق اصلی همان می‌ماند.",
@@ -3943,6 +7744,34 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Experiencing how changing words, details, and ways of expression can alter the effect of a text on its reader, even when the main events remain the same.",
+    instruction:
+      "Choose one of your earlier pieces of writing. Rewrite the same events once in a way that frightens or excites the reader, and once in a way that makes the reader laugh. The main events can stay the same; what changes is the way they are expressed.",
+    steps: [
+      "Choose one of your earlier pieces of writing.",
+      "Decide how you want the reader to feel after reading it.",
+      "Rewrite the same section or event in a way that creates that effect.",
+      "In a second rewrite, create a different effect on the reader.",
+      "Place the two versions side by side and identify their differences.",
+    ],
+    questions: [
+      "What did you want the reader to feel in each version?",
+      "Which words or details made the greatest difference?",
+      "What remained unchanged in the main events?",
+      "Which version was more successful in creating the effect you intended?",
+    ],
+    teacherNote:
+      "Students do not need to know the theoretical meaning of 'tone'. The focus is on practical experience: expressing the same event in different ways to create different effects on the reader.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3951,7 +7780,13 @@ export const atlas: AtlasLand[] = [
         title: "یک جمله، سه شکل",
         description:
           "بازنویسی یک جمله‌ی آماده در سه شکل متفاوت: خنده‌دار، ترسناک و عجیب و خیال‌انگیز.",
-
+         translations: {
+  en: {
+    title: "One Sentence, Three Versions",
+    description:
+      "Rewriting a given sentence in three different ways: funny, frightening, and strange or imaginative.",
+  },
+},
         activity: {
           purpose:
             "تقویت انعطاف زبانی و تجربه‌ی این نکته که یک موقعیت واحد را می‌توان با انتخاب‌های زبانی متفاوت به شکل‌های مختلف بیان کرد.",
@@ -3987,6 +7822,39 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Developing linguistic flexibility and experiencing how the same situation can be expressed in different ways through different language choices.",
+    instruction:
+      "Choose one of the sentences below. Rewrite the same sentence three times: once in a funny way, once in a frightening way, and once in a strange and imaginative way. Keep the main event of the sentence as much as possible, but change the way it is expressed and the details.",
+    steps: [
+      "Choose one of the following sentences:",
+      "\"The room door opened, and someone came in.\"",
+      "\"The little boy looked under the bed.\"",
+      "\"Someone was standing behind the window.\"",
+      "\"The cat jumped down from the table.\"",
+      "\"When they opened the box, something was inside.\"",
+      "Rewrite your chosen sentence in a funny way.",
+      "Rewrite the same sentence in a frightening way.",
+      "Rewrite the same sentence in a strange and imaginative way.",
+      "Place the three versions side by side and examine their differences.",
+    ],
+    questions: [
+      "What made the funny version funny?",
+      "What made the frightening version frightening?",
+      "What did you change in the strange and imaginative version?",
+      "Which version moved the furthest away from the original sentence?",
+    ],
+    teacherNote:
+      "The sentences are provided in advance so that students can focus on changing the way something is expressed rather than finding a suitable sentence. The goal is not to completely change the original content. Students should discover how changing words and details can alter the effect of the same situation.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
 
@@ -3995,7 +7863,13 @@ export const atlas: AtlasLand[] = [
         title: "دوباره نگاه کن",
         description:
           "بازخوانی یک نوشته‌ی قدیمی و بازنویسی بخشی از آن که اکنون نویسنده می‌خواهد آن را جور دیگری بنویسد.",
-
+          translations: {
+  en: {
+    title: "Take Another Look",
+    description:
+      "Rereading an older piece of writing and rewriting a part that the writer now wants to express differently.",
+  },
+},
         activity: {
           purpose:
             "تجربه‌ی این نکته که با فاصله گرفتن از یک نوشته، می‌توان دوباره آن را دید و درباره‌ی بعضی انتخاب‌های خود در نوشتن تصمیم تازه‌ای گرفت.",
@@ -4026,6 +7900,34 @@ export const atlas: AtlasLand[] = [
             type: "none",
             items: [],
           },
+          translations: {
+  en: {
+    purpose:
+      "Experiencing how gaining some distance from a piece of writing allows us to see it again and make new decisions about some of our writing choices.",
+    instruction:
+      "Read one of your older pieces of writing again. You do not need to rewrite everything. Find one part that you would now like to express differently, and rewrite only that part.",
+    steps: [
+      "Choose one of your older pieces of writing.",
+      "Read it again carefully.",
+      "Find one part that you would now like to write differently.",
+      "Rewrite only that part.",
+      "Place the old and new versions side by side.",
+    ],
+    questions: [
+      "What do you see differently now?",
+      "Why did you want to change this part?",
+      "What is different in the new version?",
+      "Is there anything in the original writing that you still like just the way it is?",
+    ],
+    teacherNote:
+      "The goal of this activity is not to find a 'mistake' in the earlier writing. Students should experience how, with time and by rereading a piece, they may discover a new idea or make a different choice about how to rewrite it. The selected part does not have to be weak; students may simply want to express it in another way.",
+    materials: {
+      required: false,
+      type: "none",
+      items: [],
+    },
+  },
+},
         },
       },
     ],

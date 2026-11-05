@@ -8,29 +8,59 @@ import ActivityPage from "../components/activity/ActivityPage";
 import EndPage from "../components/activity/EndPage";
 import { getLandById } from "../data/atlas";
 import Image from "next/image";
+import { useLanguage } from "../i18n/LanguageProvider";
 type Screen = "main" | "atlas" | "land" | "activity" | "end" | "support";
 
-const introSlides = [
-  {
-    eyebrow: "زنگ انشا...",
-    title: "چرا برای بعضی از بچه‌ها، زنگ نوشتن,",
-    text: "به زنگ خیره شدن به کاغذ تبدیل می‌شود؟",
-  },
+const introSlides = {
+  fa: [
+    {
+      eyebrow: "زنگ انشا...",
+      title: "چرا برای بعضی از بچه‌ها، زنگ نوشتن،",
+      text: "به زنگ خیره شدن به کاغذ تبدیل می‌شود؟",
+    },
+    {
+      eyebrow: "اگر کمی مکث کنیم...",
+      title:
+        "چه می‌شود اگر کودک، پیش از آن که مداد را روی کاغذ حرکت دهد، کمی مکث کند",
+      text: "تا در فکر خود قدم بزند؟",
+    },
+    {
+      eyebrow: "مداد فکر",
+      title:
+        "تلاش مداد فکر شروع زنگ انشا نه از یک موضوع، بلکه از یک موقعیت است.",
+      text: "ساختن لحظه‌هایی که ارزش نوشتن پیدا کنند.",
+    },
+  ],
 
-  {
-    eyebrow: "اگر کمی مکث کنیم...",
-    title:
-      "چه می‌شود اگر کودک، پیش از آن که مداد را روی کاغذ حرکت دهد، کمی مکث کند",
-    text: "تا در فکر خود قدم بزند؟",
-  },
-
-  {
-    eyebrow: "مداد فکر",
-    title: "تلاش مداد فکر شروع زنگ انشا نه از یک موضوع، بلکه از یک موقعیت است.",
-    text: "ساختن لحظه‌هایی که ارزش نوشتن پیدا کنند.",
-  },
-];
+  en: [
+    {
+      eyebrow: "The writing session...",
+      title: "Why does writing time, for some children,",
+      text: "turn into a time of staring at a blank page?",
+    },
+    {
+      eyebrow: "What if we paused for a moment...",
+      title:
+        "What if a child paused for a moment before putting pencil to paper",
+      text: "and took a walk through their own thoughts?",
+    },
+    {
+      eyebrow: "ENSHA",
+      title:
+        "ENSHA begins a writing session not with a topic, but with a situation.",
+      text: "Creating moments that make writing worth doing.",
+    },
+  ],
+};
 export default function Home() {
+  const {
+  language,
+  chooseLanguage,
+  hasChosenLanguage,
+  ready: languageReady,
+  t,
+} = useLanguage();
+const [introSlide, setIntroSlide] = useState(0);
   const started = useSyncExternalStore(
     (onStoreChange) => {
       const handleChange = () => onStoreChange();
@@ -44,8 +74,7 @@ export default function Home() {
     () => localStorage.getItem("medad-fekr-intro") === "true",
     () => false,
   );
-
-  const [introSlide, setIntroSlide] = useState(0);
+  const currentSlides = introSlides[language];
   const [screen, setScreen] = useState<Screen>("main");
   const screenHistory = useRef<Screen[]>([]);
 
@@ -55,7 +84,11 @@ export default function Home() {
     screenHistory.current.push(screen);
     setScreen(nextScreen);
   }
-
+  function goToAtlas() {
+  screenHistory.current = ["main"];
+  setPremiumFeature(null);
+  setScreen("atlas");
+}
   function handleBack() {
     if (premiumFeature !== null) {
       setPremiumFeature(null);
@@ -107,7 +140,7 @@ export default function Home() {
   );
 
   function handleIntroNext() {
-    if (introSlide < introSlides.length - 1) {
+    if (introSlide === currentSlides.length - 1) {
       setIntroSlide((current) => current + 1);
       return;
     }
@@ -133,9 +166,54 @@ export default function Home() {
   /*
    * INTRO
    */
-  if (!started) {
-    const currentSlide = introSlides[introSlide];
+  if (!languageReady) {
+  return null;
+}
 
+if (!hasChosenLanguage) {
+  return (
+    <main
+      dir="ltr"
+      lang="en"
+      className="flex min-h-screen items-center justify-center bg-[#F6F1E6] px-6 py-12 text-[#2B3A67]"
+    >
+      <section className="w-full max-w-md text-center">
+        <img
+          src="/logo.png"
+          alt="ENSHA"
+          className="mx-auto mb-6 h-16 w-16 object-contain"
+        />
+
+        <h1 className="mb-3 text-3xl font-bold">
+          Choose your language
+        </h1>
+
+        <p className="mb-8 text-slate-600">
+          انتخاب زبان / Select the language for your experience
+        </p>
+
+        <div className="flex flex-col gap-3">
+          <button
+            onClick={() => chooseLanguage("fa")}
+            className="rounded-full bg-[#2B3A67] px-6 py-4 text-lg text-white transition hover:opacity-90"
+          >
+            فارسی
+          </button>
+
+          <button
+            onClick={() => chooseLanguage("en")}
+            className="rounded-full border border-[#2B3A67]/20 bg-white px-6 py-4 text-lg transition hover:bg-slate-50"
+          >
+            English
+          </button>
+        </div>
+      </section>
+    </main>
+  );
+}
+  if (!started) {
+const currentSlides = introSlides[language];
+const currentSlide = currentSlides[introSlide];
     return (
       <main className="min-h-screen bg-[#F6F1E6] text-[#2B3A67]">
         <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-6 py-8 md:px-10">
@@ -145,16 +223,16 @@ export default function Home() {
                 <div className="flex items-center gap-3">
                   <Image
                     src="/logo.png"
-                    alt="مداد فکر"
+                    alt={t("brand")}
                     width={40}
                     height={40}
                     className="rounded-xl object-cover"
                   />
-                  <div className="text-xl font-bold">مداد فکر</div>
+                  <div className="text-xl font-bold">{t("brand")}</div>
                 </div>
 
                 <div className="mt-0.5 text-xs text-slate-400">
-                  دستیار معلم برای زنگ انشا
+                 {t("teacherAssistant")}
                 </div>
               </div>
             </div>
@@ -175,24 +253,23 @@ export default function Home() {
               </p>
 
               <button
-                onClick={handleIntroNext}
-                className="mt-12 inline-flex items-center rounded-full bg-[#2B3A67] px-8 py-4 text-lg text-white transition hover:-translate-y-0.5 hover:shadow-lg"
-              >
-                {introSlide === introSlides.length - 1
-                  ? "ورود به مداد فکر"
-                  : "ادامه"}
+                 onClick={handleIntroNext}
+                 className="mt-12 inline-flex items-center rounded-full bg-[#2B3A67] px-8 py-4 text-lg text-white transition hover:-translate-y-0.5 hover:shadow-lg"
+>
+                 {introSlide === currentSlides.length - 1
+                 ? t("enterApp")
+                 : t("continue")}
 
-                <span className="mr-3" aria-hidden="true">
-                  ←
-                </span>
+                 <span className="mr-3" aria-hidden="true">
+                 {language === "fa" ? "←" : "→"}
+                 </span>
               </button>
             </div>
           </section>
 
           <footer className="pb-4">
             <div className="mx-auto flex max-w-xs gap-2">
-              {introSlides.map((_, index) => (
-                <div
+                  {currentSlides.map((_, index) => (                <div
                   key={index}
                   className={`h-1 flex-1 rounded-full transition ${
                     index === introSlide ? "bg-[#2B3A67]" : "bg-slate-200"
@@ -206,7 +283,7 @@ export default function Home() {
     );
   }
 
-  /*
+   /*
    * ATLAS
    */
   if (screen === "atlas") {
@@ -225,26 +302,29 @@ export default function Home() {
     }
 
     return (
-      <main className="min-h-screen bg-[#F6F1E6] text-[#2B3A67]">
+      <main
+        dir={language === "fa" ? "rtl" : "ltr"}
+        className="min-h-screen bg-[#F6F1E6] text-[#2B3A67]"
+      >
         <div className="mx-auto w-full max-w-5xl px-6 py-8 md:px-10">
           <header className="flex items-center justify-between">
             <button
-              onClick={() => navigateTo("atlas")}
+              onClick={goToAtlas}
               className="text-sm text-slate-400 transition hover:text-[#2B3A67]"
             >
-              بازگشت به اطلس
+              {t("backToAtlas")}
             </button>
 
             <div className="flex items-center gap-3">
               <div className="flex h-9 w-9 shrink-0 items-center justify-center">
                 <img
                   src="/logo.png"
-                  alt="مداد فکر"
+                  alt={t("brand")}
                   className="h-full w-full object-contain"
                 />
               </div>
 
-              <div className="text-xl font-bold">مداد فکر</div>
+              <div className="text-xl font-bold">{t("brand")}</div>
             </div>
           </header>
 
@@ -256,21 +336,25 @@ export default function Home() {
             </div>
 
             <h1 className="mt-5 text-4xl font-bold leading-[1.4] md:text-6xl">
-              {land.title}
+              {language === "en"
+              ? land.translations?.en?.title ?? land.title
+              : land.title}
             </h1>
 
             <p className="mt-6 max-w-3xl text-lg leading-9 text-slate-600 md:text-xl">
-              {land.description}
+              {language === "en"
+              ? land.translations?.en?.description ?? land.description
+              : land.description}
             </p>
 
             <div className="mt-14">
               <div className="mb-5 flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-[#2B3A67]">
-                  موقعیت‌ها
+                  {t("situations")}
                 </h2>
 
                 <span className="text-sm text-slate-400">
-                  {land.situations.length} موقعیت
+                  {land.situations.length} {t("situationCount")}
                 </span>
               </div>
 
@@ -279,34 +363,43 @@ export default function Home() {
                   <button
                     key={situation.id}
                     onClick={() => handleSelectSituation(land.id, situation.id)}
-                    className="group relative block w-full overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 text-right transition duration-300 hover:-translate-y-0.5 hover:border-[#2B3A67]/20 hover:shadow-md"
+                    className={`group relative block w-full overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition duration-300 hover:-translate-y-0.5 hover:border-[#2B3A67]/20 hover:shadow-md ${
+                      language === "fa" ? "text-right" : "text-left"
+                    }`}
                   >
                     <div
-                      className="absolute right-0 top-0 h-full w-1 bg-slate-100 transition group-hover:bg-[#C1863C]"
+                      className={`absolute top-0 h-full w-1 bg-slate-100 transition group-hover:bg-[#C1863C] ${
+                        language === "fa" ? "right-0" : "left-0"
+                      }`}
                       aria-hidden="true"
                     />
 
                     <div className="flex items-start justify-between gap-6">
                       <div className="min-w-0">
                         <div className="text-xs font-medium tracking-wide text-[#C1863C]">
-                          موقعیت {String(index + 1).padStart(2, "0")}
+                          {language === "fa" ? "موقعیت" : "Situation"}{" "}
+                          {String(index + 1).padStart(2, "0")}
                         </div>
 
                         <h3 className="mt-3 text-xl font-semibold leading-9 text-[#2B3A67]">
-                          {situation.title}
+                         {language === "en"
+                         ? situation.translations?.en?.title ?? situation.title
+                         : situation.title}
                         </h3>
 
                         <p className="mt-2 max-w-3xl text-base leading-8 text-slate-500">
-                          {situation.description}
+                         {language === "en"
+                         ? situation.translations?.en?.description ?? situation.description
+                         : situation.description}
                         </p>
                       </div>
 
-                      <span
-                        className="mt-1 shrink-0 text-xl text-slate-300 transition duration-300 group-hover:-translate-x-1 group-hover:text-[#2B3A67]"
-                        aria-hidden="true"
-                      >
-                        ←
-                      </span>
+                        <span
+                         className={`mt-1 shrink-0 text-xl text-slate-300 transition duration-300 group-hover:text-[#2B3A67]`}
+                         aria-hidden="true"
+                         >
+                         {language === "fa" ? "←" : "→"}
+                        </span>
                     </div>
                   </button>
                 ))}
@@ -358,11 +451,12 @@ export default function Home() {
   if (screen === "end") {
     return (
       <EndPage
-        onBackToAtlas={handleBack}
+        onBackToAtlas={goToAtlas}
         onSupport={() => navigateTo("support")}
       />
     );
   }
+
   /*
    * SUPPORT
    */
@@ -374,11 +468,23 @@ export default function Home() {
    * MAIN
    */
   return (
-    <main className="min-h-screen bg-[#F6F1E6] text-[#2B3A67]">
+    <main
+      dir={language === "fa" ? "rtl" : "ltr"}
+      className="min-h-screen bg-[#F6F1E6] text-[#2B3A67]"
+    >
       <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-6 py-8 md:px-10">
-        <header className="pt-4">
-          <div className="text-xl font-bold">مداد فکر</div>
-        </header>
+      <header className="flex items-center justify-between pt-4">
+      <div className="text-xl font-bold">{t("brand")}</div>
+
+       <button
+        type="button"
+        onClick={() => chooseLanguage(language === "fa" ? "en" : "fa")}
+        className="rounded-full border border-[#2B3A67]/20 bg-white px-4 py-2 text-sm font-medium text-[#2B3A67] transition hover:border-[#C1863C] hover:text-[#C1863C]"
+        aria-label={language === "fa" ? "Switch to English" : "تغییر زبان به فارسی"}
+  >
+        {language === "fa" ? "English" : "فارسی"}
+       </button>
+      </header>
 
         <section className="flex flex-1 items-center justify-center py-16">
           <div className="w-full max-w-2xl">
@@ -386,58 +492,68 @@ export default function Home() {
               <div className="mx-auto mb-6 h-px w-12 bg-[#C1863C]" />
 
               <div className="text-sm font-medium tracking-wide text-[#C1863C]">
-                دستیار معلم برای زنگ انشا
+                {t("teacherAssistant")}
               </div>
 
               <h1 className="mt-5 text-4xl font-bold leading-[1.5] md:text-5xl">
-                امروز از کجا شروع کنیم؟
+                {t("homeTitle")}
               </h1>
 
               <p className="mx-auto mt-5 max-w-xl text-lg leading-9 text-slate-600">
-                فعالیتی را برای زنگ انشا انتخاب کنید یا با قابلیت‌های آینده‌ی
-                مداد فکر آشنا شوید.
+                {t("homeDescription")}
               </p>
             </div>
 
             <div className="mt-12 space-y-4">
-              {/* ZANG ENSHA */}
+              {/* ESSAY BELL */}
               <button
                 onClick={() => navigateTo("atlas")}
-                className="group flex w-full items-center justify-between rounded-2xl bg-[#2B3A67] px-7 py-7 text-right text-xl text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
+                className={`group flex w-full items-center justify-between rounded-2xl bg-[#2B3A67] px-7 py-7 text-xl text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${
+                  language === "fa" ? "text-right" : "text-left"
+                }`}
               >
                 <div>
-                  <div className="text-xl font-semibold">زنگ انشا</div>
+                  <div className="text-xl font-semibold">
+                    {t("essayBell")}
+                  </div>
 
                   <div className="mt-1 text-sm text-white/60">
-                    انتخاب یک موقعیت برای شروع
+                    {t("essayBellDescription")}
                   </div>
                 </div>
 
                 <span
-                  className="text-xl transition-transform group-hover:-translate-x-1"
+                  className={`text-xl transition-transform ${
+                    language === "fa"
+                      ? "group-hover:-translate-x-1"
+                      : "group-hover:translate-x-1"
+                  }`}
                   aria-hidden="true"
                 >
-                  ←
+                  {language === "fa" ? "←" : "→"}
                 </span>
               </button>
+
               {/* CLASS */}
               <button
                 type="button"
                 onClick={() => setPremiumFeature("class")}
-                className="group flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-7 py-6 text-right transition hover:-translate-y-0.5 hover:border-[#2B3A67]/20 hover:shadow-md"
+                className={`group flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-7 py-6 transition hover:-translate-y-0.5 hover:border-[#2B3A67]/20 hover:shadow-md ${
+                  language === "fa" ? "text-right" : "text-left"
+                }`}
               >
                 <div>
                   <div className="text-xl font-semibold text-[#2B3A67]">
-                    کلاس من
+                    {t("myClass")}
                   </div>
 
                   <div className="mt-2 text-sm text-slate-400">
-                    همراهی مداد فکر با کلاس شما در طول زمان
+                    {t("myClassDescription")}
                   </div>
                 </div>
 
                 <span className="shrink-0 text-sm text-[#C1863C]">
-                  نسخه‌ی آینده
+                  {t("futureVersion")}
                 </span>
               </button>
 
@@ -445,37 +561,44 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => setPremiumFeature("archive")}
-                className="group flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-7 py-6 text-right transition hover:-translate-y-0.5 hover:border-[#2B3A67]/20 hover:shadow-md"
+                className={`group flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-7 py-6 transition hover:-translate-y-0.5 hover:border-[#2B3A67]/20 hover:shadow-md ${
+                  language === "fa" ? "text-right" : "text-left"
+                }`}
               >
                 <div>
                   <div className="text-xl font-semibold text-[#2B3A67]">
-                    آرشیو
+                    {t("archive")}
                   </div>
 
                   <div className="mt-2 text-sm text-slate-400">
-                    نگه داشتن نوشته‌ها و لحظه‌های ارزشمند فکر کردن
+                    {t("archiveDescription")}
                   </div>
                 </div>
 
                 <span className="shrink-0 text-sm text-[#C1863C]">
-                  نسخه‌ی آینده
+                  {t("futureVersion")}
                 </span>
               </button>
             </div>
+
             {premiumFeature && (
               <div
-                className="mt-8 rounded-3xl border border-[#2B3A67]/10 bg-white p-7 text-right shadow-sm"
+                className={`mt-8 rounded-3xl border border-[#2B3A67]/10 bg-white p-7 shadow-sm ${
+                  language === "fa" ? "text-right" : "text-left"
+                }`}
                 role="dialog"
                 aria-modal="true"
               >
                 <div className="flex items-start justify-between gap-6">
                   <div>
                     <div className="text-sm font-medium tracking-wide text-[#C1863C]">
-                      نسخه‌ی آینده‌ی مداد فکر
+                      {t("futureMedadFekr")}
                     </div>
 
                     <h2 className="mt-3 text-2xl font-bold text-[#2B3A67]">
-                      {premiumFeature === "class" ? "کلاس من" : "آرشیو"}
+                      {premiumFeature === "class"
+                        ? t("myClass")
+                        : t("archive")}
                     </h2>
                   </div>
 
@@ -484,28 +607,27 @@ export default function Home() {
                     onClick={() => setPremiumFeature(null)}
                     className="text-sm text-slate-400 transition hover:text-[#2B3A67]"
                   >
-                    بستن
+                    {t("close")}
                   </button>
                 </div>
 
                 <p className="mt-6 text-lg leading-9 text-slate-600">
                   {premiumFeature === "class"
-                    ? "نسخه‌ی Premium مداد فکر برای این ساخته می‌شود که ابزار فقط در یک زنگ انشا کنار معلم نباشد؛ بلکه بتواند تجربه‌های یک کلاس را در طول زمان همراهی کند و به معلم کمک کند از میان نوشته‌های دانش‌آموزان، لحظه‌ها و فکرهایی را که ارزش دیده‌شدن و تشویق دارند پیدا کند."
-                    : "در میان انبوه نوشته‌های یک کلاس، همیشه چیزهایی هست که ارزش دوباره دیدن دارند. آرشیو نسخه‌ی Premium کمک می‌کند این نوشته‌ها و لحظه‌های ارزشمند از دست نروند و معلم بتواند دوباره به آن‌ها برگردد."}
+                    ? t("classFeatureDescription")
+                    : t("archiveFeatureDescription")}
                 </p>
 
                 <div className="mt-6 border-t border-slate-100 pt-5">
                   <p className="text-sm leading-7 text-slate-400">
-                    نسخه‌ی پایلوت عمداً روی تجربه‌ی اصلی زنگ انشا متمرکز شده
-                    است. قابلیت‌های گسترده‌تر پس از دریافت و بررسی بازخورد
-                    معلمان توسعه پیدا خواهند کرد.
+                    {t("pilotDetails")}
                   </p>
                 </div>
               </div>
             )}
+
             <div className="mt-10 text-center">
               <p className="text-sm leading-7 text-slate-400">
-                نسخه‌ی پایلوت بر تجربه‌ی اصلی زنگ انشا تمرکز دارد.
+                {t("pilotDescription")}
               </p>
             </div>
           </div>

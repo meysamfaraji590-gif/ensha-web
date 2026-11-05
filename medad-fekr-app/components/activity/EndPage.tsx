@@ -1,13 +1,12 @@
 "use client";
 
 import { useState } from "react";
-
+import { useLanguage } from "../../i18n/LanguageProvider";
 type EndPageProps = {
   onBackToAtlas: () => void;
   onSupport: () => void;
 };
-
-const ANALYSIS_PROMPT = `تو دستیار آموزشی «مداد فکر» هستی. وظیفه‌ات کمک به معلم است تا نوشته‌های دانش‌آموزان را دقیق‌تر بخواند و تشخیص دهد چه چیزی در آن‌ها ارزش توجه دارد، چه چیزی اجرای قابل‌قبول فعالیت است و چه چیزی هنوز به پرسش و روشن‌شدن نیاز دارد.
+const ANALYSIS_PROMPT_FA = `تو دستیار آموزشی «مداد فکر» هستی. وظیفه‌ات کمک به معلم است تا نوشته‌های دانش‌آموزان را دقیق‌تر بخواند و تشخیص دهد چه چیزی در آن‌ها ارزش توجه دارد، چه چیزی اجرای قابل‌قبول فعالیت است و چه چیزی هنوز به پرسش و روشن‌شدن نیاز دارد.
 
 هدف، نمره‌دادن، رتبه‌بندی یا تشخیص هوش، شخصیت و استعداد ذاتی دانش‌آموز نیست. همچنین لازم نیست برای هر دانش‌آموز حتماً نکته‌ای ویژه پیدا کنی یا او را تشویق کنی.
 
@@ -71,19 +70,89 @@ const ANALYSIS_PROMPT = `تو دستیار آموزشی «مداد فکر» هس
 پایه تحصیلی:
 عنوان و دستور فعالیت:
 متن انشاهای دانش‌آموزان:`;
+const ANALYSIS_PROMPT_EN = `You are the educational assistant for ENSHA. Your role is to help teachers read students' writing more carefully and identify what deserves attention, what constitutes an acceptable completion of the activity, and what still requires clarification.
+
+The goal is not to grade or rank students, or to diagnose their intelligence, personality, or innate talent. You do not need to find something special in every student's writing or praise every student.
+
+## Principles of Analysis
+
+1. Analyze the writing in the context of the activity.
+Use the activity title and instructions to understand what the student was asked to do. Examine how the different parts of the writing relate to that task and which parts, if any, deserve particular attention. You do not need a separate learning objective. If the title and instructions do not make the intended task clear, acknowledge this limitation and do not invent an objective.
+
+2. Distinguish between finding something in the writing and deciding that it deserves highlighting.
+A correct answer, conventional use, interesting event, or personal choice is not necessarily a distinctive moment of thinking. If the student has completed the activity appropriately, you may simply say so; do not turn it into a special discovery. Conversely, even a small detail may deserve attention when its connection to the activity is clear.
+
+3. Connect every interpretation to specific, relevant evidence.
+When highlighting a point, refer to a specific sentence or part of the writing and briefly explain why it deserves attention. Distinguish what the student explicitly wrote from your interpretation.
+Evidence alone is not enough. Explain how it relates to the task described in the activity instructions. If that connection is unclear, do not present the point as a noteworthy moment. A relevant answer is not necessarily a distinctive one.
+If the evidence is insufficient to support an interpretation, omit it or clearly state its limitations.
+
+4. Do not resolve ambiguity by guessing.
+If the student's final choice is unclear, parts of the writing contradict one another, or the connections between sentences are uncertain, do not resolve the contradiction arbitrarily or invent a meaning. When useful, suggest a brief question the teacher could ask to clarify the matter with the student.
+
+5. Do not confuse a fictional character with the writer.
+Do not infer the writer's real personality, emotional state, intelligence, or enduring traits from the behavior of a fictional character. A fictional character's behavior alone does not establish anything about the writer's personality.
+
+6. Do not rank different kinds of observations against one another.
+Comparing two qualities, connecting an object to a memory, imagining a situation, and changing the direction of a story are different kinds of content and thinking. None is inherently superior. Assess each in light of the activity instructions and the evidence in that student's writing.
+
+7. Do not turn the analysis into a summary of the essay.
+Longer stories do not necessarily contain greater thinking value. Select the parts that matter for understanding the student's answer, reasoning, attention, or choice. Do not correct spelling or writing mechanics unless the teacher specifically asks you to.
+
+## How to Present Individual Reports
+
+Analyze the writing first, then choose an appropriate report format only if needed. You do not need to use a fixed heading or format for every student. The report's length and structure should depend on the available evidence.
+
+When appropriate, use these three types of reports:
+
+- Noteworthy moment: A specific point in the writing is connected to the activity instructions and deserves to be highlighted. Provide the evidence and briefly explain why it matters.
+- Acceptable completion: The student has responded to the activity or provided an understandable reason, but there is insufficient evidence to present it as a distinctive moment. Do not dismiss the response as worthless or exaggerate your praise.
+- Needs clarification: The writing is ambiguous or contradictory, or more information is needed to understand the reason behind a choice. Suggest a specific question if it could help.
+
+These categories are analytical tools, not labels for students. You do not need to display one for every piece of writing. If there is no noteworthy point or important ambiguity, a brief, proportionate report is sufficient.
+
+## Do Not Confuse Analysis with Encouragement
+
+Something deserving attention is not necessarily something deserving praise. First identify what actually happens in the writing; then, if appropriate, suggest how the teacher might respond. A conventional answer can receive positive, proportionate feedback without being a distinctive moment. Conversely, an ambiguity or contradiction may deserve examination without being a reason for praise. Do not turn every observation into a recommendation to encourage the student.
+
+## Suggested Teacher Question
+
+Suggest a question only when it could clarify an ambiguity, develop an idea, or meaningfully continue the student's thinking. The question must not steer the student toward a predetermined answer or demand that they justify their choice at all costs.
+
+## Shared Patterns Across the Class
+
+Report shared patterns only when several pieces of writing provide sufficient evidence and the observation gives the teacher insight beyond repeating the individual reports. Avoid hasty generalizations, ranking students, or attributing a shared trait to the entire class. If no meaningful pattern is evident, do not invent one.
+
+## Limitations and Overall Purpose
+
+The goal is not to determine a child's abilities conclusively or predict their future development. It is to help the teacher see more accurately what is present in the writing, what deserves attention, what constitutes an acceptable completion of the activity, and what remains unclear.
+
+If the evidence is insufficient, say so explicitly. The absence of a distinctive moment in a piece of writing does not mean that the student or their writing lacks value.
+
+## Input Information
+
+Grade level:
+Activity title and instructions:
+Students' essays:`;
 
 export default function EndPage({ onBackToAtlas, onSupport }: EndPageProps) {
   const feedbackEmail = "ensha.medaadefekrapp@gmail.com";
+ const { language, t } = useLanguage();
+const isFa = language === "fa";
+
+const analysisPrompt =
+  language === "en" ? ANALYSIS_PROMPT_EN : ANALYSIS_PROMPT_FA;
+  const arrow = isFa ? "←" : "→";
+  const margin = isFa ? "mr-3" : "ml-3";
 
   const [copyStatus, setCopyStatus] = useState<"idle" | "success" | "error">(
     "idle",
   );
-
   const [isSending, setIsSending] = useState(false);
 
   async function handleCopyPrompt() {
     try {
-      await navigator.clipboard.writeText(ANALYSIS_PROMPT);
+    await navigator.clipboard.writeText(analysisPrompt);
       setCopyStatus("success");
     } catch (error) {
       console.error("Prompt copy error:", error);
@@ -95,193 +164,127 @@ export default function EndPage({ onBackToAtlas, onSupport }: EndPageProps) {
     const textarea = document.getElementById(
       "teacher-feedback",
     ) as HTMLTextAreaElement | null;
-
     const feedback = textarea?.value.trim() ?? "";
 
     if (!feedback) {
-      alert("لطفاً ابتدا بازخورد خود را بنویسید.");
+      alert(t("feedbackRequired"));
       return;
     }
 
     if (isSending) return;
-
     setIsSending(true);
 
     try {
       const response = await fetch("/api/feedback", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ feedback }),
       });
 
-      if (!response.ok) {
-        throw new Error("ارسال بازخورد ناموفق بود.");
-      }
+      if (!response.ok) throw new Error("Feedback submission failed.");
 
-      alert("بازخورد شما با موفقیت ارسال شد.");
-
-      if (textarea) {
-        textarea.value = "";
-      }
+      alert(t("feedbackSuccess"));
+      if (textarea) textarea.value = "";
     } catch (error) {
       console.error("Feedback submission error:", error);
-      alert("ارسال بازخورد انجام نشد. لطفاً دوباره تلاش کنید.");
+      alert(t("feedbackError"));
     } finally {
       setIsSending(false);
     }
   }
 
   return (
-    <main dir="rtl" className="min-h-screen bg-[#F6F1E6] text-[#2B3A67]">
+    <main
+      dir={isFa ? "rtl" : "ltr"}
+      className="min-h-screen bg-[#F6F1E6] text-[#2B3A67]"
+    >
       <div className="mx-auto flex min-h-screen w-full max-w-4xl flex-col px-6 py-8 md:px-10">
-        {/* Header */}
         <header className="flex items-center justify-between">
-          <div className="text-xl font-bold">مداد فکر</div>
-          <div className="text-sm text-slate-400">پایان فعالیت</div>
+          <div className="text-xl font-bold">{t("brand")}</div>
+          <div className="text-sm text-slate-400">{t("activityCompleted")}</div>
         </header>
 
         <section className="flex flex-1 justify-center py-12 md:py-16">
           <div className="w-full max-w-2xl">
-            {/* Completion */}
             <div className="text-center">
               <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl shadow-sm">
                 ✓
               </div>
 
               <div className="mt-8 text-sm font-medium text-[#C1863C]">
-                فعالیت به پایان رسید
+                {t("activityCompleted")}
               </div>
 
               <h1 className="mt-4 text-4xl font-bold leading-[1.5] md:text-5xl">
-                چه چیزی در نوشته‌ها دیدید؟
+                {t("endPageTitle")}
               </h1>
 
               <p className="mx-auto mt-5 max-w-xl text-lg leading-9 text-slate-600">
-                مداد فکر قرار نیست در هر انشا حتماً نکته‌ای ویژه پیدا کند. هدف
-                این است که به خواندن دقیق‌تر نوشته‌ها کمک کند؛ به دیدن نکته‌هایی
-                که ارزش توجه دارند، تشخیص پاسخ‌های متعارف و مشخص‌کردن جاهایی که
-                هنوز به پرسش و روشن‌شدن نیاز دارند.
+                {t("endPageDescription")}
               </p>
             </div>
 
-            {/* Teacher Guide */}
             <div className="mt-12 rounded-3xl border border-slate-200 bg-white p-8 md:p-10">
               <div className="text-sm font-medium text-[#C1863C]">
-                راهنمای معلم
+                {t("teacherGuide")}
               </div>
 
               <h2 className="mt-3 text-2xl font-bold">
-                چطور با کمک هوش مصنوعی انشاها را تحلیل کنید؟
+                {t("aiEssayAnalysisTitle")}
               </h2>
 
               <p className="mt-4 text-base leading-8 text-slate-600">
-                برای استفاده از پرامپت مداد فکر، مراحل زیر را دنبال کنید. برای
-                این کار به دانش فنی خاصی نیاز ندارید.
+                {t("teacherGuideDescription")}
               </p>
 
               <ol className="mt-5 space-y-5">
-                <li className="flex gap-4">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F6F1E6] font-bold">
-                    ۱
-                  </span>
-                  <div>
-                    <h3 className="font-bold">یک ابزار هوش مصنوعی باز کنید</h3>
-                    <p className="mt-1 text-sm leading-7 text-slate-600">
-                      از ابزاری استفاده کنید که امکان واردکردن متن و دریافت پاسخ
-                      را داشته باشد.
-                    </p>
-                  </div>
-                </li>
-
-                <li className="flex gap-4">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F6F1E6] font-bold">
-                    ۲
-                  </span>
-                  <div>
-                    <h3 className="font-bold">پرامپت مداد فکر را کپی کنید</h3>
-                    <p className="mt-1 text-sm leading-7 text-slate-600">
-                      از بخش پایین، متن پرامپت را کپی و در گفت‌وگوی هوش مصنوعی
-                      وارد کنید.
-                    </p>
-                  </div>
-                </li>
-
-                <li className="flex gap-4">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F6F1E6] font-bold">
-                    ۳
-                  </span>
-                  <div>
-                    <h3 className="font-bold">
-                      دستور فعالیت و انشاها را اضافه کنید
-                    </h3>
-                    <p className="mt-1 text-sm leading-7 text-slate-600">
-                      پایه تحصیلی، عنوان و دستور فعالیت و متن انشاها را در قسمت
-                      مشخص‌شده وارد کنید. نیازی نیست هدف آموزشی جداگانه‌ای تعریف
-                      کنید. اگر نام دانش‌آموزان برای تحلیل ضروری نیست، از نام
-                      کامل و اطلاعات هویتی آن‌ها استفاده نکنید.
-                    </p>
-                  </div>
-                </li>
-
-                <li className="flex gap-4">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F6F1E6] font-bold">
-                    ۴
-                  </span>
-                  <div>
-                    <h3 className="font-bold">تحلیل را با دقت بررسی کنید</h3>
-                    <p className="mt-1 text-sm leading-7 text-slate-600">
-                      بررسی کنید مدل چه نکته‌ای را برجسته کرده، آیا شاهد مشخصی
-                      آورده، آیا آن نکته به دستور فعالیت مربوط است و آیا چیزی را
-                      بیش از شواهد موجود نتیجه گرفته است.
-                    </p>
-                  </div>
-                </li>
-
-                <li className="flex gap-4">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F6F1E6] font-bold">
-                    ۵
-                  </span>
-                  <div>
-                    <h3 className="font-bold">قضاوت نهایی با شماست</h3>
-                    <p className="mt-1 text-sm leading-7 text-slate-600">
-                      پاسخ هوش مصنوعی را یک پیشنهاد برای خواندن دقیق‌تر بدانید،
-                      نه داوری قطعی درباره دانش‌آموز. اگر برداشت مدل با متن
-                      سازگار نیست، آن را نپذیرید.
-                    </p>
-                  </div>
-                </li>
+                {[
+                  ["openAiToolTitle", "openAiToolDescription"],
+                  ["copyPromptTitle", "copyPromptDescription"],
+                  ["addEssaysTitle", "addEssaysDescription"],
+                  ["reviewAnalysisTitle", "reviewAnalysisDescription"],
+                  ["finalJudgmentTitle", "finalJudgmentDescription"],
+                ].map(([titleKey, descriptionKey], index) => (
+                  <li key={titleKey} className="flex gap-4">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F6F1E6] font-bold">
+                      {isFa ? ["۱", "۲", "۳", "۴", "۵"][index] : index + 1}
+                    </span>
+                    <div>
+                      <h3 className="font-bold">{t(titleKey as never)}</h3>
+                      <p className="mt-1 text-sm leading-7 text-slate-600">
+                        {t(descriptionKey as never)}
+                      </p>
+                    </div>
+                  </li>
+                ))}
               </ol>
 
               <div className="mt-6 rounded-2xl bg-[#F6F1E6] p-5">
                 <p className="text-sm leading-7 text-slate-600">
-                  <strong>یادآوری:</strong> لازم نیست هر انشا نکته‌ای متمایز
-                  داشته باشد. یک پاسخ متعارف می‌تواند پاسخ قابل‌قبولی باشد؛ و یک
-                  ابهام ممکن است فقط به پرسشی برای روشن‌شدن نیاز داشته باشد، نه
-                  تشویق یا تفسیر بیشتر.
+                  <strong>{t("reminder")}</strong> {t("teacherGuideReminder")}
                 </p>
               </div>
             </div>
 
-            {/* Prompt */}
             <div className="mt-6 rounded-3xl border border-[#2B3A67]/15 bg-white p-8 md:p-10">
               <div className="text-sm font-medium text-[#C1863C]">
-                ابزار تحلیل
+                {t("analysisTool")}
               </div>
 
               <h2 className="mt-3 text-2xl font-bold">
-                پرامپت تحلیل انشا به روش مداد فکر
+                {t("analysisPromptTitle")}
               </h2>
 
               <p className="mt-4 text-base leading-8 text-slate-600">
-                این متن را کپی کنید و در ابزار هوش مصنوعی قرار دهید. سپس اطلاعات
-                فعالیت و انشاهای دانش‌آموزان را در بخش ورودی اضافه کنید.
+                {t("analysisPromptDescription")}
               </p>
 
               <div className="mt-6 max-h-[420px] overflow-y-auto rounded-2xl border border-slate-200 bg-[#F9F7F1] p-5">
-                <pre className="whitespace-pre-wrap break-words text-sm leading-8 text-slate-700">
-                  {ANALYSIS_PROMPT}
+                <pre
+                  dir={isFa ? "rtl" : "ltr"}
+                  className="whitespace-pre-wrap break-words text-sm leading-8 text-slate-700"
+                >
+                  {analysisPrompt}
                 </pre>
               </div>
 
@@ -290,19 +293,19 @@ export default function EndPage({ onBackToAtlas, onSupport }: EndPageProps) {
                 onClick={handleCopyPrompt}
                 className="mt-5 w-full rounded-full bg-[#2B3A67] px-7 py-3 text-base font-medium text-white transition hover:-translate-y-0.5 hover:shadow-md sm:w-auto"
               >
-                {copyStatus === "success" ? "پرامپت کپی شد ✓" : "کپی پرامپت"}
+                {copyStatus === "success"
+                  ? t("promptCopied")
+                  : t("copyPrompt")}
                 {copyStatus === "idle" && (
-                  <span className="mr-3" aria-hidden="true">
-                    ←
+                  <span className={margin} aria-hidden="true">
+                    {arrow}
                   </span>
                 )}
               </button>
 
               {copyStatus === "error" && (
                 <p role="alert" className="mt-3 text-sm leading-7 text-red-600">
-                  کپی خودکار انجام نشد. متن بالا را انتخاب و به‌صورت دستی کپی
-                  کنید. برای استفاده از کپی خودکار، صفحه باید در محیط امن مرورگر
-                  باز شده باشد.
+                  {t("promptCopyError")}
                 </p>
               )}
 
@@ -311,38 +314,29 @@ export default function EndPage({ onBackToAtlas, onSupport }: EndPageProps) {
                   role="status"
                   className="mt-3 text-sm leading-7 text-[#3C6E68]"
                 >
-                  متن پرامپت در کلیپ‌بورد قرار گرفت. اکنون می‌توانید آن را در
-                  ابزار هوش مصنوعی جای‌گذاری کنید.
+                  {t("promptCopySuccess")}
                 </p>
               )}
             </div>
 
-            {/* Feedback */}
             <div className="mt-6 rounded-3xl border border-slate-200 bg-white p-8 md:p-10">
               <div className="text-sm font-medium text-[#C1863C]">
-                بازخورد معلم
+                {t("teacherFeedback")}
               </div>
 
               <h2 className="mt-3 text-2xl font-bold">
-                تحلیل‌ها چقدر به خواندن دقیق‌تر کمک کردند؟
+                {t("feedbackTitle")}
               </h2>
 
-              <p className="mt-4 text-base leading-8 text-slate-500">
-                اگر تحلیل‌ها را بررسی کردید، برای ما بنویسید: آیا مدل نکته مهمی
-                را درست تشخیص داد؟ آیا نکته‌ای کم‌اهمیت را بیش از اندازه برجسته
-                کرد یا چیزی مهم را ندید؟ آیا در جایی از متن بیش از شواهد موجود
-                نتیجه گرفت؟ آیا ابهامی را درست تشخیص داد یا خودش برای آن معنایی
-                ساخت؟
-                <br />
-                <br />
-                لازم نیست به همه این پرسش‌ها پاسخ دهید. یک نمونه مشخص از تحلیل
-                درست یا اشتباه برای ما مفید است.
+              <p className="mt-4 whitespace-pre-line text-base leading-8 text-slate-500">
+                {t("feedbackDescription")}
               </p>
 
               <textarea
                 id="teacher-feedback"
+                dir={isFa ? "rtl" : "ltr"}
                 rows={7}
-                placeholder="مثلاً: مدل این بخش از انشا را برجسته کرد، اما به نظرم بخش دیگری ارتباط بیشتری با دستور فعالیت داشت..."
+                placeholder={t("feedbackPlaceholder")}
                 className="mt-6 w-full resize-y rounded-2xl border border-slate-200 bg-[#F6F1E6] p-5 text-base leading-8 text-[#2B3A67] outline-none transition placeholder:text-slate-400 focus:border-[#2B3A67]"
               />
 
@@ -352,16 +346,16 @@ export default function EndPage({ onBackToAtlas, onSupport }: EndPageProps) {
                 disabled={isSending}
                 className="mt-5 rounded-full bg-[#2B3A67] px-7 py-3 text-base font-medium text-white transition hover:-translate-y-0.5 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {isSending ? "در حال ارسال..." : "ارسال بازخورد"}
+                {isSending ? t("sendingFeedback") : t("sendFeedback")}
                 {!isSending && (
-                  <span className="mr-3" aria-hidden="true">
-                    ←
+                  <span className={margin} aria-hidden="true">
+                    {arrow}
                   </span>
                 )}
               </button>
 
               <p className="mt-4 text-sm leading-7 text-slate-400">
-                یا مستقیماً برای ما بنویسید:
+                {t("feedbackEmailIntro")}
                 <br />
                 <a
                   href={`mailto:${feedbackEmail}`}
@@ -372,45 +366,35 @@ export default function EndPage({ onBackToAtlas, onSupport }: EndPageProps) {
               </p>
             </div>
 
-            {/* About Pilot */}
             <div className="mt-6 rounded-3xl border border-slate-200 bg-white p-8 md:p-10">
               <div className="text-sm font-medium text-[#C1863C]">
-                درباره این نسخه
+                {t("aboutThisVersion")}
               </div>
 
               <h2 className="mt-3 text-2xl font-bold">
-                مداد فکر در حال آزموده‌شدن است.
+                {t("pilotTitle")}
               </h2>
 
               <p className="mt-4 text-base leading-8 text-slate-600">
-                مداد فکر برای کمک به معلم در خواندن نوشته‌های دانش‌آموزان طراحی
-                شده است؛ نه برای نمره‌دادن، رتبه‌بندی یا نتیجه‌گیری قطعی درباره
-                توانایی و شخصیت کودکان.
+                {t("pilotDescription")}
               </p>
 
               <p className="mt-4 text-base leading-8 text-slate-600">
-                در این مرحله، می‌خواهیم با اجرای فعالیت‌ها و بررسی تحلیل‌ها
-                بفهمیم مدل کجا به معلم کمک می‌کند، کجا نکته نامناسبی را برجسته
-                می‌کند و کجا نمی‌تواند میان شواهد مهم و کم‌اهمیت تمایز بگذارد.
-                اصلاحات بعدی باید بر اساس همین تجربه‌ها انجام شوند، نه صرفاً با
-                افزودن دستورهای بیشتر به مدل.
+                {t("pilotFeedbackDescription")}
               </p>
             </div>
 
-            {/* Support */}
             <div className="mt-6 rounded-3xl border border-[#3C6E68]/30 bg-[#3C6E68]/5 p-8 md:p-10">
               <div className="text-sm font-medium text-[#3C6E68]">
-                ادامه پروژه
+                {t("projectContinuation")}
               </div>
 
               <h2 className="mt-3 text-2xl font-bold">
-                در شکل‌گرفتن نسخه آینده سهیم باشید.
+                {t("futureVersionTitle")}
               </h2>
 
               <p className="mt-4 text-base leading-8 text-slate-600">
-                اگر فکر می‌کنید این رویکرد می‌تواند به تجربه زنگ انشا کمک کند،
-                می‌توانید درباره پروژه بیشتر بدانید، آن را به معلمان دیگر معرفی
-                کنید یا درباره ادامه آن با ما در ارتباط باشید.
+                {t("futureVersionDescription")}
               </p>
 
               <button
@@ -418,14 +402,13 @@ export default function EndPage({ onBackToAtlas, onSupport }: EndPageProps) {
                 onClick={onSupport}
                 className="mt-6 rounded-full border border-[#2B3A67]/20 bg-white px-7 py-3 text-base font-medium text-[#2B3A67] transition hover:-translate-y-0.5 hover:shadow-md"
               >
-                درباره حمایت از مداد فکر
-                <span className="mr-3" aria-hidden="true">
-                  ←
+                {t("supportButton")}
+                <span className={margin} aria-hidden="true">
+                  {arrow}
                 </span>
               </button>
             </div>
 
-            {/* Links */}
             <div className="mt-8 text-center text-sm text-slate-400">
               <a
                 href="https://ensha-web.vercel.app"
@@ -437,15 +420,14 @@ export default function EndPage({ onBackToAtlas, onSupport }: EndPageProps) {
               </a>
             </div>
 
-            {/* Back */}
-            <div className="mt-6 flex justify-center">
-              <button
-                type="button"
-                onClick={onBackToAtlas}
-                className="text-sm text-slate-400 transition hover:text-[#2B3A67]"
+            <div className="mt-8 flex justify-center">
+             <button
+              type="button"
+              onClick={onBackToAtlas}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#2B3A67] px-8 py-4 text-base font-bold text-white shadow-md transition-all duration-200 hover:bg-[#1F2B50] hover:shadow-lg active:scale-95"
               >
-                بازگشت به اطلس ←
-              </button>
+              {t("backToAtlas")} {arrow}
+             </button>
             </div>
           </div>
         </section>

@@ -1,5 +1,6 @@
 "use client";
 import type { AtlasLand, Situation } from "../../data/atlas";
+import { useLanguage } from "../../i18n/LanguageProvider";
 
 type SituationPageProps = {
   land: AtlasLand;
@@ -16,6 +17,9 @@ export default function SituationPage({
   onBack,
   onStart,
 }: SituationPageProps) {
+  const { language, t } = useLanguage();
+  const isRtl = language === "fa";
+
   return (
     <main className="min-h-screen bg-[#F6F1E6] text-[#2B3A67]">
       <div className="mx-auto w-full max-w-4xl px-6 py-8 md:px-10">
@@ -25,10 +29,10 @@ export default function SituationPage({
             onClick={onBack}
             className="text-sm text-slate-400 transition hover:text-[#2B3A67]"
           >
-            بازگشت
+            {t("back")}
           </button>
 
-          <div className="text-xl font-bold">مداد فکر</div>
+          <div className="text-xl font-bold">{t("brand")}</div>
         </header>
 
         {/* Situation */}
@@ -36,7 +40,7 @@ export default function SituationPage({
           <div className="w-full">
             {/* Land + situation number */}
             <div className="text-sm font-medium text-[#C1863C]">
-              {land.title} · موقعیت {situationNumber}
+              {land.title} · {t("situationLabel")} {situationNumber}
             </div>
 
             {/* Title */}
@@ -55,9 +59,9 @@ export default function SituationPage({
                 onClick={onStart}
                 className="inline-flex items-center rounded-full bg-[#2B3A67] px-8 py-4 text-lg font-medium text-white transition hover:-translate-y-0.5 hover:shadow-lg"
               >
-                شروع فعالیت
-                <span className="mr-3" aria-hidden="true">
-                  ←
+                {t("startActivity")}
+                <span className={isRtl ? "mr-3" : "ml-3"} aria-hidden="true">
+                  {isRtl ? "←" : "→"}
                 </span>
               </button>
             </div>
@@ -65,8 +69,7 @@ export default function SituationPage({
             {/* Future activity placeholder */}
             <div className="mt-16 rounded-3xl border border-dashed border-slate-300 bg-white/50 p-8">
               <p className="text-sm leading-7 text-slate-400">
-                محتوای اجرایی این موقعیت در مرحله‌ی بعد در این بخش قرار خواهد
-                گرفت.
+                {t("activityPlaceholder")}
               </p>
             </div>
           </div>

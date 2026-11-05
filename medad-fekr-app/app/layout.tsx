@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { SerwistProvider } from "./serwist";
 import "./globals.css";
+import { LanguageProvider } from "../i18n/LanguageProvider";
 
 export const metadata: Metadata = {
   applicationName: "مداد فکر",
@@ -26,7 +27,11 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body>
-        <SerwistProvider swUrl="/sw.js">{children}</SerwistProvider>
+        <LanguageProvider>
+          <SerwistProvider swUrl="/sw.js">
+            {children}
+          </SerwistProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

@@ -1,3 +1,4 @@
+
 @import "tailwindcss";
 
 @font-face {
@@ -37,11 +38,48 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "MRT Bamshad", sans-serif;
-  -webkit-font-smoothing: antialiased;
+  font-size: 17px;
+  line-height: 1.85;
+  -webkit-font-smoothing: auto;
   text-rendering: optimizeLegibility;
 }
 
 button,
 a {
   font-family: inherit;
+}
+
+html[lang="fa"] body {
+  font-family: "MRT Bamshad", sans-serif;
+}
+
+html[lang="en"] body {
+  font-family: "Century Gothic", Arial, sans-serif;
+}
+
+
+
+/* Persian typography adjustments */
+html[lang="fa"] .text-xs {
+  font-size: 0.9375rem;
+}
+
+html[lang="fa"] .text-sm {
+  font-size: 1.125rem;
+}
+
+html[lang="fa"] .text-base {
+  font-size: 1.25rem;
+}
+
+html[lang="fa"] .text-lg {
+  font-size: 1.375rem;
+}
+
+html[lang="fa"] .text-xl {
+  font-size: 1.625rem;
+}
+
+html[lang="fa"] .text-2xl {
+  font-size: 1.875rem;
 }

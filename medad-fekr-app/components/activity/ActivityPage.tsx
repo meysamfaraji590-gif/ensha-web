@@ -1,7 +1,9 @@
 "use client";
+
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { AtlasLand, Situation } from "../../data/atlas";
+import { useLanguage } from "../../i18n/LanguageProvider";
 
 type ActivityPageProps = {
   land: AtlasLand;
@@ -18,6 +20,7 @@ function TwoFrameReveal({
   imagePath: string;
   title: string;
 }) {
+  const { t } = useLanguage();
   const [revealed, setRevealed] = useState(false);
 
   return (
@@ -28,7 +31,7 @@ function TwoFrameReveal({
             onClick={() => setRevealed(true)}
             className="rounded-full bg-[#2B3A67] px-6 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:shadow-md"
           >
-            دیدن قاب کامل
+            {t("revealFullFrame")}
           </button>
         </div>
       )}
@@ -37,7 +40,7 @@ function TwoFrameReveal({
         <div className="relative overflow-hidden rounded-2xl bg-[#F6F1E6]">
           <Image
             src={imagePath}
-            alt={`${title} - قاب کامل`}
+            alt={`${title} - ${t("fullFrame")}`}
             width={1600}
             height={1000}
             className="h-auto w-full object-contain"
@@ -55,59 +58,99 @@ export default function ActivityPage({
   onBack,
   onFinish,
 }: ActivityPageProps) {
-  const activity = situation.activity;
-  console.log("ACTIVITY MATERIALS:", situation.id, activity?.materials);
+ const { language, t } = useLanguage();
+const activity = situation.activity;
 
+const displayActivity =
+  language === "en"
+    ? activity?.translations?.en ?? activity
+    : activity;
+
+const displayTitle =
+  language === "en"
+    ? situation.translations?.en?.title ?? situation.title
+    : situation.title;
+
+const displayDescription =
+  language === "en"
+    ? situation.translations?.en?.description ?? situation.description
+    : situation.description;
+
+const isFa = language === "fa";
   const [textMaterials, setTextMaterials] = useState<
     { path: string; content: string }[]
   >([]);
 
-  useEffect(() => {
-    const materials = activity?.materials;
+    
+useEffect(() => {
+  const materials = activity?.materials;
 
-    if (!materials || materials.type !== "text") {
-      return;
-    }
-    const textPaths = materials.items;
+  if (!materials || materials.type !== "text") {
+    setTextMaterials([]);
+    return;
+  }
 
-    let cancelled = false;
+  const textPaths = materials.items;
+  let cancelled = false;
 
-    async function loadTexts() {
-      const results = await Promise.all(
-        textPaths.map(async (path) => {
-          try {
-            const response = await fetch(path);
+  async function loadTexts() {
+    const results = await Promise.all(
+      textPaths.map(async (path) => {
+        const englishPath = path.replace(
+          /^\/text\//,
+          "/text/en/"
+        );
 
-            if (!response.ok) {
-              throw new Error(`Could not load ${path}`);
+        try {
+          // در زبان انگلیسی ابتدا نسخه انگلیسی را امتحان می‌کنیم.
+          if (language === "en" && englishPath !== path) {
+            const englishResponse = await fetch(englishPath);
+            console.log("English text path:", englishPath, "Status:", englishResponse.status);
+
+            if (englishResponse.ok) {
+              return {
+                path,
+                content: await englishResponse.text(),
+              };
             }
-
-            const content = await response.text();
-
-            return {
-              path,
-              content,
-            };
-          } catch {
-            return {
-              path,
-              content: "متن این فعالیت قابل بارگذاری نیست.",
-            };
           }
-        }),
-      );
 
-      if (!cancelled) {
-        setTextMaterials(results);
-      }
+          // اگر نسخه انگلیسی نبود، نسخه اصلی (فارسی) بارگذاری می‌شود.
+          const response = await fetch(path);
+
+          if (!response.ok) {
+            throw new Error(`Could not load ${path}`);
+          }
+
+          return {
+            path,
+            content: await response.text(),
+          };
+        } catch {
+          return {
+            path,
+            content: t("textMaterialLoadError"),
+          };
+        }
+      })
+    );
+
+    if (!cancelled) {
+console.log(
+  "Loaded text content:",
+  JSON.stringify(results, null, 2)
+);
+  setTextMaterials(results);
+
     }
+  }
 
-    loadTexts();
+  void loadTexts();
 
-    return () => {
-      cancelled = true;
-    };
-  }, [activity]);
+  return () => {
+    cancelled = true;
+  };
+}, [activity, language, t]);
 
   function renderMaterials() {
     if (!activity?.materials?.required) {
@@ -121,24 +164,27 @@ export default function ActivityPage({
 
       return (
         <section className="mt-6 rounded-3xl border border-slate-200 bg-white p-6 md:p-10">
-          <div className="text-sm font-medium text-[#C1863C]">تصویر فعالیت</div>
+          <div className="text-sm font-medium text-[#C1863C]">
+            {t("activityImages")}
+          </div>
 
           <div className="mt-8 space-y-8">
             <div className="overflow-hidden rounded-2xl bg-[#F6F1E6]">
               <Image
                 src={materials.items[0]}
-                alt={`${situation.title} - تصویر 1`}
+                alt={`${situation.title} - ${t("image")} 1`}
                 width={1600}
                 height={1000}
                 className="h-auto w-full object-contain"
               />
             </div>
+
             {isTwoFrameActivity && materials.items[1] && (
-              <TwoFrameReveal
-                imagePath={materials.items[1]}
-                title={situation.title}
-              />
-            )}
+  <TwoFrameReveal
+    imagePath={materials.items[1]}
+    title={situation.title}
+  />
+)}
 
             {!isTwoFrameActivity &&
               materials.items.slice(1).map((path, index) => (
@@ -148,7 +194,7 @@ export default function ActivityPage({
                 >
                   <Image
                     src={path}
-                    alt={`${situation.title} - تصویر ${index + 2}`}
+                    alt={`${situation.title} - ${t("image")} ${index + 2}`}
                     width={1600}
                     height={1000}
                     className="h-auto w-full object-contain"
@@ -159,21 +205,24 @@ export default function ActivityPage({
         </section>
       );
     }
+
     if (materials.type === "audio") {
       return (
         <section className="mt-6 rounded-3xl border border-slate-200 bg-white p-6 md:p-10">
-          <div className="text-sm font-medium text-[#C1863C]">صدای فعالیت</div>
+          <div className="text-sm font-medium text-[#C1863C]">
+            {t("activityAudio")}
+          </div>
 
           <div className="mt-8 space-y-6">
             {materials.items.map((path, index) => (
               <div key={path} className="rounded-2xl bg-[#F6F1E6] p-5">
                 <div className="mb-3 text-sm text-slate-500">
-                  فایل صوتی {index + 1}
+                  {t("audioFile")} {index + 1}
                 </div>
 
                 <audio controls preload="metadata" className="w-full">
                   <source src={path} type="audio/mpeg" />
-                  مرورگر شما از پخش این فایل صوتی پشتیبانی نمی‌کند.
+                  {t("audioUnsupported")}
                 </audio>
               </div>
             ))}
@@ -185,14 +234,16 @@ export default function ActivityPage({
     if (materials.type === "text") {
       return (
         <section className="mt-6 rounded-3xl border border-slate-200 bg-white p-6 md:p-10">
-          <div className="text-sm font-medium text-[#C1863C]">متن فعالیت</div>
+          <div className="text-sm font-medium text-[#C1863C]">
+            {t("activityText")}
+          </div>
 
           <div className="mt-8 space-y-6">
             {textMaterials.map(({ path, content }, index) => (
               <div key={path} className="rounded-2xl bg-[#F6F1E6] p-6">
                 {textMaterials.length > 1 && (
                   <div className="mb-4 text-sm text-slate-400">
-                    متن {index + 1}
+                    {t("textFile")} {index + 1}
                   </div>
                 )}
 
@@ -210,7 +261,7 @@ export default function ActivityPage({
       return (
         <section className="mt-6 rounded-3xl border border-slate-200 bg-white p-6 md:p-10">
           <div className="text-sm font-medium text-[#C1863C]">
-            وسایل موردنیاز
+            {t("requiredMaterials")}
           </div>
 
           <div className="mt-6 space-y-3">
@@ -231,49 +282,54 @@ export default function ActivityPage({
   }
 
   return (
-    <main className="min-h-screen bg-[#F6F1E6] text-[#2B3A67]">
+    <main
+      dir={isFa ? "rtl" : "ltr"}
+      className="min-h-screen bg-[#F6F1E6] text-[#2B3A67]"
+    >
       <div className="mx-auto w-full max-w-4xl px-6 py-8 md:px-10">
         <header className="flex items-center justify-between">
           <button
             onClick={onBack}
             className="text-sm text-slate-400 transition hover:text-[#2B3A67]"
           >
-            بازگشت
+            {t("back")}
           </button>
 
-          <div className="text-xl font-bold">مداد فکر</div>
+          <div className="text-xl font-bold">{t("brand")}</div>
         </header>
 
         <section className="py-16">
           <div className="text-sm font-medium text-[#C1863C]">
-            {land.title} · موقعیت {situationNumber}
+            {land.title} · {t("situationLabel")} {situationNumber}
           </div>
 
           <h1 className="mt-5 text-4xl font-bold leading-[1.5] md:text-6xl">
-            {situation.title}
+           {displayTitle}
           </h1>
 
           <p className="mt-6 max-w-3xl text-lg leading-9 text-slate-600">
-            {situation.description}
+           {displayDescription}
           </p>
 
           {!activity ? (
             <div className="mt-12 rounded-3xl border border-dashed border-slate-200 bg-white p-8 md:p-10">
-              <div className="text-sm font-medium text-[#C1863C]">فعالیت</div>
+              <div className="text-sm font-medium text-[#C1863C]">
+                {t("activity")}
+              </div>
 
               <p className="mt-4 text-lg leading-9 text-slate-500">
-                راهنمای اجرای این موقعیت هنوز آماده نشده است.
+                {t("activityNotReady")}
               </p>
             </div>
           ) : (
             <>
               <div className="mt-12 rounded-3xl border border-slate-200 bg-white p-8 md:p-10">
                 <div className="text-sm font-medium text-[#C1863C]">
-                  هدف موقعیت
+                  {t("activityPurpose")}
                 </div>
 
                 <p className="mt-5 text-lg leading-9 text-slate-600">
-                  {activity.purpose}
+                  {displayActivity?.purpose ?? activity.purpose}
                 </p>
               </div>
 
@@ -281,60 +337,62 @@ export default function ActivityPage({
 
               <div className="mt-6 rounded-3xl border border-slate-200 bg-white p-8 md:p-10">
                 <div className="text-sm font-medium text-[#C1863C]">
-                  راهنمای اجرا
+                  {t("executionGuide")}
                 </div>
 
                 <p className="mt-5 text-lg leading-9 text-slate-600">
-                  {activity.instruction}
+                  {displayActivity?.instruction ?? activity.instruction}
                 </p>
 
-                <div className="mt-8 space-y-4">
-                  {activity.steps.map((step, index) => (
-                    <div key={index} className="flex items-start gap-4">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F6F1E6] text-sm font-semibold text-[#2B3A67]">
-                        {index + 1}
-                      </div>
+             <div className="mt-8 space-y-4">
+               {(displayActivity?.steps ?? activity.steps).map((step, index) => (
+             <div key={index} className="flex items-start gap-4">
+             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F6F1E6] text-sm font-semibold text-[#2B3A67]">
+              {index + 1}
+            </div>
 
-                      <p className="pt-1 text-base leading-8 text-slate-600">
-                        {step}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+             <p className="pt-1 text-base leading-8 text-slate-600">
+              {step}
+            </p>
+            </div>
+           ))}
+          </div>
+        </div>
 
-              <div className="mt-6 rounded-3xl border border-slate-200 bg-white p-8 md:p-10">
-                <div className="text-sm font-medium text-[#C1863C]">
-                  پرسش‌های پیشنهادی
-                </div>
+        <div className="mt-6 rounded-3xl border border-slate-200 bg-white p-8 md:p-10">
+        <div className="text-sm font-medium text-[#C1863C]">
+         {t("suggestedQuestions")}
+        </div>
 
-                <p className="mt-3 text-sm leading-7 text-slate-400">
-                  معلم می‌تواند بر اساس فضای کلاس، از این پرسش‌ها استفاده کند یا
-                  آن‌ها را تغییر دهد.
-                </p>
+        <p className="mt-3 text-sm leading-7 text-slate-400">
+         {t("suggestedQuestionsNote")}
+        </p>
 
-                <div className="mt-8 space-y-5">
-                  {activity.questions.map((question, index) => (
-                    <div
-                      key={index}
-                      className="border-r-2 border-[#C1863C]/40 pr-5"
-                    >
-                      <p className="text-lg leading-9 text-[#2B3A67]">
-                        {question}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
+        <div className="mt-8 space-y-5">
+         {(displayActivity?.questions ?? activity.questions).map((question, index) => (
+        <div
+        key={index}
+        className={`border-[#C1863C]/40 ${
+          isFa
+            ? "border-r-2 pr-5"
+            : "border-l-2 pl-5"
+        }`}
+      >
+        <p className="text-lg leading-9 text-[#2B3A67]">
+          {question}
+        </p>
+      </div>
+    ))}
+  </div>
+</div>
               {activity.teacherNote && (
                 <div className="mt-6 rounded-3xl bg-[#2B3A67] p-8 text-white md:p-10">
                   <div className="text-sm font-medium text-[#C1863C]">
-                    یادداشت برای معلم
+                    {t("teacherNote")}
                   </div>
 
                   <p className="mt-4 text-base leading-8 text-white/80">
-                    {activity.teacherNote}
+                    {displayActivity?.teacherNote ?? activity.teacherNote}
                   </p>
                 </div>
               )}
@@ -343,31 +401,33 @@ export default function ActivityPage({
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <div className="text-sm font-medium text-slate-400">
-                      فضای توسعه
+                      {t("futureDevelopment")}
                     </div>
 
                     <p className="mt-1 text-sm leading-7 text-slate-400">
-                      پیشنهاد، شخصی‌سازی، حافظه کلاس و سایر ابزارهای هوشمند در
-                      نسخه‌های آینده به این چرخه اضافه خواهند شد.
+                      {t("futureDevelopmentDescription")}
                     </p>
                   </div>
 
                   <span className="shrink-0 rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-400">
-                    به‌زودی
+                    {t("comingSoon")}
                   </span>
                 </div>
               </div>
             </>
           )}
 
-          <div className="mt-10 flex justify-end">
+          <div className={`mt-10 flex ${isFa ? "justify-start" : "justify-end"}`}>
             <button
               onClick={onFinish}
               className="rounded-full bg-[#2B3A67] px-8 py-4 text-lg font-medium text-white transition hover:-translate-y-0.5 hover:shadow-lg"
             >
-              پایان فعالیت
-              <span className="mr-3" aria-hidden="true">
-                ←
+              {t("finishActivity")}
+              <span
+                className={isFa ? "mr-3" : "ml-3"}
+                aria-hidden="true"
+              >
+                {isFa ? "←" : "→"}
               </span>
             </button>
           </div>

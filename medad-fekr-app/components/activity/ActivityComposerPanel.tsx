@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { useLanguage } from "../../i18n/LanguageProvider";
 import { getSituationById } from "../../data/atlas";
 import { composeActivities } from "./activity-composer";
 import type {
@@ -51,52 +52,62 @@ const executionStructures: ExecutionStructure[] = [
   "group",
 ];
 
-// Labels for UI
-const thinkingMovementLabels: Record<ThinkingMovement, string> = {
-  mashahede: "مشاهده",
-  jozeinegari: "جزئی‌نگری",
-  tosif: "توصیف",
-  revayat: "روایت",
-  bayan_ehsas: "بیان احساس",
-  takhayol: "تخیل",
-  porseshgari: "پرسشگری",
-  moghayese: "مقایسه",
-  didgah: "دیدگاه",
-  ertebatsazi: "ارتباط‌سازی",
-  dalil_entekhab: "دلیل انتخاب",
-  bazandishi: "بازاندیشی",
+const thinkingMovementLabels: Record<
+  ThinkingMovement,
+  { fa: string; en: string }
+> = {
+  mashahede: { fa: "مشاهده", en: "Observation" },
+  jozeinegari: { fa: "جزئی‌نگری", en: "Attention to detail" },
+  tosif: { fa: "توصیف", en: "Description" },
+  revayat: { fa: "روایت", en: "Narration" },
+  bayan_ehsas: { fa: "بیان احساس", en: "Expressing feelings" },
+  takhayol: { fa: "تخیل", en: "Imagination" },
+  porseshgari: { fa: "پرسشگری", en: "Questioning" },
+  moghayese: { fa: "مقایسه", en: "Comparison" },
+  didgah: { fa: "دیدگاه", en: "Perspective" },
+  ertebatsazi: { fa: "ارتباط‌سازی", en: "Making connections" },
+  dalil_entekhab: { fa: "دلیل انتخاب", en: "Reason for a choice" },
+  bazandishi: { fa: "بازاندیشی", en: "Reflection" },
 };
 
-const outputFormLabels: Record<OutputForm, string> = {
-  description: "توصیف",
-  list: "فهرست",
-  narrative: "روایت",
-  letter: "نامه",
-  dialogue: "گفت‌وگو",
-  interview: "مصاحبه",
-  monologue: "تک‌گویی",
-  report: "گزارش",
-  analysis: "تحلیل",
-  interpretation: "تفسیر",
-  argument: "استدلال",
-  hypothesis_evidence: "فرضیه و شواهد",
-  decision_reason: "دلیل تصمیم",
-  question_chain: "زنجیره پرسش",
-  text_rewrite: "بازنویسی متن",
-  text_extension: "گسترش متن",
-  text_variants: "گونه‌های مختلف متن",
+const outputFormLabels: Record<OutputForm, { fa: string; en: string }> = {
+  description: { fa: "توصیف", en: "Description" },
+  list: { fa: "فهرست", en: "List" },
+  narrative: { fa: "روایت", en: "Narrative" },
+  letter: { fa: "نامه", en: "Letter" },
+  dialogue: { fa: "گفت‌وگو", en: "Dialogue" },
+  interview: { fa: "مصاحبه", en: "Interview" },
+  monologue: { fa: "تک‌گویی", en: "Monologue" },
+  report: { fa: "گزارش", en: "Report" },
+  analysis: { fa: "تحلیل", en: "Analysis" },
+  interpretation: { fa: "تفسیر", en: "Interpretation" },
+  argument: { fa: "استدلال", en: "Argument" },
+  hypothesis_evidence: { fa: "فرضیه و شواهد", en: "Hypothesis and evidence" },
+  decision_reason: { fa: "دلیل تصمیم", en: "Reason for a decision" },
+  question_chain: { fa: "زنجیرهٔ پرسش", en: "Chain of questions" },
+  text_rewrite: { fa: "بازنویسی متن", en: "Text rewriting" },
+  text_extension: { fa: "گسترش متن", en: "Text expansion" },
+  text_variants: { fa: "گونه‌های مختلف متن", en: "Text variations" },
 };
 
-const executionStructureLabels: Record<ExecutionStructure, string> = {
-  individual: "فردی",
-  pair: "دو نفره",
-  group: "گروهی",
+const executionStructureLabels: Record<
+  ExecutionStructure,
+  { fa: string; en: string }
+> = {
+  individual: { fa: "فردی", en: "Individual" },
+  pair: { fa: "دونفره", en: "Pair" },
+  group: { fa: "گروهی", en: "Group" },
 };
+
 export default function ActivityComposerPanel() {
+  const { language } = useLanguage();
+  const isFa = language === "fa";
+
   const [cognitiveMove, setCognitiveMove] =
     useState<ThinkingMovement>("takhayol");
 
-  const [outputForm, setOutputForm] = useState<OutputForm>("description");
+  const [outputForm, setOutputForm] =
+    useState<OutputForm>("description");
 
   const [executionStructure, setExecutionStructure] =
     useState<ExecutionStructure>("individual");
@@ -116,17 +127,47 @@ export default function ActivityComposerPanel() {
     setResults(result.matches);
   }
 
+  const text = isFa
+    ? {
+        title: "ترکیب‌گر آزمایشی فعالیت‌ها",
+        description:
+          "حرکت فکری، شکل خروجی و ساختار اجرای فعالیت را انتخاب کنید.",
+        thinkingMove: "حرکت فکری",
+        outputForm: "شکل خروجی",
+        executionStructure: "ساختار اجرا",
+        suggest: "پیشنهاد بده",
+        suggestions: "پیشنهادها",
+        activity: "فعالیت",
+        choose: "انتخاب این فعالیت",
+        noResults: "هنوز پیشنهادی نمایش داده نشده است.",
+      }
+    : {
+        title: "Experimental Activity Composer",
+        description:
+          "Choose a thinking movement, output form, and execution structure.",
+        thinkingMove: "Thinking movement",
+        outputForm: "Output form",
+        executionStructure: "Execution structure",
+        suggest: "Suggest activities",
+        suggestions: "Suggestions",
+        activity: "Activity",
+        choose: "Choose this activity",
+        noResults: "No suggestions to display yet.",
+      };
+
   return (
     <section
+      lang={language}
+      dir={isFa ? "rtl" : "ltr"}
       style={{
         maxWidth: 720,
         margin: "0 auto",
         padding: 24,
       }}
     >
-      <h2>Composer آزمایشی</h2>
+      <h2>{text.title}</h2>
 
-      <p>حرکت فکری، شکل خروجی و ساختار اجرای فعالیت را انتخاب کنید.</p>
+      <p>{text.description}</p>
 
       <div
         style={{
@@ -136,7 +177,7 @@ export default function ActivityComposerPanel() {
         }}
       >
         <label>
-          <div>حرکت فکری</div>
+          <div>{text.thinkingMove}</div>
 
           <select
             value={cognitiveMove}
@@ -151,14 +192,14 @@ export default function ActivityComposerPanel() {
           >
             {thinkingMoves.map((move) => (
               <option key={move} value={move}>
-                {move}
+                {thinkingMovementLabels[move][language]}
               </option>
             ))}
           </select>
         </label>
 
         <label>
-          <div>شکل خروجی</div>
+          <div>{text.outputForm}</div>
 
           <select
             value={outputForm}
@@ -173,19 +214,21 @@ export default function ActivityComposerPanel() {
           >
             {outputForms.map((form) => (
               <option key={form} value={form}>
-                {form}
+                {outputFormLabels[form][language]}
               </option>
             ))}
           </select>
         </label>
 
         <label>
-          <div>ساختار اجرا</div>
+          <div>{text.executionStructure}</div>
 
           <select
             value={executionStructure}
             onChange={(event) =>
-              setExecutionStructure(event.target.value as ExecutionStructure)
+              setExecutionStructure(
+                event.target.value as ExecutionStructure,
+              )
             }
             style={{
               width: "100%",
@@ -195,7 +238,7 @@ export default function ActivityComposerPanel() {
           >
             {executionStructures.map((structure) => (
               <option key={structure} value={structure}>
-                {structure}
+                {executionStructureLabels[structure][language]}
               </option>
             ))}
           </select>
@@ -209,13 +252,13 @@ export default function ActivityComposerPanel() {
             cursor: "pointer",
           }}
         >
-          پیشنهاد بده
+          {text.suggest}
         </button>
       </div>
 
       {results.length > 0 && (
         <div style={{ marginTop: 32 }}>
-          <h3>پیشنهادها</h3>
+          <h3>{text.suggestions}</h3>
 
           <div
             style={{
@@ -240,28 +283,30 @@ export default function ActivityComposerPanel() {
                     padding: 16,
                   }}
                 >
-                  <strong>{result.activityId}</strong>
+                  <strong>
+                    {text.activity}: {result.activityId}
+                  </strong>
 
-                  <h4
-                    style={{
-                      marginTop: 8,
-                      fontSize: 18,
-                    }}
-                  ></h4>
+                  <div style={{ marginTop: 12 }}>
+                    <span>
+                      {text.thinkingMove}:{" "}
+                      {thinkingMovementLabels[cognitiveMove][language]}
+                    </span>
 
-                  <span>
-                    حرکت فکری: {thinkingMovementLabels[cognitiveMove]}
-                  </span>
+                    <span> • </span>
 
-                  <span>•</span>
+                    <span>
+                      {text.outputForm}:{" "}
+                      {outputFormLabels[outputForm][language]}
+                    </span>
 
-                  <span>شکل خروجی: {outputFormLabels[outputForm]}</span>
+                    <span> • </span>
 
-                  <span>•</span>
-
-                  <span>
-                    اجرا: {executionStructureLabels[executionStructure]}
-                  </span>
+                    <span>
+                      {text.executionStructure}:{" "}
+                      {executionStructureLabels[executionStructure][language]}
+                    </span>
+                  </div>
 
                   <button
                     type="button"
@@ -271,7 +316,7 @@ export default function ActivityComposerPanel() {
                       cursor: "pointer",
                     }}
                   >
-                    انتخاب این فعالیت
+                    {text.choose}
                   </button>
                 </article>
               );
