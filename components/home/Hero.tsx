@@ -49,7 +49,7 @@ export default function Hero() {
 
           <div className="mt-14 flex flex-wrap gap-5">
   <a
-    href="https://ensha-web-prdv-8kc6ykc3s-ensha.vercel.app/"
+    href="https://ensha-web-f5co.vercel.app/"
     target="_blank"
     rel="noopener noreferrer"
   >
